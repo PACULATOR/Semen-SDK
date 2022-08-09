@@ -129,401 +129,383 @@ return ;
 #line 131 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
 #line 134 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-if(m_ctLeftStains  > 20){
+if(m_ctLeftStains  > 5){
 #line 135 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return ;
 #line 136 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
 #line 137 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-FLOAT fBloodStainsNum  = 5;
-#line 138 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-if(GetSP  () -> sp_bSinglePlayer ){
-#line 139 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-fBloodStainsNum  = 15;
-#line 140 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}else {
-#line 141 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-fBloodStainsNum  = 5;
-#line 142 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}
-#line 144 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-if(m_ctLeftStains  > fBloodStainsNum ){
-#line 145 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-return ;
-#line 146 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}
-#line 147 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ESpawnEffect  ese ;
-#line 148 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 138 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOAT3D vPoint ;
-#line 149 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 139 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOATplane3D plPlaneNormal ;
-#line 150 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 140 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOAT fDistanceToEdge ;
-#line 153 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 143 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(GetNearestPolygon  (vPoint  , plPlaneNormal  , fDistanceToEdge )){
-#line 155 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 145 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if((m_fLastStainHitPoint  - vPoint ) . Length  () > 3.0f && 
-#line 156 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 146 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 (vPoint  - GetPlacement  () . pl_PositionVector ) . Length  () < 3.5f){
-#line 157 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 147 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_fLastStainHitPoint  = vPoint ;
-#line 159 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 149 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . colMuliplier  = C_WHITE  | CT_OPAQUE ;
-#line 160 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 150 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . betType  = m_betStain ;
-#line 161 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 151 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . vNormal  = FLOAT3D (plPlaneNormal );
-#line 162 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 152 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetNormalComponent  (en_vCurrentTranslationAbsolute  , plPlaneNormal  , ese  . vDirection );
-#line 163 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 153 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOAT fLength  = ese  . vDirection  . Length  () / 7.5f;
-#line 164 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 154 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 fLength  = Clamp  (fLength  , 1.0f , 15.0f);
-#line 165 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 155 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . vStretch  = FLOAT3D (1.0f , fLength  * 1.0f , 1.0f);
-#line 166 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 156 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SpawnEffect  (CPlacement3D (vPoint  + ese  . vNormal  / 50.0f * (FRnd  () + 0.5f) , ANGLE3D (0 , 0 , 0)) , ese );
-#line 167 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 157 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_ctLeftStains  ++;
-#line 168 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 158 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 169 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 159 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 170 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 160 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
   
-#line 173 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 163 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 void CDebris::SpawnEffect(const CPlacement3D & plEffect,const class ESpawnEffect & eSpawnEffect) 
-#line 174 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 164 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 175 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 165 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 CEntityPointer penEffect  = CreateEntity  (plEffect  , CLASS_BASIC_EFFECT );
-#line 176 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 166 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 penEffect  -> Initialize  (eSpawnEffect );
-#line 177 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 167 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
   
-#line 180 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 170 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 void CDebris::RenderParticles(void) 
-#line 181 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 171 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 183 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 173 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(en_vCurrentTranslationAbsolute  . Length  () < 0.1f){
-#line 185 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 175 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return ;
-#line 186 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 176 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 187 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 177 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 switch(m_dptParticles ){
-#line 188 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 178 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 case DPT_BLOODTRAIL : {
-#line 189 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 179 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Particles_BloodTrail  (this );
+#line 180 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+}break ;
+#line 181 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+case DPR_SMOKETRAIL : {
+#line 182 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+Particles_GrenadeTrail  (this );
+#line 183 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+}break ;
+#line 184 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+case DPR_SPARKS : {
+#line 185 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+Particles_ColoredStarsTrail  (this );
+#line 186 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+}break ;
+#line 187 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+case DPR_FLYINGTRAIL : {
+#line 189 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+Particles_BombTrail  (this );
 #line 190 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }break ;
 #line 191 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-case DPR_SMOKETRAIL : {
+case DPT_AFTERBURNER : {
 #line 192 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-Particles_GrenadeTrail  (this );
+Particles_AfterBurner  (this  , m_tmStarted  , 0.5f);
 #line 193 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }break ;
 #line 194 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-case DPR_SPARKS : {
-#line 195 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-Particles_ColoredStarsTrail  (this );
-#line 196 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}break ;
-#line 197 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-case DPR_FLYINGTRAIL : {
-#line 199 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-Particles_BombTrail  (this );
-#line 200 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}break ;
-#line 201 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-case DPT_AFTERBURNER : {
-#line 202 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-Particles_AfterBurner  (this  , m_tmStarted  , 0.5f);
-#line 203 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-}break ;
-#line 204 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 default  : ASSERT  (FALSE );
-#line 205 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 195 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 case DPT_NONE : 
-#line 206 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 196 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return ;
-#line 207 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 197 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 208 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 198 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
   
-#line 211 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 201 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 void CDebris::Explode(void) 
-#line 212 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 202 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 214 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 204 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 CPlacement3D plExplosion  = GetPlacement  ();
-#line 215 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 205 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 CEntityPointer penExplosion  = CreateEntity  (plExplosion  , CLASS_BASIC_EFFECT );
-#line 216 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 206 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ESpawnEffect  eSpawnEffect ;
-#line 217 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 207 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 eSpawnEffect  . colMuliplier  = C_WHITE  | CT_OPAQUE ;
-#line 218 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 208 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 eSpawnEffect  . betType  = BET_BOMB ;
-#line 219 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 209 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 eSpawnEffect  . vStretch  = FLOAT3D (0.3f , 0.3f , 0.3f);
-#line 220 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 210 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 penExplosion  -> Initialize  (eSpawnEffect );
-#line 221 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 211 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
 BOOL CDebris::
-#line 229 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 219 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Main(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CDebris_Main
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_ESpawnDebris, "CDebris::Main expects 'ESpawnDebris' as input!");  const ESpawnDebris &eSpawn = (const ESpawnDebris &)__eeInput;
-#line 231 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 221 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 InitAsModel  ();
-#line 232 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 222 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetPhysicsFlags  (EPF_MODEL_BOUNCING  | EPF_CANFADESPINNING );
-#line 233 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 223 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetCollisionFlags  (ECF_DEBRIS );
-#line 234 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 224 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetFlags  (GetFlags  () | ENF_SEETHROUGH );
-#line 235 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 225 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetHealth  (25.0f);
-#line 236 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 226 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fBounceDampNormal  = 0.15f;
-#line 237 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 227 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fBounceDampParallel  = 0.5f;
-#line 238 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 228 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fJumpControlMultiplier  = 0.0f;
-#line 241 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 231 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(eSpawn  . Eeibt  == EIBT_ICE ){
-#line 242 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 232 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fDensity  = 500.0f;
-#line 243 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 233 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }else if(eSpawn  . Eeibt  == EIBT_WOOD ){
-#line 244 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 234 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fDensity  = 500.0f;
-#line 245 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 235 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }else if(eSpawn  . Eeibt  == EIBT_FLESH ){
-#line 246 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 236 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fDensity  = 5000.0f;
-#line 247 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 237 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fBounceDampNormal  = 0.25f;
-#line 248 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 238 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fBounceDampParallel  = 0.75f;
-#line 249 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 239 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }else if(TRUE ){
-#line 250 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 240 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fDensity  = 5000.0f;
-#line 251 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 241 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 254 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 244 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_dptParticles  = eSpawn  . dptParticles ;
-#line 255 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 245 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(m_dptParticles  == DPT_AFTERBURNER )
-#line 256 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 246 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 257 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 247 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Particles_AfterBurner_Prepare  (this );
-#line 258 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 248 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 259 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 249 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_betStain  = eSpawn  . betStain ;
-#line 260 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 250 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_iBodyType  = (INDEX) eSpawn  . Eeibt ;
-#line 261 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 251 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> SetData  (eSpawn  . pmd );
-#line 262 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 252 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_toTexture  . SetData  (eSpawn  . ptd );
-#line 263 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 253 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_toReflection  . SetData  (eSpawn  . ptdRefl );
-#line 264 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 254 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_toSpecular  . SetData  (eSpawn  . ptdSpec );
-#line 265 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 255 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_toBump  . SetData  (eSpawn  . ptdBump );
-#line 266 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 256 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> PlayAnim  (eSpawn  . iModelAnim  , AOF_LOOPING );
-#line 267 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 257 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_Stretch  = FLOAT3D (eSpawn  . fSize  , eSpawn  . fSize  , eSpawn  . fSize );
-#line 268 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 258 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_Stretch  (1) *= eSpawn  . vStretch  (1);
-#line 269 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 259 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_Stretch  (2) *= eSpawn  . vStretch  (2);
-#line 270 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 260 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_Stretch  (3) *= eSpawn  . vStretch  (3);
-#line 273 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 263 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetModelObject  () -> mo_colBlendColor  = eSpawn  . colDebris  | CT_OPAQUE ;
-#line 274 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 264 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bCustomShading  = eSpawn  . bCustomShading ;
-#line 275 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 265 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(m_bCustomShading )
-#line 276 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 266 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 277 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 267 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_ulFlags  |= ENF_NOSHADINGINFO ;
-#line 278 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 268 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 279 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 269 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_aShadingDirection  = eSpawn  . aShadingDirection ;
-#line 280 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 270 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_colCustomAmbient  = eSpawn  . colCustomAmbient ;
-#line 281 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 271 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_colCustomDiffuse  = eSpawn  . colCustomDiffuse ;
-#line 282 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 272 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bImmaterialASAP  = eSpawn  . bImmaterialASAP ;
-#line 283 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 273 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_fDustStretch  = eSpawn  . fDustStretch ;
-#line 284 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 274 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_penFallFXPapa  = eSpawn  . penFallFXPapa ;
-#line 286 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 276 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ModelChangeNotify  ();
-#line 287 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 277 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOATaabbox3D box ;
-#line 288 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 278 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 GetBoundingBox  (box );
-#line 289 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 279 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOAT fEntitySize  = box  . Size  () . MaxNorm  ();
-#line 290 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 280 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(fEntitySize  > 0.5f){
-#line 291 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 281 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetCollisionFlags  (ECF_MODEL );
-#line 292 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 282 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 293 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 283 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 en_fCollisionSpeedLimit  += ClampDn  (0.0f , fEntitySize  * 10.0f);
-#line 294 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 284 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bFade  = FALSE ;
-#line 295 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 285 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_fLastStainHitPoint  = FLOAT3D (32000.0f , 32000.0f , 32000.0f);
-#line 296 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 286 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_ctLeftStains  = 0;
-#line 297 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 287 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_tmStarted  = _pTimer  -> CurrentTick  ();
-#line 298 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 288 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bTouchedGround  = FALSE ;
-#line 301 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 291 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 FLOAT fWaitBeforeFade  = FRnd  () * 2.0f + 3.0f;
-#line 302 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 292 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetTimerAfter(fWaitBeforeFade );
 Jump(STATE_CURRENT, 0x025a0001, FALSE, EBegin());return TRUE;}BOOL CDebris::H0x025a0001_Main_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x025a0001
 switch(__eeInput.ee_slEvent)
-#line 303 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 293 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {case(EVENTCODE_EBegin):{const EBegin&e= (EBegin&)__eeInput;
 return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_ETouch):{const ETouch&etouch= (ETouch&)__eeInput;
 
-#line 308 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 298 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(etouch  . penOther  -> GetRenderType  () == RT_BRUSH )
+#line 299 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+{
+#line 301 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+if(m_penFallFXPapa  != NULL  && ! m_bTouchedGround )
+#line 302 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+{
+#line 304 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+FOREACHINLIST  (CEntity  , en_lnInParent  , m_penFallFXPapa  -> en_lhChildren  , iten )
+#line 305 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+{
+#line 307 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+CEntity  * penNew  = GetWorld  () -> CopyEntityInWorld  (* iten  , GetPlacement  ());
+#line 308 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+penNew  -> SetParent  (NULL );
 #line 309 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+if(IsOfClass  (& * penNew  , "SoundHolder"))
+#line 310 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
 #line 311 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-if(m_penFallFXPapa  != NULL  && ! m_bTouchedGround )
-#line 312 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-{
-#line 314 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-FOREACHINLIST  (CEntity  , en_lnInParent  , m_penFallFXPapa  -> en_lhChildren  , iten )
-#line 315 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-{
-#line 317 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-CEntity  * penNew  = GetWorld  () -> CopyEntityInWorld  (* iten  , GetPlacement  ());
-#line 318 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-penNew  -> SetParent  (NULL );
-#line 319 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-if(IsOfClass  (& * penNew  , "SoundHolder"))
-#line 320 "C:/MyMod/Sources/EntitiesMP/Debris.es"
-{
-#line 321 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 penNew  -> SendEvent  (EStart  ());
-#line 322 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 312 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 323 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 313 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 else 
-#line 324 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 314 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 325 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 315 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 penNew  -> SendEvent  (ETrigger  ());
-#line 326 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 316 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 327 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 317 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 328 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 318 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 330 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 320 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(m_fDustStretch  > 0 && ! m_bTouchedGround )
-#line 331 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 321 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 333 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 323 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 CPlacement3D plDust  = GetPlacement  ();
-#line 334 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 324 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 plDust  . pl_PositionVector  = plDust  . pl_PositionVector  + FLOAT3D (0 , m_fDustStretch  * 0.25f , 0);
-#line 336 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 326 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ESpawnEffect  ese ;
-#line 337 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 327 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . colMuliplier  = C_WHITE  | CT_OPAQUE ;
-#line 338 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 328 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . vStretch  = FLOAT3D (m_fDustStretch  , m_fDustStretch  , m_fDustStretch );
-#line 339 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 329 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . vNormal  = FLOAT3D (0 , 1 , 0);
-#line 340 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 330 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 ese  . betType  = BET_DUST_FALL ;
-#line 341 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 331 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 CEntityPointer penFX  = CreateEntity  (plDust  , CLASS_BASIC_EFFECT );
-#line 342 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 332 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 penFX  -> Initialize  (ese );
-#line 343 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 333 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 344 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 334 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bTouchedGround  = TRUE ;
-#line 347 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 337 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 LeaveStain  ();
-#line 349 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 339 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(m_iBodyType  == EIBT_ROBOT )
-#line 350 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 340 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 352 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 342 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Explode  ();
-#line 353 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 343 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SendEvent  (EDeath  ());
-#line 354 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 344 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return TRUE;
-#line 355 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 345 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 356 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 346 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 357 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 347 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 if(m_bImmaterialASAP )
-#line 358 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 348 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 {
-#line 359 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 349 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetCollisionFlags  (ECF_DEBRIS );
-#line 360 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 350 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }
-#line 361 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 351 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return TRUE;
-#line 362 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 352 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EDeath):{const EDeath&e= (EDeath&)__eeInput;
 Destroy  ();Return(STATE_CURRENT,EVoid());return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_ETimer):{const ETimer&e= (ETimer&)__eeInput;
 UnsetTimer();Jump(STATE_CURRENT,0x025a0002, FALSE, EInternal());return TRUE;}ASSERT(FALSE);break;default: return FALSE; break;
-#line 365 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 355 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 }return TRUE;}BOOL CDebris::H0x025a0002_Main_02(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x025a0002
 
-#line 368 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 358 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetCollisionFlags  (ECF_DEBRIS );
-#line 369 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 359 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_fFadeStartTime  = _pTimer  -> CurrentTick  ();
-#line 370 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 360 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_fFadeTime  = 5.0f;
-#line 371 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 361 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 m_bFade  = TRUE ;
-#line 372 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 362 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 SetTimerAfter(m_fFadeTime );
 Jump(STATE_CURRENT, 0x025a0003, FALSE, EBegin());return TRUE;}BOOL CDebris::H0x025a0003_Main_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -533,9 +515,9 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x025a0004
 ;
-#line 375 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 365 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Destroy  ();
-#line 377 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 367 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 Return(STATE_CURRENT,EVoid());
-#line 377 "C:/MyMod/Sources/EntitiesMP/Debris.es"
+#line 367 "C:/MyMod/Sources/EntitiesMP/Debris.es"
 return TRUE; ASSERT(FALSE); return TRUE;};

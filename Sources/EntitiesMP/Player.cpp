@@ -2816,13 +2816,13 @@ penViewer  = m_penCamera ;
 #line 2341 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPerspectiveProjection3D  prPerspectiveProjection ;
 #line 2342 "C:/MyMod/Sources/EntitiesMP/Player.es"
-plr_fFOV  = Clamp  (plr_fFOV  , 5.0f , 620.0f);
+plr_fFOV  = Clamp  (plr_fFOV  , 1.0f , 160.0f);
 #line 2343 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE aFOV  = plr_fFOV ;
 #line 2345 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative ){
 #line 2346 "C:/MyMod/Sources/EntitiesMP/Player.es"
-aFOV  = 140.0f;
+aFOV  = 90.0f;
 #line 2347 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 2349 "C:/MyMod/Sources/EntitiesMP/Player.es"
@@ -3905,3508 +3905,3540 @@ DamageImpact  (dmtType  , fSubHealth  , vHitPoint  , vDirection );
 CPlayerEntity  :: ReceiveDamage  (penInflictor  , dmtType  , fSubHealth  , vHitPoint  , vDirection );
 #line 3112 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fDamageAmmount  > 1.0f){
-#line 3120 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3114 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(dmtType  == DMT_EXPLOSION  || dmtType  == DMT_PROJECTILE  || dmtType  == DMT_BULLET  
+#line 3115 "C:/MyMod/Sources/EntitiesMP/Player.es"
+|| dmtType  == DMT_IMPACT  || dmtType  == DMT_CANNONBALL  || dmtType  == DMT_CANNONBALL_EXPLOSION ){
+#line 3118 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
+#line 3119 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetFlags  () & ENF_ALIVE ){
-#line 3121 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3120 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fDamageAmmount  += fDamageAmmount ;
-#line 3122 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3121 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmWoundedTime  = _pTimer  -> CurrentTick  ();
+#line 3122 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3123 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3124 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3127 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3126 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESound  eSound ;
-#line 3128 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3127 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSound  . EsndtSound  = SNDT_PLAYER ;
-#line 3129 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3128 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSound  . penTarget  = this ;
-#line 3130 "C:/MyMod/Sources/EntitiesMP/Player.es"
-SendEventInRange  (eSound  , FLOATaabbox3D (GetPlacement  () . pl_PositionVector  , 1.0f));
-#line 3133 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3129 "C:/MyMod/Sources/EntitiesMP/Player.es"
+SendEventInRange  (eSound  , FLOATaabbox3D (GetPlacement  () . pl_PositionVector  , 10.0f));
+#line 3132 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(dmtType  == DMT_DROWNING ){
+#line 3133 "C:/MyMod/Sources/EntitiesMP/Player.es"
+SetRandomMouthPitch  (0.9f , 1.1f);
 #line 3134 "C:/MyMod/Sources/EntitiesMP/Player.es"
-SetRandomMouthPitch  (0.9f , 1.1f);
-#line 3135 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_DROWN ) , SOF_3D );
-#line 3136 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3135 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("WoundWater");}
-#line 3137 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3136 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMouthSoundLast  = _pTimer  -> CurrentTick  ();
-#line 3138 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3137 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soLocalAmbientOnce  , SOUND_WATERBUBBLES  , SOF_3D  | SOF_VOLUMETRIC  | SOF_LOCAL );
-#line 3139 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3138 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soLocalAmbientOnce  . Set3DParameters  (25.0f , 5.0f , 2.0f , Lerp  (0.5f , 1.5f , FRnd  ()));
-#line 3140 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3139 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SpawnBubbles  (10 + INDEX (FRnd  () * 10));
-#line 3141 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3140 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_fDamageAmmount  > 1.0f){
-#line 3143 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3142 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetFlags  () & ENF_ALIVE ){
-#line 3145 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3144 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iSound ;
-#line 3146 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3145 "C:/MyMod/Sources/EntitiesMP/Player.es"
 char  * strIFeel  = NULL ;
-#line 3147 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3146 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_fDamageAmmount  < 5.0f){
-#line 3148 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3147 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSound  = GenderSound  (SOUND_WOUNDWEAK );
-#line 3149 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3148 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strIFeel  = "WoundWeak";
+#line 3149 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3150 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3151 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(m_fDamageAmmount  < 25.0f){
-#line 3152 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3151 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSound  = GenderSound  (SOUND_WOUNDMEDIUM );
-#line 3153 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3152 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strIFeel  = "WoundMedium";
+#line 3153 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3154 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3155 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else {
-#line 3156 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3155 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSound  = GenderSound  (SOUND_WOUNDSTRONG );
-#line 3157 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3156 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strIFeel  = "WoundStrong";
+#line 3157 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3158 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3159 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_DIVE ){
-#line 3160 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3159 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSound  = GenderSound  (SOUND_WOUNDWATER );
-#line 3161 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3160 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strIFeel  = "WoundWater";
-#line 3162 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3161 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3163 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3162 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetRandomMouthPitch  (0.9f , 1.1f);
-#line 3165 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3164 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TIME  tmNow  = _pTimer  -> CurrentTick  ();
-#line 3166 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3165 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if((tmNow  - m_tmScreamTime ) > 1.0f){
-#line 3167 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3166 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmScreamTime  = tmNow ;
-#line 3168 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3167 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , iSound  , SOF_3D );
-#line 3169 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3168 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  (strIFeel );}
+#line 3169 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3170 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3171 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3172 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3173 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3176 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3175 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL CPlayer::ShouldBlowUp(void) 
-#line 3177 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3176 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3179 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3178 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return 
-#line 3181 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3180 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetSP  () -> sp_bGibs  && 
-#line 3183 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3182 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (GetHealth  () <= 0) && 
-#line 3185 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3184 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (m_vDamage  . Length  () > _fBlowUpAmmount ) && 
-#line 3187 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3186 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetRenderType  () == RT_MODEL ;
-#line 3188 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3187 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3191 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3190 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::BlowUp(void) 
-#line 3192 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3191 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3193 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3192 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vNormalizedDamage  = m_vDamage  - m_vDamage  * (_fBlowUpAmmount  / m_vDamage  . Length  ());
-#line 3194 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3193 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vNormalizedDamage  /= Sqrt  (vNormalizedDamage  . Length  ());
-#line 3195 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3194 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vNormalizedDamage  *= 0.75f;
-#line 3197 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3196 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vBodySpeed  = en_vCurrentTranslationAbsolute  - en_vGravityDir  * (en_vGravityDir  % en_vCurrentTranslationAbsolute );
-#line 3198 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3197 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const FLOAT fBlowUpSize  = 2.0f;
-#line 3201 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3200 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const INDEX iBloodType  = GetSP  () -> sp_iBlood ;
-#line 3203 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3202 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ULONG  ulFleshTexture  = TEXTURE_FLESH_GREEN ;
-#line 3204 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3203 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ULONG  ulFleshModel  = MODEL_FLESH ;
-#line 3205 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3204 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iBloodType  == 2){ulFleshTexture  = TEXTURE_FLESH_RED ;}
-#line 3207 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3206 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Debris_Begin  (EIBT_FLESH  , DPT_BLOODTRAIL  , BET_BLOODSTAIN  , fBlowUpSize  , vNormalizedDamage  , vBodySpeed  , 1.0f , 0.0f);
-#line 3208 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3207 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iDebris  = 0;iDebris  < 4;iDebris  ++){
-#line 3210 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3209 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iBloodType  == 3){
-#line 3211 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3210 "C:/MyMod/Sources/EntitiesMP/Player.es"
 switch(IRnd  () % 5){
-#line 3212 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3211 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 1: {ulFleshModel  = MODEL_FLESH_APPLE ;ulFleshTexture  = TEXTURE_FLESH_APPLE ;break ;}
-#line 3213 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3212 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 2: {ulFleshModel  = MODEL_FLESH_BANANA ;ulFleshTexture  = TEXTURE_FLESH_BANANA ;break ;}
-#line 3214 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3213 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 3: {ulFleshModel  = MODEL_FLESH_BURGER ;ulFleshTexture  = TEXTURE_FLESH_BURGER ;break ;}
-#line 3215 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3214 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 4: {ulFleshModel  = MODEL_FLESH_LOLLY ;ulFleshTexture  = TEXTURE_FLESH_LOLLY ;break ;}
-#line 3216 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3215 "C:/MyMod/Sources/EntitiesMP/Player.es"
 default  :{ulFleshModel  = MODEL_FLESH_ORANGE ;ulFleshTexture  = TEXTURE_FLESH_ORANGE ;break ;}
+#line 3216 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3217 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3218 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3219 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Debris_Spawn  (this  , this  , ulFleshModel  , ulFleshTexture  , 0 , 0 , 0 , IRnd  () % 4 , 0.5f , 
-#line 3220 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3219 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D (FRnd  () * 0.6f + 0.2f , FRnd  () * 0.6f + 0.2f , FRnd  () * 0.6f + 0.2f));
-#line 3221 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3220 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3224 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3223 "C:/MyMod/Sources/EntitiesMP/Player.es"
 LeaveStain  (FALSE );
-#line 3226 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3225 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soBody  , SOUND_BLOWUP  , SOF_3D );
-#line 3229 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3228 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToEditorModel  ();
-#line 3231 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3230 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fSpeedOrg  = en_vCurrentTranslationAbsolute  . Length  ();
-#line 3232 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3231 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const FLOAT fSpeedMax  = 30.0f;
-#line 3233 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3232 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fSpeedOrg  > fSpeedMax ){
-#line 3234 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3233 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_vCurrentTranslationAbsolute  *= fSpeedMax  / fSpeedOrg ;
-#line 3235 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3234 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3239 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3238 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3245 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3244 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void * CPlayer::GetEntityInfo(void) 
-#line 3246 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3245 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3247 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3246 "C:/MyMod/Sources/EntitiesMP/Player.es"
 switch(m_pstState ){
-#line 3248 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3247 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_STAND : case PST_FALL : 
+#line 3248 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return & eiPlayerGround ;
 #line 3249 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return & eiPlayerGround ;
+break ;
 #line 3250 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 3251 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_CROUCH : 
-#line 3252 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3251 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return & eiPlayerCrouch ;
+#line 3252 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 3253 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 3254 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_SWIM : case PST_DIVE : 
-#line 3255 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3254 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return & eiPlayerSwim ;
-#line 3256 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3255 "C:/MyMod/Sources/EntitiesMP/Player.es"
 break ;
-#line 3257 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3256 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3258 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3257 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return & eiPlayerGround ;
-#line 3259 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3258 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3263 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3262 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL CPlayer::ReceiveItem(const CEntityEvent & ee) 
-#line 3264 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3263 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3266 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3265 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ee  . ee_slEvent  == EVENTCODE_EHealth )
-#line 3267 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3266 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3269 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3268 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fHealthOld  = GetHealth  ();
-#line 3270 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3269 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fHealthNew  = fHealthOld  + ((EHealth  &) ee ) . fHealth ;
-#line 3271 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3270 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((EHealth  &) ee ) . bOverTopHealth ){
-#line 3272 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3271 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fHealthNew  = ClampUp  (fHealthNew  , MaxHealth  ());
-#line 3273 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3272 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3274 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3273 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fHealthNew  = ClampUp  (fHealthNew  , TopHealth  ());
-#line 3275 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3274 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3278 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3277 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ceil  (fHealthNew ) > ceil  (fHealthOld )){
-#line 3280 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3279 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (fHealthNew );
-#line 3281 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3280 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("Health") , ((EHealth  &) ee ) . fHealth );
-#line 3282 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3281 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  += (INDEX) (((EHealth  &) ee ) . fHealth );
-#line 3283 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3282 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fPickedMana  += ((EHealth  &) ee ) . fHealth ;
-#line 3284 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3283 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE ;
+#line 3284 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3285 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3286 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3289 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3288 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EArmor )
-#line 3290 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3289 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3292 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3291 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fArmorOld  = m_fArmor ;
-#line 3293 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3292 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fArmorNew  = fArmorOld  + ((EArmor  &) ee ) . fArmor ;
-#line 3294 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3293 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((EArmor  &) ee ) . bOverTopArmor ){
-#line 3295 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3294 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fArmorNew  = ClampUp  (fArmorNew  , MaxArmor  ());
-#line 3296 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3295 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3297 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3296 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fArmorNew  = ClampUp  (fArmorNew  , TopArmor  ());
-#line 3298 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3297 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3300 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3299 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ceil  (fArmorNew ) > ceil  (fArmorOld )){
-#line 3302 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3301 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fArmor  = fArmorNew ;
-#line 3303 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3302 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("Armor") , ((EArmor  &) ee ) . fArmor );
-#line 3304 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3303 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  += (INDEX) (((EArmor  &) ee ) . fArmor );
-#line 3305 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3304 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fPickedMana  += ((EArmor  &) ee ) . fArmor ;
-#line 3306 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3305 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE ;
+#line 3306 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3307 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3308 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3311 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3310 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EMessageItem ){
-#line 3312 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3311 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EMessageItem  & eMI  = (EMessageItem  &) ee ;
-#line 3313 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3312 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ReceiveComputerMessage  (eMI  . fnmMessage  , CMF_ANALYZE );
-#line 3314 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3313 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("Ancient papyrus") , 0);
+#line 3314 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return TRUE ;
 #line 3315 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return TRUE ;
-#line 3316 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3319 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3318 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EWeaponItem ){
-#line 3320 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3319 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ((CPlayerWeapons  &) * m_penWeapons ) . ReceiveWeapon  (ee );
-#line 3321 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3320 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3324 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3323 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EAmmoItem ){
-#line 3325 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3324 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ((CPlayerWeapons  &) * m_penWeapons ) . ReceiveAmmo  (ee );
-#line 3326 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3325 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3328 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3327 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EAmmoPackItem ){
-#line 3329 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3328 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ((CPlayerWeapons  &) * m_penWeapons ) . ReceivePackAmmo  (ee );
-#line 3330 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3329 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3333 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3332 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EKey ){
-#line 3335 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3334 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penActionMarker  != NULL ){
+#line 3335 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return FALSE ;
 #line 3336 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return FALSE ;
-#line 3337 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3339 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3338 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ULONG  ulKey  = 1 << INDEX (((EKey  &) ee ) . kitType );
-#line 3340 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3339 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EKey  & eKey  = (EKey  &) ee ;
-#line 3341 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3340 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(eKey  . kitType  == KIT_HAWKWINGS01DUMMY  || eKey  . kitType  == KIT_HAWKWINGS02DUMMY  
-#line 3342 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3341 "C:/MyMod/Sources/EntitiesMP/Player.es"
 || eKey  . kitType  == KIT_TABLESDUMMY  || eKey  . kitType  == KIT_JAGUARGOLDDUMMY )
-#line 3343 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3342 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3344 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3343 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulKey  = 0;
-#line 3345 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3344 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3347 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3346 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulKeys  & ulKey ){
-#line 3349 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3348 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return FALSE ;
-#line 3351 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3350 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3353 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3352 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulKeys  |= ulKey ;
-#line 3354 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3353 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strKey  = GetKeyName  (((EKey  &) ee ) . kitType );
-#line 3355 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3354 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (strKey  , 0);
-#line 3357 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3356 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative  && ! GetSP  () -> sp_bSinglePlayer ){
-#line 3358 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3357 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("^cFFFFFF%s - %s^r\n") , GetPlayerName  () , strKey );
-#line 3359 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3358 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3360 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3359 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE ;
+#line 3360 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3361 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3362 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3365 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3364 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(ee  . ee_slEvent  == EVENTCODE_EPowerUp ){
-#line 3366 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3365 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const FLOAT tmNow  = _pTimer  -> CurrentTick  ();
-#line 3367 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3366 "C:/MyMod/Sources/EntitiesMP/Player.es"
 switch(((EPowerUp  &) ee ) . puitType ){
-#line 3368 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3367 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PUIT_INVISIB : m_tmInvisibility  = tmNow  + m_tmInvisibilityMax ;
-#line 3369 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3368 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("^cABE3FFInvisibility") , 0);
+#line 3369 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return TRUE ;
 #line 3370 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return TRUE ;
-#line 3371 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PUIT_INVULNER : m_tmInvulnerability  = tmNow  + m_tmInvulnerabilityMax ;
-#line 3372 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3371 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("^c00B440Invulnerability") , 0);
+#line 3372 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return TRUE ;
 #line 3373 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return TRUE ;
-#line 3374 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PUIT_DAMAGE : m_tmSeriousDamage  = tmNow  + m_tmSeriousDamageMax ;
-#line 3375 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3374 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("^cFF0000Serious Damage!") , 0);
+#line 3375 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return TRUE ;
 #line 3376 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return TRUE ;
-#line 3377 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PUIT_SPEED : m_tmSeriousSpeed  = tmNow  + m_tmSeriousSpeedMax ;
-#line 3378 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3377 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("^cFF9400Serious Speed") , 0);
+#line 3378 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return TRUE ;
 #line 3379 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return TRUE ;
-#line 3380 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PUIT_BOMB : 
-#line 3381 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3380 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iSeriousBombCount  ++;
-#line 3382 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3381 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ItemPicked  (TRANS  ("^cFF0000Serious Bomb!") , 0);
-#line 3385 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3384 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative ){
-#line 3386 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3385 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EComputerMessage  eMsg ;
-#line 3387 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3386 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eMsg  . fnmMessage  = CTFILENAME  ("DataMP\\Messages\\Weapons\\seriousbomb.txt");
-#line 3388 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3387 "C:/MyMod/Sources/EntitiesMP/Player.es"
 this  -> SendEvent  (eMsg );
-#line 3389 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3388 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3390 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3389 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE ;
+#line 3390 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3391 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3392 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3395 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3394 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return FALSE ;
-#line 3396 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3395 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3401 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3400 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ChangePlayerView() 
-#line 3402 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3401 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3404 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3403 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iViewState  == PVT_PLAYEREYES ){
-#line 3406 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3405 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (m_pen3rdPersonView  == NULL );
-#line 3407 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3406 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pen3rdPersonView  == NULL ){
-#line 3408 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3407 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pen3rdPersonView  = CreateEntity  (GetPlacement  () , CLASS_PLAYER_VIEW );
-#line 3409 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3408 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EViewInit  eInit ;
-#line 3410 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3409 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . penOwner  = this ;
-#line 3411 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3410 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . penCamera  = NULL ;
-#line 3412 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3411 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . vtView  = VT_3RDPERSONVIEW ;
-#line 3413 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3412 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . bDeathFixed  = FALSE ;
-#line 3414 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3413 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pen3rdPersonView  -> Initialize  (eInit );
-#line 3415 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3414 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3417 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3416 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iViewState  = PVT_3RDPERSONVIEW ;
-#line 3420 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3419 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_3RDPERSONVIEW ){
-#line 3421 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3420 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iViewState  = PVT_PLAYEREYES ;
-#line 3424 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3423 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pen3rdPersonView  != NULL ){
-#line 3425 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3424 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerView  &) * m_pen3rdPersonView ) . SendEvent  (EEnd  ());
-#line 3426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3425 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pen3rdPersonView  = NULL ;
+#line 3426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3427 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3428 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3429 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3432 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3431 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ComputerPressed(void) 
-#line 3433 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3432 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3436 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3435 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cmp_ppenPlayer  == NULL  && _pNetwork  -> IsPlayerLocal  (this )){
-#line 3437 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3436 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_ppenPlayer  = this ;
-#line 3438 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3437 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3439 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3438 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bComputerInvoked  = TRUE ;
-#line 3441 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3440 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmAnalyseEnd  = 0;
-#line 3442 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3441 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bPendingMessage  = FALSE ;
-#line 3443 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3442 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMessagePlay  = 0;
-#line 3445 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3444 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3449 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3448 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::UsePressed(BOOL bOrComputer) 
-#line 3450 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3449 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3452 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3451 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * penWeapons  = GetPlayerWeapons  ();
-#line 3453 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3452 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * pen  = penWeapons  -> m_penRayHit ;
-#line 3454 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3453 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSomethingToUse  = FALSE ;
-#line 3457 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3456 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  != NULL ){
-#line 3459 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3458 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (pen  , "Moving Brush")){
-#line 3460 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3459 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CMovingBrush  &) * pen ) . m_penSwitch  != NULL ){
-#line 3461 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3460 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = ((CMovingBrush  &) * pen ) . m_penSwitch ;
+#line 3461 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3462 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3463 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3466 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3465 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (pen  , "Switch") && penWeapons  -> m_fRayHitDistance  < 2.0f){
-#line 3467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3466 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CSwitch  & enSwitch  = (CSwitch  &) * pen ;
-#line 3469 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3468 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(enSwitch  . m_bUseable ){
-#line 3471 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3470 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (pen  , EET_TRIGGER  , this );
-#line 3472 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3471 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSomethingToUse  = TRUE ;
+#line 3472 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3473 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3474 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3477 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3476 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (pen  , "MessageHolder") 
-#line 3478 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3477 "C:/MyMod/Sources/EntitiesMP/Player.es"
 && penWeapons  -> m_fRayHitDistance  < ((CMessageHolder  *) & * pen ) -> m_fDistance  
-#line 3479 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3478 "C:/MyMod/Sources/EntitiesMP/Player.es"
 && ((CMessageHolder  *) & * pen ) -> m_bActive ){
-#line 3480 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3479 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const CTFileName & fnmMessage  = ((CMessageHolder  *) & * pen ) -> m_fnmMessage ;
-#line 3482 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3481 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! HasMessage  (fnmMessage )){
-#line 3484 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3483 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ReceiveComputerMessage  (fnmMessage  , CMF_ANALYZE );
-#line 3485 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3484 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSomethingToUse  = TRUE ;
+#line 3485 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3486 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3487 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3488 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3490 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3489 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! bSomethingToUse  && bOrComputer ){
-#line 3492 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3491 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ComputerPressed  ();
+#line 3492 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3493 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3494 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(! bSomethingToUse )
-#line 3495 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3494 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3496 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3495 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * penWeapon  = GetPlayerWeapons  ();
-#line 3500 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3499 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penWeapon  -> m_iCurrentWeapon  == WEAPON_SNIPER  && 
-#line 3501 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3500 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_iWantedWeapon  == WEAPON_SNIPER ){
-#line 3502 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3501 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_ISZOOMING ){
-#line 3503 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3502 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_ISZOOMING ;
-#line 3504 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3503 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_bSniping  = FALSE ;
-#line 3505 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3504 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV  = penWeapon  -> m_fSniperMaxFOV ;
-#line 3506 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3505 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 3507 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3506 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_StopEffect  ("SniperZoom");}
-#line 3508 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3507 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3509 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3508 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else {
-#line 3510 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3509 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_bSniping  = TRUE ;
-#line 3511 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3510 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_ISZOOMING ;
-#line 3512 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3511 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV  = penWeapon  -> m_fMinimumZoomFOV ;
-#line 3513 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3512 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SNIPER_ZOOM  , SOF_3D  | SOF_LOOP );
-#line 3514 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3513 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("SniperZoom");}
+#line 3514 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3515 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3516 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3517 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3518 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3524 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3523 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::SetGameEnd(void) 
-#line 3525 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3524 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3526 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3525 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pNetwork  -> SetGameFinished  ();
-#line 3528 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3527 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iPlayer  = 0;iPlayer  < GetMaxPlayers  ();iPlayer  ++){
-#line 3529 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3528 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * pen  = GetPlayerEntity  (iPlayer );
-#line 3530 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3529 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  != NULL ){
-#line 3531 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3530 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cmp_ppenPlayer  == NULL  && _pNetwork  -> IsPlayerLocal  (pen )){
-#line 3532 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3531 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_ppenPlayer  = (CPlayer  *) pen ;
+#line 3532 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3533 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3534 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3535 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3536 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3538 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3537 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::CheckGameEnd(void) 
-#line 3539 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3538 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3540 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3539 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bFinished  = FALSE ;
-#line 3542 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3541 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iTimeLimit  = GetSP  () -> sp_iTimeLimit ;
-#line 3543 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3542 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iTimeLimit  > 0 && _pTimer  -> CurrentTick  () >= iTimeLimit  * 60.0f){
+#line 3543 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bFinished  = TRUE ;
 #line 3544 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bFinished  = TRUE ;
-#line 3545 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3547 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3546 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iFragLimit  = GetSP  () -> sp_iFragLimit ;
-#line 3548 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3547 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iFragLimit  > 0 && m_psLevelStats  . ps_iKills  >= iFragLimit ){
+#line 3548 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bFinished  = TRUE ;
 #line 3549 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bFinished  = TRUE ;
-#line 3550 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3552 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3551 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iScoreLimit  = GetSP  () -> sp_iScoreLimit ;
-#line 3553 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3552 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iScoreLimit  > 0 && m_psLevelStats  . ps_iScore  >= iScoreLimit ){
-#line 3554 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3553 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bFinished  = TRUE ;
-#line 3555 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3554 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3557 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3556 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bFinished ){
-#line 3558 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3557 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetGameEnd  ();
+#line 3558 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3559 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3560 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3563 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3562 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::PreapplyAction(const CPlayerAction & paAction) 
-#line 3564 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3563 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3565 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3564 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3568 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3567 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ApplyAction(const CPlayerAction & paOriginal,FLOAT tmLatency) 
+#line 3568 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3569 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3570 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_INITIALIZED )){return ;}
-#line 3574 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3573 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_NOTCONNECTED ){
-#line 3576 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3575 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetConnected  ();
-#line 3577 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3576 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3579 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3578 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_APPLIEDACTION ;
-#line 3582 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3581 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAction  paAction  = paOriginal ;
-#line 3587 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3586 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aDeltaRotation  = paAction  . pa_aRotation  - m_aLastRotation ;
-#line 3588 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3587 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aDeltaViewRotation  = paAction  . pa_aViewRotation  - m_aLastViewRotation ;
-#line 3590 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3589 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_ISZOOMING ){
-#line 3591 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3590 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fRotationDamping  = ((CPlayerWeapons  &) * m_penWeapons ) . m_fSniperFOV  / ((CPlayerWeapons  &) * m_penWeapons ) . m_fSniperMaxFOV ;
-#line 3592 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3591 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDeltaRotation  *= fRotationDamping ;
-#line 3593 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3592 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDeltaViewRotation  *= fRotationDamping ;
-#line 3594 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3593 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3596 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3595 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_aLastRotation  = paAction  . pa_aRotation ;
-#line 3597 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3596 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_aLastViewRotation  = paAction  . pa_aViewRotation ;
-#line 3599 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3598 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  = aDeltaRotation ;
-#line 3600 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3599 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aViewRotation  = aDeltaViewRotation ;
-#line 3604 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3603 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  /= _pTimer  -> TickQuantum ;
-#line 3605 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3604 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aViewRotation  /= _pTimer  -> TickQuantum ;
-#line 3608 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3607 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * penMe  = this ;
-#line 3609 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3608 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsPredictor  ()){
-#line 3610 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3609 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penMe  = penMe  -> GetPredicted  ();
+#line 3610 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3611 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3612 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPredictable  (! _pNetwork  -> IsPlayerLocal  (penMe ));
-#line 3615 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3614 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! IsPredictor  ()){
-#line 3616 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3615 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CheckGameEnd  ();
-#line 3617 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3616 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3620 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3619 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  (1) = Clamp  (paAction  . pa_vTranslation  (1) , - plr_fSpeedSide  , plr_fSpeedSide );
-#line 3621 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3620 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  (2) = Clamp  (paAction  . pa_vTranslation  (2) , - plr_fSpeedUp  , plr_fSpeedUp );
-#line 3622 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3621 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  (3) = Clamp  (paAction  . pa_vTranslation  (3) , - plr_fSpeedForward  , plr_fSpeedBackward );
-#line 3625 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3624 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Abs  (paAction  . pa_vTranslation  (3)) < plr_fSpeedForward  / 1.99f 
-#line 3626 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3625 "C:/MyMod/Sources/EntitiesMP/Player.es"
 && Abs  (paAction  . pa_vTranslation  (1)) < plr_fSpeedSide  / 1.99f){
-#line 3628 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3627 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fStepDnHeight  = 1.5f;
-#line 3631 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3630 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3633 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3632 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fStepDnHeight  = - 1;
-#line 3634 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3633 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3637 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3636 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D & v  = paAction  . pa_vTranslation ;
-#line 3638 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3637 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fDiag  = Sqrt  (v  (1) * v  (1) + v  (3) * v  (3));
-#line 3639 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3638 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fDiag  > 0.01f){
-#line 3640 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3639 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fDiagLimited  = Min  (fDiag  , plr_fSpeedForward );
-#line 3641 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3640 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fFactor  = fDiagLimited  / fDiag ;
-#line 3642 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3641 "C:/MyMod/Sources/EntitiesMP/Player.es"
 v  (1) *= fFactor ;
-#line 3643 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3642 "C:/MyMod/Sources/EntitiesMP/Player.es"
 v  (3) *= fFactor ;
-#line 3644 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3643 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3646 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3645 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulButtonsNow  = paAction  . pa_ulButtons ;
-#line 3647 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3646 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulButtonsBefore  = m_ulLastButtons ;
-#line 3648 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3647 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulNewButtons  = ulButtonsNow  & ~ ulButtonsBefore ;
-#line 3649 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3648 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulReleasedButtons  = (~ ulButtonsNow ) & (ulButtonsBefore );
-#line 3651 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3650 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulLastButtons  = ulButtonsNow ;
-#line 3652 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3651 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plLastViewpoint  = en_plViewpoint ;
-#line 3655 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3654 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * penWeapon  = GetPlayerWeapons  ();
-#line 3656 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3655 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penWeapon  -> m_iCurrentWeapon  == WEAPON_SNIPER )
+#line 3656 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3657 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3658 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bUseButtonHeld  && m_ulFlags  & PLF_ISZOOMING )
+#line 3658 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3659 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3660 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV ;
-#line 3661 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3660 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOV  -= penWeapon  -> m_fSnipingZoomSpeed ;
-#line 3662 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3661 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penWeapon  -> m_fSniperFOV  < penWeapon  -> m_fSniperMinFOV )
-#line 3663 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3662 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3664 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3663 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV  = penWeapon  -> m_fSniperMinFOV ;
-#line 3665 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3664 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 3666 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3665 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_StopEffect  ("SniperZoom");}
+#line 3666 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3667 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3668 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3669 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulReleasedButtons  & PLACT_USE_HELD )
-#line 3670 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3669 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3671 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3670 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV ;
-#line 3672 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3671 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 3673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3672 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_StopEffect  ("SniperZoom");}
+#line 3673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3674 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3675 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3678 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3677 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetFlags  () & ENF_ALIVE ){
-#line 3680 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3679 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penActionMarker  == NULL ){
-#line 3682 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3681 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AliveActions  (paAction );
-#line 3684 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3683 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3686 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3685 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoActions  (paAction );
-#line 3687 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3686 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3689 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3688 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3690 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3689 "C:/MyMod/Sources/EntitiesMP/Player.es"
 DeathActions  (paAction );
-#line 3691 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3690 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3693 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3692 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Abs  (_pTimer  -> CurrentTick  () - m_tmAnalyseEnd ) < _pTimer  -> TickQuantum  * 2){
+#line 3693 "C:/MyMod/Sources/EntitiesMP/Player.es"
+m_tmAnalyseEnd  = 0;
 #line 3694 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_tmAnalyseEnd  = 0;
-#line 3695 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bPendingMessage  = TRUE ;
-#line 3696 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3695 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMessagePlay  = 0;
+#line 3696 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3697 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3698 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_bPendingMessage  && ! IsFuss  ()){
+#line 3698 "C:/MyMod/Sources/EntitiesMP/Player.es"
+m_bPendingMessage  = FALSE ;
 #line 3699 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_bPendingMessage  = FALSE ;
-#line 3700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMessagePlay  = _pTimer  -> CurrentTick  () + 1.0f;
-#line 3701 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmAnimateInbox  = _pTimer  -> CurrentTick  ();
-#line 3702 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3701 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3703 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3702 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Abs  (_pTimer  -> CurrentTick  () - m_tmMessagePlay ) < _pTimer  -> TickQuantum  * 2){
-#line 3704 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3703 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bPendingMessage  = FALSE ;
-#line 3705 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3704 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmAnalyseEnd  = 0;
-#line 3707 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3706 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! m_bComputerInvoked  && GetSP  () -> sp_bSinglePlayer ){
-#line 3708 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3707 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PrintCenterMessage  (this  , this  , 
-#line 3709 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3708 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TRANS  ("Press USE to read the message!") , 5.0f , MSS_NONE );
+#line 3709 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3710 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3711 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3714 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3713 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(CheatsEnabled  ()){
-#line 3715 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3714 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Cheats  ();
-#line 3716 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3715 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3719 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3718 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_iGoToMarker  > 0 && (GetFlags  () & ENF_ALIVE )){
-#line 3721 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3720 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iLastViewState  = m_iViewState ;
-#line 3722 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3721 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendEvent  (ERebirth  ());
-#line 3723 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3722 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3726 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3725 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UpdateLatency  (tmLatency );
-#line 3729 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3728 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CheckHighScore  ();
-#line 3730 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3729 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3734 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3733 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::Disconnect(void) 
-#line 3735 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3734 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3737 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3736 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_strName  = GetPlayerName  ();
-#line 3739 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3738 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pcCharacter  = CPlayerCharacter  ();
-#line 3741 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3740 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendEvent  (EDisconnected  ());
-#line 3742 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3741 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3745 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3744 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::CharacterChanged(const CPlayerCharacter & pcNew) 
-#line 3746 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3745 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3748 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3747 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerCharacter  pcOrg  = en_pcCharacter ;
-#line 3751 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3750 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pcCharacter  = pcNew ;
-#line 3752 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3751 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ValidateCharacter  ();
-#line 3755 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3754 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pcOrg  . GetName  () != pcNew  . GetName  ()){
-#line 3757 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3756 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s is now known as %s\n") , 
-#line 3758 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3757 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pcOrg  . GetNameForPrinting  () , pcNew  . GetNameForPrinting  ());
-#line 3759 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3758 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3762 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3761 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pcOrg  . GetTeam  () != pcNew  . GetTeam  ()){
-#line 3764 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3763 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s switched to team %s\n") , 
-#line 3765 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3764 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pcNew  . GetNameForPrinting  () , pcNew  . GetTeamForPrinting  ());
-#line 3766 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3765 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3769 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3768 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerSettings  * ppsOrg  = (CPlayerSettings  *) pcOrg  . pc_aubAppearance ;
-#line 3770 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3769 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerSettings  * ppsNew  = (CPlayerSettings  *) pcNew  . pc_aubAppearance ;
-#line 3771 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3770 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(memcmp  (ppsOrg  -> ps_achModelFile  , ppsNew  -> ps_achModelFile  , sizeof  (ppsOrg  -> ps_achModelFile )) != 0){
-#line 3773 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3772 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strNewLook ;
-#line 3774 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3773 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSuccess  = SetPlayerAppearance  (& m_moRender  , & en_pcCharacter  , strNewLook  , FALSE );
-#line 3776 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3775 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bSuccess ){
-#line 3777 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3776 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ParseGender  (strNewLook );
-#line 3779 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3778 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s now appears as %s\n") , 
-#line 3780 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3779 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pcNew  . GetNameForPrinting  () , strNewLook );
-#line 3782 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3781 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3784 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3783 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("Cannot change appearance for %s: setting '%s' is unavailable\n") , 
-#line 3785 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3784 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pcNew  . GetNameForPrinting  () , (const char  *) ppsNew  -> GetModelFilename  ());
-#line 3786 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3785 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3788 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3787 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SyncWeapon  ();
-#line 3789 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3788 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3791 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3790 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL b3RDPersonOld  = ppsOrg  -> ps_ulFlags  & PSF_PREFER3RDPERSON ;
-#line 3792 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3791 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL b3RDPersonNew  = ppsNew  -> ps_ulFlags  & PSF_PREFER3RDPERSON ;
-#line 3793 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3792 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if((b3RDPersonOld  && ! b3RDPersonNew  && m_iViewState  == PVT_3RDPERSONVIEW ) 
-#line 3794 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3793 "C:/MyMod/Sources/EntitiesMP/Player.es"
 || (b3RDPersonNew  && ! b3RDPersonOld  && m_iViewState  == PVT_PLAYEREYES )){
-#line 3795 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3794 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ChangePlayerView  ();
+#line 3795 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3796 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3797 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3801 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3800 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::AliveActions(const CPlayerAction & pa) 
-#line 3802 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3801 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3803 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3802 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAction  paAction  = pa ;
-#line 3806 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3805 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penCamera  != NULL ){
-#line 3808 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3807 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  = FLOAT3D (0 , 0 , 0);
-#line 3809 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3808 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  = ANGLE3D (0 , 0 , 0);
-#line 3810 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3809 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aViewRotation  = ANGLE3D (0 , 0 , 0);
-#line 3812 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3811 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & (PLACT_FIRE  | PLACT_USE )){
-#line 3814 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3813 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penCamera  = NULL ;
+#line 3814 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3815 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
+}else {
 #line 3816 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 3817 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ButtonsActions  (paAction );
-#line 3818 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3817 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3821 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3820 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ActiveActions  (paAction );
-#line 3824 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3823 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT tmSinceWounding  = _pTimer  -> CurrentTick  () - m_tmWoundedTime ;
-#line 3825 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3824 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmSinceWounding  < 4.0f){
-#line 3827 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3826 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fDamageAmmount  *= 1.0f - tmSinceWounding  / 4.0f;
-#line 3828 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3827 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3830 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3829 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fDamageAmmount  = 0.0f;
+#line 3830 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3831 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3832 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3835 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3834 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::AutoActions(const CPlayerAction & pa) 
-#line 3836 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3835 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3838 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3837 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & (PLACT_FIRE  | PLACT_USE  | PLACT_COMPUTER )){
-#line 3839 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3838 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penCamera  != NULL ){
-#line 3840 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3839 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * penOnBreak  = ((CCamera  &) * m_penCamera ) . m_penOnBreak ;
-#line 3841 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3840 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penOnBreak  != NULL ){
-#line 3842 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3841 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (penOnBreak  , EET_TRIGGER  , this );
+#line 3842 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3843 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3844 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3845 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3847 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3846 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAction  paAction  = pa ;
-#line 3849 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3848 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  = FLOAT3D (0 , 0 , 0);
-#line 3850 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3849 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  = ANGLE3D (0 , 0 , 0);
-#line 3851 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3850 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aViewRotation  = ANGLE3D (0 , 0 , 0);
-#line 3854 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3853 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_fAutoSpeed  > 0){
-#line 3855 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3854 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vDelta  = 
-#line 3856 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3855 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penActionMarker  -> GetPlacement  () . pl_PositionVector  - 
-#line 3857 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3856 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlacement  () . pl_PositionVector ;
-#line 3858 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3857 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fDistance  = vDelta  . Length  ();
-#line 3859 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3858 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fDistance  > 0.1f){
-#line 3860 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3859 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vDelta  /= fDistance ;
-#line 3861 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3860 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE aDH  = GetRelativeHeading  (vDelta );
-#line 3864 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3863 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fSpeed  = m_fAutoSpeed ;
-#line 3865 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3864 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> m_paaAction  == PAA_RUNANDSTOP ){
-#line 3867 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3866 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fSpeed  = Min  (fSpeed  , fDistance  / _pTimer  -> TickQuantum );
-#line 3868 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3867 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3870 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3869 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Abs  (aDH ) > 5.0f){
-#line 3871 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3870 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fSpeed  > m_fAutoSpeed  - 0.1f){
-#line 3872 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3871 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDH  = Clamp  (aDH  , - 30.0f , 30.0f);
+#line 3872 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3873 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3874 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  = ANGLE3D (aDH  / _pTimer  -> TickQuantum  , 0 , 0);
-#line 3875 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3874 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3877 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3876 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  = FLOAT3D (0 , 0 , - fSpeed );
+#line 3877 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3878 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3879 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3880 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3879 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_vTranslation  = m_vAutoSpeed ;
-#line 3881 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3880 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3883 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3882 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerActionMarker  * ppam  = GetActionMarker  ();
-#line 3884 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3883 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (ppam  != NULL );
-#line 3885 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3884 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ppam  -> m_paaAction  == PAA_LOGO_FIRE_MINIGUN  || ppam  -> m_paaAction  == PAA_LOGO_FIRE_INTROSE )
+#line 3885 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3886 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3887 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_tmMinigunAutoFireStart  != - 1)
+#line 3887 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3888 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3889 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT tmDelta  = _pTimer  -> CurrentTick  () - m_tmMinigunAutoFireStart ;
-#line 3890 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3889 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT aDH  = 0.0f;
-#line 3891 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3890 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT aDP  = 0.0f;
-#line 3892 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3891 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmDelta  >= 0.0f && tmDelta  <= 0.75f)
+#line 3892 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3893 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3894 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDH  = 0.0f;
+#line 3894 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3895 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3896 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(tmDelta  >= 0.75f)
+#line 3896 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3897 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3898 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fDT  = tmDelta  - 0.75f;
-#line 3899 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3898 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDH  = 1.0f * cos  (fDT  + PI  / 2.0f);
-#line 3900 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3899 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDP  = 0.5f * cos  (fDT );
-#line 3901 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3900 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3902 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3901 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ppam  -> m_paaAction  == PAA_LOGO_FIRE_INTROSE )
+#line 3902 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3903 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3904 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fRatio  = CalculateRatio  (tmDelta  , 0.25 , 5 , 0.1f , 0.1f);
-#line 3905 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3904 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDP  = 2.0f * sin  (tmDelta  * 200.0f) * fRatio ;
-#line 3906 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3905 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmDelta  > 2.5f)
-#line 3907 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3906 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3908 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3907 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDP  += (tmDelta  - 2.5f) * 4.0f;
+#line 3908 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3909 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 3910 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3911 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  = ANGLE3D (aDH  / _pTimer  -> TickQuantum  , aDP  / _pTimer  -> TickQuantum  , 0);
+#line 3911 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3912 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3913 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 3916 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3915 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_AUTOMOVEMENTS )){
-#line 3917 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3916 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ActiveActions  (paAction );
+#line 3917 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3918 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3919 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3921 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3920 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::GetLerpedWeaponPosition(FLOAT3D vRel,CPlacement3D & pl) 
-#line 3922 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3921 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3923 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3922 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pl  = CPlacement3D (vRel  , ANGLE3D (0 , 0 , 0));
-#line 3924 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3923 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plView ;
-#line 3925 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3924 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _bDiscard3rdView  = GetViewEntity  () != this ;
-#line 3926 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3925 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetLerpedAbsoluteViewPlacement  (plView );
-#line 3927 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3926 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pl  . RelativeToAbsolute  (plView );
-#line 3928 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3927 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3930 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3929 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::SpawnBubbles(INDEX ctBubbles) 
+#line 3930 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 3931 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 3932 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iBouble  = 0;iBouble  < ctBubbles ;iBouble  ++)
-#line 3933 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3932 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3934 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3933 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vRndRel  = FLOAT3D ((FRnd  () - 0.5f) * 0.25f , - 0.25f , - 0.5f + FRnd  () / 10.0f);
-#line 3935 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3934 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aDummy  = ANGLE3D (0 , 0 , 0);
-#line 3936 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3935 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plMouth  = CPlacement3D (vRndRel  , aDummy );
-#line 3938 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3937 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plMouth  . RelativeToAbsolute  (en_plViewpoint );
-#line 3939 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3938 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plMouth  . RelativeToAbsolute  (GetPlacement  ());
-#line 3940 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3939 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vRndSpd  = FLOAT3D ((FRnd  () - 0.5f) * 0.25f , (FRnd  () - 0.5f) * 0.25f , (FRnd  () - 0.5f) * 0.25f);
-#line 3941 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3940 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AddBouble  (plMouth  . pl_PositionVector  , vRndSpd );
+#line 3941 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 3942 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3943 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 3945 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3944 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::PlayPowerUpSound(void) {
-#line 3946 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3945 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soPowerUpBeep  . Set3DParameters  (50.0f , 10.0f , 4.0f , 1.0f);
-#line 3947 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3946 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soPowerUpBeep  , SOUND_POWERUP_BEEP  , SOF_3D  | SOF_VOLUMETRIC  | SOF_LOCAL );
-#line 3948 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3947 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 3950 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3949 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ActiveActions(const CPlayerAction & paAction) 
-#line 3951 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3950 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3953 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3952 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vTranslation  = paAction  . pa_vTranslation ;
-#line 3955 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3954 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_fTranslationMultiplier  && CheatsEnabled  ()){
-#line 3956 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3955 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  *= cht_fTranslationMultiplier ;
-#line 3957 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3956 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3960 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3959 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  == WEAPON_KNIFE  && 
-#line 3961 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3960 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ! GetSP  () -> sp_bCooperative ){
-#line 3962 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3961 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  *= 1.3f;
-#line 3963 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3962 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3966 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3965 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const TIME  tmDelta  = m_tmSeriousSpeed  - _pTimer  -> CurrentTick  ();
-#line 3967 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3966 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmDelta  > 0 && m_fAutoSpeed  == 0.0f){
-#line 3968 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3967 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (1) *= 2.0f;
-#line 3969 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3968 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (3) *= 2.0f;
-#line 3970 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3969 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3972 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3971 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fAcceleration  = plr_fAcceleration ;
-#line 3973 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3972 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fDeceleration  = plr_fDeceleration ;
-#line 3974 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3973 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative )
-#line 3975 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3974 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 3976 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3975 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (1) *= 1.35f;
-#line 3977 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3976 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (3) *= 1.35f;
-#line 3979 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3978 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 3981 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3980 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CContentType  & ctUp  = GetWorld  () -> wo_actContentTypes  [ en_iUpContent  ];
-#line 3982 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3981 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CContentType  & ctDn  = GetWorld  () -> wo_actContentTypes  [ en_iDnContent  ];
-#line 3983 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3982 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlayerState  pstWanted  = PST_STAND ;
-#line 3984 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3983 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bUpSwimable  = (ctUp  . ct_ulFlags  & CTF_SWIMABLE ) && en_fImmersionFactor  <= 0.99f;
-#line 3985 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3984 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bDnSwimable  = (ctDn  . ct_ulFlags  & CTF_SWIMABLE ) && en_fImmersionFactor  >= 0.5f;
-#line 3988 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3987 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bUpSwimable  || bDnSwimable ){
-#line 3990 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3989 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_JUMPALLOWED ;
-#line 3993 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3992 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(en_fImmersionFactor  >= 0.99f || bUpSwimable ){
-#line 3995 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3994 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pstWanted  = PST_DIVE ;
-#line 3997 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3996 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 3999 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3998 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pstWanted  = PST_SWIM ;
-#line 4000 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 3999 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4002 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4001 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4004 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4003 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(en_penReference  != NULL ){
-#line 4006 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4005 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fFallTime  = 0.0f;
-#line 4009 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4008 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4011 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4010 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fFallTime  += _pTimer  -> TickQuantum ;
-#line 4012 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4011 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4014 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4013 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(vTranslation  (2) < 0.1f){
-#line 4016 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4015 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_JUMPALLOWED ;
-#line 4017 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4016 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4020 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4019 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_fFallTime  >= 0.5f){
-#line 4022 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4021 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pstWanted  = PST_FALL ;
-#line 4024 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4023 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4026 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4025 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(vTranslation  (2) < - 0.01f){
-#line 4028 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4027 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pstWanted  = PST_CROUCH ;
-#line 4030 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4029 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4032 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4031 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pstWanted  = PST_STAND ;
+#line 4032 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4033 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4034 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4035 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4039 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4038 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (GetPhysicsFlags  () & EPF_TRANSLATEDBYGRAVITY )){
-#line 4040 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4039 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (paAction  . pa_aRotation );
-#line 4041 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4040 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , AOF_LOOPING  | AOF_NORESTART );
-#line 4042 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4041 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (vTranslation );
+#line 4043 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4044 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 4045 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlayerState  pstOld  = m_pstState ;
-#line 4048 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4047 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pstWanted  != m_pstState ){
-#line 4050 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4049 "C:/MyMod/Sources/EntitiesMP/Player.es"
 switch(pstWanted ){
-#line 4052 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4051 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_STAND : {
+#line 4053 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_STAND )){
 #line 4054 "C:/MyMod/Sources/EntitiesMP/Player.es"
-if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_STAND )){
+en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightStand ;
 #line 4055 "C:/MyMod/Sources/EntitiesMP/Player.es"
-en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightStand ;
-#line 4056 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_CROUCH ){
-#line 4057 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4056 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Rise  ();
-#line 4058 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4057 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4059 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4058 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Stand  ();
+#line 4059 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4060 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4061 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_STAND ;
+#line 4061 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4062 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4063 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }break ;
-#line 4065 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4064 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_CROUCH : {
-#line 4067 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4066 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_CROUCH )){
-#line 4068 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4067 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_CROUCH ;
-#line 4069 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4068 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightCrouch ;
-#line 4070 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4069 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Crouch  ();
+#line 4070 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4071 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4072 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }break ;
-#line 4074 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4073 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_SWIM : {
+#line 4075 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_SWIMSMALL )){
 #line 4076 "C:/MyMod/Sources/EntitiesMP/Player.es"
-if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_SWIMSMALL )){
+ChangeCollisionBoxIndexWhenPossible  (PLAYER_COLLISION_BOX_SWIM );
 #line 4077 "C:/MyMod/Sources/EntitiesMP/Player.es"
-ChangeCollisionBoxIndexWhenPossible  (PLAYER_COLLISION_BOX_SWIM );
-#line 4078 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_SWIM ;
-#line 4079 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4078 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightSwim ;
+#line 4079 "C:/MyMod/Sources/EntitiesMP/Player.es"
+((CPlayerAnimator  &) * m_penAnimator ) . Swim  ();
 #line 4080 "C:/MyMod/Sources/EntitiesMP/Player.es"
-((CPlayerAnimator  &) * m_penAnimator ) . Swim  ();
-#line 4081 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fSwimTime  = _pTimer  -> CurrentTick  ();
+#line 4081 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4082 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4083 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }break ;
-#line 4085 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4084 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_DIVE : {
-#line 4087 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4086 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_SWIMSMALL )){
-#line 4088 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4087 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ChangeCollisionBoxIndexWhenPossible  (PLAYER_COLLISION_BOX_SWIM );
-#line 4089 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4088 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_DIVE ;
-#line 4090 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4089 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightDive ;
-#line 4091 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4090 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Swim  ();
+#line 4091 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4092 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4093 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }break ;
-#line 4095 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4094 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case PST_FALL : {
-#line 4097 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4096 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ChangeCollisionBoxIndexNow  (PLAYER_COLLISION_BOX_STAND )){
-#line 4098 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4097 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_FALL ;
-#line 4099 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4098 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightStand ;
-#line 4100 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4099 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Fall  ();
-#line 4101 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4100 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4102 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4101 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }break ;
+#line 4102 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4103 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4104 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4107 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4106 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  != pstOld ){
-#line 4109 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4108 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bWasInWater  = (pstOld  == PST_SWIM  || pstOld  == PST_DIVE );
-#line 4110 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4109 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bIsInWater  = (m_pstState  == PST_SWIM  || m_pstState  == PST_DIVE );
-#line 4112 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4111 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bIsInWater  && ! bWasInWater ){
-#line 4113 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4112 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soBody  , GenderSound  (SOUND_WATER_ENTER ) , SOF_3D );
-#line 4115 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4114 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(! bIsInWater  && bWasInWater ){
-#line 4116 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4115 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soBody  , GenderSound  (SOUND_WATER_LEAVE ) , SOF_3D );
-#line 4117 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4116 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmOutOfWater  = _pTimer  -> CurrentTick  ();
-#line 4120 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4119 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(bIsInWater ){
-#line 4122 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4121 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pstOld  == PST_SWIM  && m_pstState  == PST_DIVE ){
-#line 4123 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4122 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , GenderSound  (SOUND_DIVEIN ) , SOF_3D );
-#line 4124 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4123 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("DiveIn");}
+#line 4124 "C:/MyMod/Sources/EntitiesMP/Player.es"
+m_bMoveSoundLeft  = TRUE ;
 #line 4125 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_bMoveSoundLeft  = TRUE ;
-#line 4126 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = _pTimer  -> CurrentTick  ();
-#line 4128 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4127 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_pstState  == PST_SWIM  && pstOld  == PST_DIVE ){
-#line 4129 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4128 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , GenderSound  (SOUND_DIVEOUT ) , SOF_3D );
-#line 4130 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4129 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bMoveSoundLeft  = TRUE ;
-#line 4131 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4130 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = _pTimer  -> CurrentTick  ();
+#line 4131 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4132 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4133 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4135 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4134 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pstOld  == PST_FALL  && (m_pstState  == PST_STAND  || m_pstState  == PST_CROUCH )){
-#line 4136 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4135 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , GenderSound  (SOUND_LAND ) , SOF_3D );
-#line 4137 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4136 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("Land");}
-#line 4138 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4137 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4140 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4139 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_DIVE ){
-#line 4141 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4140 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soLocalAmbientLoop  . Set3DParameters  (50.0f , 10.0f , 0.25f , 1.0f);
-#line 4142 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4141 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soLocalAmbientLoop  , SOUND_WATERAMBIENT  , 
-#line 4143 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4142 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SOF_LOOP  | SOF_3D  | SOF_VOLUMETRIC  | SOF_LOCAL );
-#line 4144 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4143 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(pstOld  == PST_DIVE ){
-#line 4145 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4144 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soLocalAmbientLoop  . Stop  ();
+#line 4145 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4146 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4147 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4149 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4148 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(en_tmJumped  + _pTimer  -> TickQuantum  >= _pTimer  -> CurrentTick  () && 
-#line 4150 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4149 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_tmJumped  <= _pTimer  -> CurrentTick  () && en_penReference  == NULL ){
-#line 4152 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4151 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDefaultMouthPitch  ();
-#line 4153 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4152 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_JUMP ) , SOF_3D );
-#line 4154 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4153 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("Jump");}
-#line 4156 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4155 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_JUMPALLOWED ;
-#line 4157 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4156 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4160 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4159 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_SWIM  || pstWanted  == PST_SWIM  
-#line 4161 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4160 "C:/MyMod/Sources/EntitiesMP/Player.es"
 || (pstWanted  == PST_DIVE  && m_pstState  != pstWanted )){
-#line 4162 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4161 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fDensity  = 500.0f;
+#line 4162 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4163 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 4164 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fDensity  = 1000.0f;
-#line 4165 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4164 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4167 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4166 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pTimer  -> CurrentTick  () >= m_tmNextAmbientOnce )
+#line 4167 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4168 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4169 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_DIVE )
-#line 4170 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4169 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4171 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4170 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soLocalAmbientOnce  , SOUND_WATERBUBBLES  , 
-#line 4172 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4171 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SOF_3D  | SOF_VOLUMETRIC  | SOF_LOCAL );
-#line 4173 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4172 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soLocalAmbientOnce  . Set3DParameters  (25.0f , 5.0f , 2.0f , Lerp  (0.5f , 1.5f , FRnd  ()));
-#line 4174 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4173 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SpawnBubbles  (5 + INDEX (FRnd  () * 5));
+#line 4174 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4175 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4176 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmNextAmbientOnce  = _pTimer  -> CurrentTick  () + 5.0f + FRnd  ();
-#line 4177 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4176 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4181 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4180 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_CROUCH ){
-#line 4183 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4182 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  /= 2.5f;
+#line 4184 "C:/MyMod/Sources/EntitiesMP/Player.es"
+vTranslation  (2) = 0.0f;
 #line 4185 "C:/MyMod/Sources/EntitiesMP/Player.es"
-vTranslation  (2) = 0.0f;
-#line 4186 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4189 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4188 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_DIVE ){
+#line 4190 "C:/MyMod/Sources/EntitiesMP/Player.es"
+FLOATmatrix3D mPitch ;
 #line 4191 "C:/MyMod/Sources/EntitiesMP/Player.es"
-FLOATmatrix3D mPitch ;
-#line 4192 "C:/MyMod/Sources/EntitiesMP/Player.es"
 MakeRotationMatrixFast  (mPitch  , FLOAT3D (0 , en_plViewpoint  . pl_OrientationAngle  (2) , 0));
+#line 4192 "C:/MyMod/Sources/EntitiesMP/Player.es"
+FLOAT fZ  = vTranslation  (3);
 #line 4193 "C:/MyMod/Sources/EntitiesMP/Player.es"
-FLOAT fZ  = vTranslation  (3);
+vTranslation  (3) = 0.0f;
 #line 4194 "C:/MyMod/Sources/EntitiesMP/Player.es"
-vTranslation  (3) = 0.0f;
-#line 4195 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  += FLOAT3D (0 , 0 , fZ ) * mPitch ;
-#line 4197 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4196 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_pstState  == PST_SWIM ){
-#line 4199 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4198 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mPitch ;
-#line 4200 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4199 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fPitch  = en_plViewpoint  . pl_OrientationAngle  (2);
-#line 4201 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4200 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fPitch  > - 30.0f){
-#line 4202 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4201 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fPitch  = 0;
+#line 4202 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4203 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4204 "C:/MyMod/Sources/EntitiesMP/Player.es"
 MakeRotationMatrixFast  (mPitch  , FLOAT3D (0 , fPitch  , 0));
-#line 4205 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4204 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fZ  = vTranslation  (3);
-#line 4206 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4205 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (3) = 0.0f;
-#line 4207 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4206 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  += FLOAT3D (0 , 0 , fZ ) * mPitch ;
-#line 4208 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4207 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4211 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4210 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_SWIM  || m_pstState  == PST_DIVE ){
-#line 4213 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4212 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (2) *= 0.5f;
-#line 4214 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4213 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4217 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4216 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_SWIM  && _pTimer  -> CurrentTick  () < m_fSwimTime  + 0.5f 
-#line 4218 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4217 "C:/MyMod/Sources/EntitiesMP/Player.es"
 || _pTimer  -> CurrentTick  () < m_tmOutOfWater  + 0.5f){
-#line 4220 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4219 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (2) = 0;
-#line 4222 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4221 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4227 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4226 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_JUMPALLOWED ) && vTranslation  (2) > 0){
-#line 4228 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4227 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vTranslation  (2) = 0.0f;
-#line 4229 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4228 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4232 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4231 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (vTranslation );
-#line 4235 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4234 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . Rotate_HPB  (ANGLE3D (
-#line 4236 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4235 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (1) * _pTimer  -> TickQuantum ) , 
-#line 4237 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4236 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (2) * _pTimer  -> TickQuantum ) , 
-#line 4238 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4237 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (3) * _pTimer  -> TickQuantum )));
-#line 4240 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4239 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RoundViewAngle  (en_plViewpoint  . pl_OrientationAngle  (2) , PITCH_MAX );
-#line 4241 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4240 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RoundViewAngle  (en_plViewpoint  . pl_OrientationAngle  (3) , BANKING_MAX );
-#line 4244 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4243 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(vTranslation  . Length  () > 0.1f){
-#line 4245 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4244 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (en_plViewpoint  . pl_OrientationAngle  (1) / _pTimer  -> TickQuantum  , 0.0f , 0.0f));
-#line 4246 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4245 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_VIEWROTATIONCHANGED ){
-#line 4247 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4246 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_VIEWROTATIONCHANGED ;
-#line 4248 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4247 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mViewRot ;
-#line 4249 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4248 "C:/MyMod/Sources/EntitiesMP/Player.es"
 MakeRotationMatrixFast  (mViewRot  , ANGLE3D (en_plViewpoint  . pl_OrientationAngle  (1) , 0 , 0));
-#line 4250 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4249 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vTransRel  = vTranslation  * mViewRot ;
-#line 4251 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4250 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (vTransRel );
+#line 4251 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4252 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4253 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  (1) = 0.0f;
+#line 4255 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4256 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 4257 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_VIEWROTATIONCHANGED ;
-#line 4258 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4257 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (0.0f , 0.0f , 0.0f));
-#line 4259 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4258 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE aDiff  = en_plViewpoint  . pl_OrientationAngle  (1) - HEADING_MAX ;
-#line 4260 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4259 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(aDiff  > 0.0f){
+#line 4260 "C:/MyMod/Sources/EntitiesMP/Player.es"
+SetDesiredRotation  (ANGLE3D (aDiff  / _pTimer  -> TickQuantum  , 0.0f , 0.0f));
 #line 4261 "C:/MyMod/Sources/EntitiesMP/Player.es"
-SetDesiredRotation  (ANGLE3D (aDiff  / _pTimer  -> TickQuantum  , 0.0f , 0.0f));
+}
 #line 4262 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4263 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aDiff  = en_plViewpoint  . pl_OrientationAngle  (1) + HEADING_MAX ;
-#line 4264 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4263 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(aDiff  < 0.0f){
-#line 4265 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4264 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (aDiff  / _pTimer  -> TickQuantum  , 0.0f , 0.0f));
+#line 4265 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4266 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4267 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RoundViewAngle  (en_plViewpoint  . pl_OrientationAngle  (1) , HEADING_MAX );
-#line 4268 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4267 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4271 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4270 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fWantSpeed  = en_vDesiredTranslationRelative  . Length  ();
-#line 4272 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4271 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fGoesSpeed  = en_vCurrentTranslationAbsolute  . Length  ();
-#line 4273 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4272 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bOnGround  = (m_pstState  == PST_STAND ) || (m_pstState  == PST_CROUCH );
-#line 4274 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4273 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bRunning  = bOnGround  && fWantSpeed  > 5.0f && fGoesSpeed  > 5.0f;
-#line 4275 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4274 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bWalking  = bOnGround  && ! bRunning  && fWantSpeed  > 2.0f && fGoesSpeed  > 2.0f;
-#line 4276 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4275 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSwimming  = (m_pstState  == PST_SWIM ) && fWantSpeed  > 2.0f && fGoesSpeed  > 2.0f;
-#line 4277 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4276 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bDiving  = (m_pstState  == PST_DIVE ) && fWantSpeed  > 2.0f && fGoesSpeed  > 2.0f;
-#line 4278 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4277 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TIME  tmNow  = _pTimer  -> CurrentTick  ();
-#line 4279 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4278 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iSoundWalkL  = SOUND_WALK_L ;
-#line 4280 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4279 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iSoundWalkR  = SOUND_WALK_R ;
-#line 4281 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4280 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if((ctDn  . ct_ulFlags  & CTF_SWIMABLE ) && en_fImmersionFactor  >= 0.1f){
-#line 4282 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4281 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  = SOUND_WATERWALK_L ;
-#line 4283 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4282 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  = SOUND_WATERWALK_R ;
+#line 4283 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else if(en_pbpoStandOn  != NULL  && 
 #line 4284 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else if(en_pbpoStandOn  != NULL  && 
-#line 4285 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_SAND ){
+#line 4285 "C:/MyMod/Sources/EntitiesMP/Player.es"
+iSoundWalkL  = SOUND_WALK_SAND_L ;
 #line 4286 "C:/MyMod/Sources/EntitiesMP/Player.es"
-iSoundWalkL  = SOUND_WALK_SAND_L ;
+iSoundWalkR  = SOUND_WALK_SAND_R ;
 #line 4287 "C:/MyMod/Sources/EntitiesMP/Player.es"
-iSoundWalkR  = SOUND_WALK_SAND_R ;
+}else if(en_pbpoStandOn  != NULL  && 
 #line 4288 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else if(en_pbpoStandOn  != NULL  && 
-#line 4289 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_RED_SAND ){
-#line 4290 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4289 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  = SOUND_WALK_SAND_L ;
-#line 4291 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4290 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  = SOUND_WALK_SAND_R ;
+#line 4291 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else if(en_pbpoStandOn  != NULL  && 
 #line 4292 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else if(en_pbpoStandOn  != NULL  && 
-#line 4293 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_GRASS  || 
-#line 4294 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4293 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_GRASS_SLIDING  || 
-#line 4295 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4294 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_GRASS_NOIMPACT )){
-#line 4296 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4295 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  = SOUND_WALK_GRASS_L ;
-#line 4297 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4296 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  = SOUND_WALK_GRASS_R ;
+#line 4297 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else if(en_pbpoStandOn  != NULL  && 
 #line 4298 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else if(en_pbpoStandOn  != NULL  && 
-#line 4299 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_WOOD ){
-#line 4300 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4299 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  = SOUND_WALK_WOOD_L ;
-#line 4301 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4300 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  = SOUND_WALK_WOOD_R ;
-#line 4302 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4301 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(en_pbpoStandOn  != NULL  && 
-#line 4303 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4302 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_pbpoStandOn  -> bpo_bppProperties  . bpp_ubSurfaceType  == SURFACE_SNOW ){
-#line 4304 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4303 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  = SOUND_WALK_SNOW_L ;
-#line 4305 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4304 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  = SOUND_WALK_SNOW_R ;
+#line 4305 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4306 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4307 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else {
-#line 4308 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4307 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4309 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4308 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkL  += m_iGender  * GENDEROFFSET ;
-#line 4310 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4309 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iSoundWalkR  += m_iGender  * GENDEROFFSET ;
-#line 4311 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4310 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bRunning ){
-#line 4312 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4311 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > m_tmMoveSound  + plr_fRunSoundDelay ){
-#line 4313 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4312 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = tmNow ;
-#line 4314 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4313 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bMoveSoundLeft  = ! m_bMoveSoundLeft ;
-#line 4315 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4314 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_bMoveSoundLeft ){
-#line 4316 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4315 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , iSoundWalkL  , SOF_3D );
-#line 4317 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4316 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4318 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4317 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootR  , iSoundWalkR  , SOF_3D );
+#line 4318 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4319 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4320 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4321 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(bWalking ){
-#line 4322 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4321 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > m_tmMoveSound  + plr_fWalkSoundDelay ){
-#line 4323 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4322 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = tmNow ;
-#line 4324 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4323 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bMoveSoundLeft  = ! m_bMoveSoundLeft ;
-#line 4325 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4324 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_bMoveSoundLeft ){
-#line 4326 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4325 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , iSoundWalkL  , SOF_3D );
-#line 4327 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4326 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4328 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4327 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootR  , iSoundWalkR  , SOF_3D );
+#line 4328 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4329 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4330 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4331 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(bDiving ){
-#line 4332 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4331 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > m_tmMoveSound  + plr_fDiveSoundDelay ){
-#line 4333 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4332 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = tmNow ;
-#line 4334 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4333 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bMoveSoundLeft  = ! m_bMoveSoundLeft ;
-#line 4335 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4334 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_bMoveSoundLeft ){
-#line 4336 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4335 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , GenderSound  (SOUND_DIVE_L ) , SOF_3D );
-#line 4337 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4336 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4338 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4337 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootR  , GenderSound  (SOUND_DIVE_R ) , SOF_3D );
+#line 4338 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4339 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4340 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4341 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(bSwimming ){
-#line 4342 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4341 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > m_tmMoveSound  + plr_fSwimSoundDelay ){
-#line 4343 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4342 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMoveSound  = tmNow ;
-#line 4344 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4343 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bMoveSoundLeft  = ! m_bMoveSoundLeft ;
-#line 4345 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4344 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_bMoveSoundLeft ){
-#line 4346 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4345 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootL  , GenderSound  (SOUND_SWIM_L ) , SOF_3D );
-#line 4347 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4346 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4348 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4347 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soFootR  , GenderSound  (SOUND_SWIM_R ) , SOF_3D );
+#line 4348 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4349 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4350 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4351 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4354 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4353 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TIME  tmBreathDelay  = tmNow  - en_tmLastBreathed ;
-#line 4355 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4354 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(en_tmMaxHoldBreath  - tmBreathDelay  < 20.0f){
-#line 4357 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4356 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_tmMouthSoundLast  + 2.0f < tmNow ){
-#line 4358 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4357 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMouthSoundLast  = tmNow ;
-#line 4359 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4358 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetRandomMouthPitch  (0.9f , 1.1f);
-#line 4360 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4359 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_DROWN ) , SOF_3D );
+#line 4360 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4361 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4362 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4365 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4364 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . AnimatePlayer  ();
+#line 4365 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4366 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4367 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4370 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4369 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RoundViewAngle(ANGLE & aViewAngle,ANGLE aRound) {
-#line 4371 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4370 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(aViewAngle  > aRound ){
-#line 4372 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4371 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aViewAngle  = aRound ;
-#line 4373 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4372 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4374 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4373 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(aViewAngle  < - aRound ){
-#line 4375 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4374 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aViewAngle  = - aRound ;
+#line 4375 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4376 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4377 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4380 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4379 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::DeathActions(const CPlayerAction & paAction) {
-#line 4382 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4381 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  != NULL ){
-#line 4383 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4382 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (IsPredicted  () && m_penView  -> IsPredicted  () || IsPredictor  () && m_penView  -> IsPredictor  () || ! IsPredicted  () && ! m_penView  -> IsPredicted  () && ! IsPredictor  () && ! m_penView  -> IsPredictor  ());
-#line 4384 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4383 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  = FLOAT3D (0 , 1 , 0);
-#line 4385 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4384 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  += (ANGLE3D (
-#line 4386 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4385 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (1) * _pTimer  -> TickQuantum ) , 
-#line 4387 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4386 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (2) * _pTimer  -> TickQuantum ) , 
-#line 4388 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4387 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (ANGLE) ((FLOAT) paAction  . pa_aRotation  (3) * _pTimer  -> TickQuantum )));
-#line 4389 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4388 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4392 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4391 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iMayRespawn  == 2 && (ulReleasedButtons  & PLACT_FIRE ) && ! IsPredictor  ()){
-#line 4394 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4393 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer ){
-#line 4396 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4395 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("gam_bQuickLoad=1;");
-#line 4398 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4397 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(! GetSP  () -> sp_bCooperative ){
-#line 4400 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4399 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendEvent  (EEnd  ());
-#line 4402 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4401 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4404 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4403 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulLastButtons  & PLACT_RELOAD ){
-#line 4406 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4405 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_RESPAWNINPLACE ;
-#line 4407 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4406 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4409 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4408 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_ctCredits  != 0){
-#line 4411 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4410 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_ctCredits  == - 1 || GetSP  () -> sp_ctCreditsLeft  != 0){
-#line 4413 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4412 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_ctCredits  != - 1){
-#line 4414 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4413 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CSessionProperties  *) GetSP  ()) -> sp_ctCreditsLeft  --;
-#line 4415 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4414 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4418 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4417 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s is riding the gun again\n") , GetPlayerName  ());
-#line 4419 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4418 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendEvent  (EEnd  ());
-#line 4422 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4421 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_ctCredits  > 0){
-#line 4423 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4422 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_ctCreditsLeft  == 0){
-#line 4424 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4423 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("  no more credits left!\n"));
-#line 4425 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4424 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4425 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("  %d credits left\n") , GetSP  () -> sp_ctCreditsLeft );
+#line 4426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4427 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4428 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4430 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4429 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4432 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4431 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s rests in peace - out of credits\n") , GetPlayerName  ());
+#line 4432 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4433 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4434 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4435 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4436 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4438 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4437 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iMayRespawn  == 1 && ! (ulButtonsNow  & PLACT_FIRE )){
-#line 4439 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4438 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMayRespawn  = 2;
+#line 4439 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4440 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4441 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4445 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4444 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ButtonsActions(CPlayerAction & paAction) 
-#line 4446 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4445 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4448 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4447 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if((ulNewButtons  & PLACT_SELECT_WEAPON_MASK ) != 0){
+#line 4448 "C:/MyMod/Sources/EntitiesMP/Player.es"
+ESelectWeapon  eSelect ;
 #line 4449 "C:/MyMod/Sources/EntitiesMP/Player.es"
-ESelectWeapon  eSelect ;
-#line 4450 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = (ulNewButtons  & PLACT_SELECT_WEAPON_MASK ) >> PLACT_SELECT_WEAPON_SHIFT ;
+#line 4450 "C:/MyMod/Sources/EntitiesMP/Player.es"
+((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
 #line 4451 "C:/MyMod/Sources/EntitiesMP/Player.es"
-((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
-#line 4452 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4455 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4454 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_WEAPON_NEXT ){
-#line 4456 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4455 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . m_bSniping ){
-#line 4457 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4456 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ApplySniperZoom  (0);
-#line 4458 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4457 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(TRUE ){
-#line 4459 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4458 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 4460 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4459 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = - 1;
-#line 4461 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4460 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
+#line 4461 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4462 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4463 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4466 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4465 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_WEAPON_PREV ){
-#line 4467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4466 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . m_bSniping ){
-#line 4468 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4467 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ApplySniperZoom  (1);
-#line 4469 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4468 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(TRUE ){
-#line 4470 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4469 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 4471 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4470 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = - 2;
-#line 4472 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4471 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
+#line 4472 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4473 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4474 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4475 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_WEAPON_FLIP ){
-#line 4476 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4475 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 4477 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4476 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = - 3;
-#line 4478 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4477 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
-#line 4479 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4478 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4482 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4481 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_FIRE ){
-#line 4483 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4482 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EFireWeapon  ());
-#line 4484 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4483 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4486 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4485 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulReleasedButtons  & PLACT_FIRE ){
-#line 4487 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4486 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReleaseWeapon  ());
-#line 4488 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4487 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4490 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4489 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulReleasedButtons  & PLACT_RELOAD ){
-#line 4491 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4490 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReloadWeapon  ());
-#line 4492 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4491 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4494 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4493 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_FIREBOMB ){
-#line 4495 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4494 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iSeriousBombCount  > 0 && m_tmSeriousBombFired  + 4.0f < _pTimer  -> CurrentTick  ()){
-#line 4496 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4495 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iLastSeriousBombCount  = m_iSeriousBombCount ;
-#line 4497 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4496 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iSeriousBombCount  --;
-#line 4498 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4497 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSeriousBombFired  = _pTimer  -> CurrentTick  ();
-#line 4500 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4499 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESeriousBomb  esb ;
-#line 4501 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4500 "C:/MyMod/Sources/EntitiesMP/Player.es"
 esb  . penOwner  = this ;
-#line 4502 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4501 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntityPointer penBomb  = CreateEntity  (GetPlacement  () , CLASS_SERIOUSBOMB );
-#line 4503 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4502 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penBomb  -> Initialize  (esb );
+#line 4503 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4504 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4505 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4510 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4509 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_USE ){
-#line 4511 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4510 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  == WEAPON_SNIPER ){
+#line 4511 "C:/MyMod/Sources/EntitiesMP/Player.es"
+UsePressed  (FALSE );
 #line 4512 "C:/MyMod/Sources/EntitiesMP/Player.es"
-UsePressed  (FALSE );
-#line 4513 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4514 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4513 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UsePressed  (ulNewButtons  & PLACT_COMPUTER );
-#line 4515 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4514 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4517 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4516 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(ulNewButtons  & PLACT_SNIPER_USE  && ((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  == WEAPON_SNIPER ){
-#line 4518 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4517 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UsePressed  (FALSE );
-#line 4520 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4519 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(ulNewButtons  & PLACT_COMPUTER ){
-#line 4521 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4520 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ComputerPressed  ();
-#line 4522 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4521 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4525 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4524 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_USE_HELD ){
-#line 4526 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4525 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bUseButtonHeld  = TRUE ;
-#line 4527 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4526 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4530 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4529 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulReleasedButtons  & PLACT_USE_HELD ){
-#line 4531 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4530 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bUseButtonHeld  = FALSE ;
-#line 4532 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4531 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4535 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4534 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_SNIPER_ZOOMIN ){
-#line 4536 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4535 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ApplySniperZoom  (1);
-#line 4537 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4536 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4540 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4539 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_SNIPER_ZOOMOUT ){
-#line 4541 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4540 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ApplySniperZoom  (0);
-#line 4542 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4541 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4545 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4544 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulNewButtons  & PLACT_3RD_PERSON_VIEW ){
-#line 4546 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4545 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ChangePlayerView  ();
-#line 4547 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4546 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4550 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4549 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ulButtonsNow  & PLACT_CENTER_VIEW ){
-#line 4552 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4551 "C:/MyMod/Sources/EntitiesMP/Player.es"
 paAction  . pa_aRotation  (2) += Clamp  (- en_plViewpoint  . pl_OrientationAngle  (2) / _pTimer  -> TickQuantum  , - 900.0f , + 900.0f);
+#line 4552 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4553 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4554 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4556 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4555 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::ApplySniperZoom(BOOL bZoomIn) 
-#line 4557 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4556 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4559 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4558 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  != WEAPON_SNIPER  || 
-#line 4560 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4559 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . m_bSniping  == FALSE ){
-#line 4561 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4560 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ;
+#line 4561 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4562 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4563 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bZoomChanged ;
-#line 4564 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4563 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerWeapons  &) * m_penWeapons ) . SniperZoomDiscrete  (bZoomIn  , bZoomChanged )){
-#line 4565 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4564 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bZoomChanged ){
-#line 4566 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4565 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SNIPER_QZOOM  , SOF_3D );
+#line 4566 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4567 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4568 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_ISZOOMING ;
-#line 4569 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4568 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4570 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4569 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else 
-#line 4571 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4570 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4572 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4571 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_ISZOOMING ;
-#line 4573 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4572 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 4574 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4573 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_StopEffect  ("SniperZoom");}
+#line 4574 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4575 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4576 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4579 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4578 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL CPlayer::CheatsEnabled(void) 
-#line 4580 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4579 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4581 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4580 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return (GetSP  () -> sp_ctMaxPlayers  == 1 || GetSP  () -> sp_bQuickTest ) && m_penActionMarker  == NULL  && ! _SE_DEMO ;
-#line 4582 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4581 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 4585 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4584 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::Cheats(void) 
-#line 4586 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4585 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4587 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4586 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bFlyOn  = cht_bFly  || cht_bGhost ;
-#line 4589 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4588 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bIsFlying  = ! (GetPhysicsFlags  () & EPF_TRANSLATEDBYGRAVITY );
-#line 4590 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4589 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bFlyOn  && ! bIsFlying ){
-#line 4591 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4590 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () & ~ (EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY ));
+#line 4591 "C:/MyMod/Sources/EntitiesMP/Player.es"
+en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
 #line 4592 "C:/MyMod/Sources/EntitiesMP/Player.es"
-en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 4593 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(! bFlyOn  && bIsFlying ){
-#line 4594 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4593 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () | EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY );
-#line 4595 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4594 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 4596 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4595 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4599 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4598 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bIsGhost  = ! (GetCollisionFlags  () & ((ECBI_BRUSH  | ECBI_MODEL ) << ECB_TEST ));
-#line 4600 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4599 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bGhost  && ! bIsGhost ){
-#line 4601 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4600 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetCollisionFlags  (GetCollisionFlags  () & ~ ((ECBI_BRUSH  | ECBI_MODEL ) << ECB_TEST ));
-#line 4602 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4601 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(! cht_bGhost  && bIsGhost ){
-#line 4603 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4602 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetCollisionFlags  (GetCollisionFlags  () | ((ECBI_BRUSH  | ECBI_MODEL ) << ECB_TEST ));
-#line 4604 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4603 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4607 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4606 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const TIME  tmDelta  = m_tmInvisibility  - _pTimer  -> CurrentTick  ();
-#line 4608 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4607 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bInvisible  || tmDelta  > 0){
-#line 4609 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4608 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () | ENF_INVISIBLE );
-#line 4610 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4609 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4611 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4610 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () & ~ ENF_INVISIBLE );
-#line 4612 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4611 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4615 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4614 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bGiveAll ){
-#line 4616 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4615 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_bGiveAll  = FALSE ;
-#line 4617 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4616 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . CheatGiveAll  ();
-#line 4618 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4617 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4620 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4619 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bKillAll ){
-#line 4621 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4620 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_bKillAll  = FALSE ;
-#line 4622 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4621 "C:/MyMod/Sources/EntitiesMP/Player.es"
 KillAllEnemies  (this );
-#line 4623 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4622 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4625 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4624 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bOpen ){
-#line 4626 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4625 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_bOpen  = FALSE ;
-#line 4627 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4626 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . CheatOpen  ();
-#line 4628 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4627 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4630 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4629 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bAllMessages ){
-#line 4631 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4630 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_bAllMessages  = FALSE ;
-#line 4632 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4631 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CheatAllMessages  ();
-#line 4633 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4632 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4635 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4634 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_bRefresh ){
-#line 4636 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4635 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_bRefresh  = FALSE ;
-#line 4637 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4636 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (TopHealth  ());
+#line 4637 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4638 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4639 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4648 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4647 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::GetLerpedAbsoluteViewPlacement(CPlacement3D & plView) {
-#line 4649 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4648 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_INITIALIZED )){
-#line 4650 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4649 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  = GetPlacement  ();
+#line 4650 "C:/MyMod/Sources/EntitiesMP/Player.es"
+_bDiscard3rdView  = FALSE ;
 #line 4651 "C:/MyMod/Sources/EntitiesMP/Player.es"
-_bDiscard3rdView  = FALSE ;
-#line 4652 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ;
-#line 4653 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4652 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4655 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4654 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSharpTurning  = 
-#line 4656 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4655 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (GetSettings  () -> ps_ulFlags  & PSF_SHARPTURNING ) && 
-#line 4657 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4656 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pNetwork  -> IsPlayerLocal  ((CPlayer  *) GetPredictionTail  ());
-#line 4660 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4659 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fLerpFactor  = _pTimer  -> GetLerpFactor  ();
-#line 4661 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4660 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  . Lerp  (en_plLastViewpoint  , en_plViewpoint  , fLerpFactor );
-#line 4664 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4663 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . ChangeView  (plView );
-#line 4666 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4665 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . BodyAndHeadOrientation  (plView );
-#line 4669 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4668 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iViewState  == PVT_PLAYEREYES  || _bDiscard3rdView ){
-#line 4670 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4669 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plPosLerped  = GetLerpedPlacement  ();
-#line 4671 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4670 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bSharpTurning ){
-#line 4673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4672 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * pen  = (CPlayer  *) GetPredictionTail  ();
-#line 4675 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4674 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_ISZOOMING ){
-#line 4676 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4675 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fRotationDamping  = ((CPlayerWeapons  &) * m_penWeapons ) . m_fSniperFOV  / ((CPlayerWeapons  &) * m_penWeapons ) . m_fSniperMaxFOV ;
-#line 4677 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4676 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  . pl_OrientationAngle  = pen  -> en_plViewpoint  . pl_OrientationAngle  + (pen  -> m_aLocalRotation  - pen  -> m_aLastRotation ) * fRotationDamping ;
+#line 4677 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4678 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 4679 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  . pl_OrientationAngle  = pen  -> en_plViewpoint  . pl_OrientationAngle  + (pen  -> m_aLocalRotation  - pen  -> m_aLastRotation );
-#line 4680 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4679 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4682 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4681 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RoundViewAngle  (plView  . pl_OrientationAngle  (2) , PITCH_MAX );
-#line 4683 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4682 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RoundViewAngle  (plView  . pl_OrientationAngle  (3) , BANKING_MAX );
-#line 4688 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4687 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aCurr  = pen  -> GetPlacement  () . pl_OrientationAngle ;
-#line 4689 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4688 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aLast  = pen  -> en_plLastPlacement  . pl_OrientationAngle ;
-#line 4690 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4689 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aDesired  = pen  -> en_aDesiredRotationRelative  * _pTimer  -> TickQuantum ;
-#line 4691 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4690 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mCurr ;MakeRotationMatrixFast  (mCurr  , aCurr );
-#line 4692 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4691 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mLast ;MakeRotationMatrixFast  (mLast  , aLast );
-#line 4693 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4692 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mDesired ;MakeRotationMatrixFast  (mDesired  , aDesired );
-#line 4694 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4693 "C:/MyMod/Sources/EntitiesMP/Player.es"
 mDesired  = en_mRotation  * (mDesired  * ! en_mRotation );
-#line 4695 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4694 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D mForced  = ! mDesired  * mCurr  * ! mLast ;
-#line 4696 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4695 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ANGLE3D aForced ;DecomposeRotationMatrixNoSnap  (aForced  , mForced );
-#line 4697 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4696 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(aForced  . MaxNorm  () < 1E-2){
-#line 4698 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4697 "C:/MyMod/Sources/EntitiesMP/Player.es"
 aForced  = ANGLE3D (0 , 0 , 0);
+#line 4698 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4699 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATquat3D qForced ;qForced  . FromEuler  (aForced );
-#line 4701 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATquat3D qZero ;qZero  . FromEuler  (ANGLE3D (0 , 0 , 0));
-#line 4702 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4701 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATquat3D qLerped  = Slerp  (fLerpFactor  , qZero  , qForced );
-#line 4703 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4702 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D m ;
-#line 4704 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4703 "C:/MyMod/Sources/EntitiesMP/Player.es"
 qLerped  . ToMatrix  (m );
-#line 4705 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4704 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m  = m  * mDesired  * mLast ;
-#line 4706 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4705 "C:/MyMod/Sources/EntitiesMP/Player.es"
 DecomposeRotationMatrixNoSnap  (plPosLerped  . pl_OrientationAngle  , m );
+#line 4706 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4707 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4708 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  . RelativeToAbsoluteSmooth  (plPosLerped );
-#line 4710 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4709 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_3RDPERSONVIEW ){
-#line 4711 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4710 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  = m_pen3rdPersonView  -> GetLerpedPlacement  ();
-#line 4713 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4712 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_PLAYERAUTOVIEW ){
-#line 4714 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4713 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  = m_penView  -> GetLerpedPlacement  ();
-#line 4716 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4715 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4717 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4716 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERTALWAYS  ("Unknown player view");
-#line 4718 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4717 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4719 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4718 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _bDiscard3rdView  = FALSE ;
-#line 4720 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4719 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 4723 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4722 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity * CPlayer::GetViewEntity(void) {
-#line 4725 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4724 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iViewState  == PVT_PLAYEREYES ){
-#line 4726 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4725 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return this ;
-#line 4728 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4727 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_3RDPERSONVIEW ){
-#line 4729 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4728 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_ulFlags  & PLF_ISZOOMING ){
+#line 4729 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return this ;
 #line 4730 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return this ;
+}
 #line 4731 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4732 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerView  &) * m_pen3rdPersonView ) . m_fDistance  > 2.0f){
-#line 4733 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4732 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return m_pen3rdPersonView ;
+#line 4733 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4734 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
+return this ;
 #line 4735 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return this ;
-#line 4736 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4738 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4737 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_PLAYERAUTOVIEW ){
-#line 4739 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4738 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(((CPlayerView  &) * m_penView ) . m_fDistance  > 2.0f){
-#line 4740 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4739 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return m_penView ;
+#line 4740 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 4741 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 4742 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return this ;
-#line 4743 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4742 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4745 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4744 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 4746 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4745 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERTALWAYS  ("Unknown player view");
-#line 4747 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4746 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return NULL ;
+#line 4747 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4748 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4749 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4751 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4750 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RenderChainsawParticles(BOOL bThird) 
+#line 4751 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4752 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4753 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fStretch  = 1.0f;
+#line 4753 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(bThird )
 #line 4754 "C:/MyMod/Sources/EntitiesMP/Player.es"
-if(bThird )
+{
 #line 4755 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4756 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fStretch  = 0.4f;
-#line 4757 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4756 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4759 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4758 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT tmNow  = _pTimer  -> GetLerpedCurrentTick  ();
-#line 4760 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4759 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iSpray  = 0;iSpray  < MAX_BULLET_SPRAYS ;iSpray  ++)
+#line 4760 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4761 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4762 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BulletSprayLaunchData  & bsld  = m_absldData  [ iSpray  ];
-#line 4763 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4762 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fLife  = 1.25f;
-#line 4764 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4763 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > (bsld  . bsld_tmLaunch  + fLife )){continue ;}
-#line 4765 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4764 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_BulletSpray  (bsld  . bsld_iRndBase  , bsld  . bsld_vPos  , bsld  . bsld_vG  , 
-#line 4766 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4765 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bsld  . bsld_eptType  , bsld  . bsld_tmLaunch  , bsld  . bsld_vStretch  * fStretch  , 1.0f);
-#line 4767 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4766 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4770 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4769 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iGore  = 0;iGore  < MAX_GORE_SPRAYS ;iGore  ++)
+#line 4770 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4771 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4772 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GoreSprayLaunchData  & gsld  = m_agsldData  [ iGore  ];
-#line 4773 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4772 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fLife  = 2.0f;
-#line 4774 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4773 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmNow  > (gsld  . gsld_tmLaunch  + fLife )){continue ;}
-#line 4775 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4774 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vPos  = gsld  . gsld_vPos ;
-#line 4776 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4775 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bThird )
-#line 4777 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4776 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4778 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4777 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vPos  = gsld  . gsld_v3rdPos ;
-#line 4779 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4778 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4780 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4779 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_BloodSpray  (gsld  . gsld_sptType  , vPos  , gsld  . gsld_vG  , gsld  . gsld_fGA  , 
-#line 4781 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4780 "C:/MyMod/Sources/EntitiesMP/Player.es"
 gsld  . gsld_boxHitted  , gsld  . gsld_vSpilDirection  , 
-#line 4782 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4781 "C:/MyMod/Sources/EntitiesMP/Player.es"
 gsld  . gsld_tmLaunch  , gsld  . gsld_fDamagePower  * fStretch  , gsld  . gsld_colParticles );
+#line 4782 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4783 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4784 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4787 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4786 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RenderHUD(CPerspectiveProjection3D & prProjection,CDrawPort * pdp,
-#line 4788 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4787 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vViewerLightDirection,COLOR colViewerLight,COLOR colViewerAmbient,
-#line 4789 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4788 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bRenderWeapon,INDEX iEye) 
+#line 4789 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4790 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4791 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plViewOld  = prProjection  . ViewerPlacementR  ();
-#line 4792 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4791 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSniping  = ((CPlayerWeapons  &) * m_penWeapons ) . m_bSniping ;
-#line 4795 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4794 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bRenderModels  = _pShell  -> GetINDEX  ("gfx_bRenderModels");
-#line 4796 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4795 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(hud_bShowWeapon  && bRenderModels  && ! bSniping ){
-#line 4798 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4797 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . RenderWeaponModel  (prProjection  , pdp  , 
-#line 4799 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4798 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vViewerLightDirection  , colViewerLight  , colViewerAmbient  , bRenderWeapon  , iEye );
-#line 4800 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4799 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4803 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4802 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iViewState  == PVT_PLAYEREYES )
+#line 4803 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 4804 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 4805 "C:/MyMod/Sources/EntitiesMP/Player.es"
 prProjection  . ViewerPlacementL  () = plViewOld ;
-#line 4806 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4805 "C:/MyMod/Sources/EntitiesMP/Player.es"
 prProjection  . Prepare  ();
-#line 4807 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4806 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CAnyProjection3D  apr ;
-#line 4808 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4807 "C:/MyMod/Sources/EntitiesMP/Player.es"
 apr  = prProjection ;
-#line 4809 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4808 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Stereo_AdjustProjection  (* apr  , iEye  , 1);
-#line 4810 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4809 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particle_PrepareSystem  (pdp  , apr );
-#line 4811 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4810 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particle_PrepareEntity  (2.0f , FALSE  , FALSE  , this );
-#line 4812 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4811 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RenderChainsawParticles  (FALSE );
-#line 4813 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4812 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particle_EndSystem  ();
-#line 4814 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4813 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4817 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4816 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plView ;
-#line 4818 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4817 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_iViewState  == PVT_PLAYEREYES ){
-#line 4820 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4819 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  = en_plViewpoint ;
-#line 4821 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4820 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  . RelativeToAbsolute  (GetPlacement  ());
-#line 4822 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4821 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_iViewState  == PVT_3RDPERSONVIEW ){
-#line 4824 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4823 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plView  = ((CPlayerView  &) * m_pen3rdPersonView ) . GetPlacement  ();
+#line 4824 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4825 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4826 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! bSniping ){
-#line 4827 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4826 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . RenderCrosshair  (prProjection  , pdp  , plView );
-#line 4828 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4827 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4831 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4830 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * pen  = (CPlayer  *) GetPredictionTail  ();
-#line 4853 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4832 "C:/MyMod/Sources/EntitiesMP/Player.es"
+ULONG  ulR  = 255 , ulG  = 0 , ulB  = 0;
+#line 4833 "C:/MyMod/Sources/EntitiesMP/Player.es"
+ULONG  ulA  = pen  -> m_fDamageAmmount  * 5.0f;
+#line 4836 "C:/MyMod/Sources/EntitiesMP/Player.es"
+FLOAT tmSinceWounding  = _pTimer  -> CurrentTick  () - pen  -> m_tmWoundedTime ;
+#line 4837 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(tmSinceWounding  < 4.0f){
+#line 4839 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(tmSinceWounding  < 0.001f){ulA  = (ulA  + 64) / 2;}
+#line 4840 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
+#line 4843 "C:/MyMod/Sources/EntitiesMP/Player.es"
+ulA  = ClampUp  (ulA  , (ULONG ) 224);
+#line 4844 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(m_iViewState  == PVT_PLAYEREYES ){
+#line 4845 "C:/MyMod/Sources/EntitiesMP/Player.es"
+pdp  -> dp_ulBlendingRA  += ulR  * ulA ;
+#line 4846 "C:/MyMod/Sources/EntitiesMP/Player.es"
+pdp  -> dp_ulBlendingGA  += ulG  * ulA ;
+#line 4847 "C:/MyMod/Sources/EntitiesMP/Player.es"
+pdp  -> dp_ulBlendingBA  += ulB  * ulA ;
+#line 4848 "C:/MyMod/Sources/EntitiesMP/Player.es"
+pdp  -> dp_ulBlendingA  += ulA ;
+#line 4849 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
+#line 4852 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4854 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4853 "C:/MyMod/Sources/EntitiesMP/Player.es"
 COLOR colGlare  = GetWorldGlaring  ();
-#line 4855 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4854 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UBYTE  ubR  , ubG  , ubB  , ubA ;
-#line 4856 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4855 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ColorToRGBA  (colGlare  , ubR  , ubG  , ubB  , ubA );
-#line 4857 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4856 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ubA  != 0){
-#line 4858 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4857 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pdp  -> dp_ulBlendingRA  += ULONG  (ubR ) * ULONG  (ubA );
-#line 4859 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4858 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pdp  -> dp_ulBlendingGA  += ULONG  (ubG ) * ULONG  (ubA );
-#line 4860 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4859 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pdp  -> dp_ulBlendingBA  += ULONG  (ubB ) * ULONG  (ubA );
-#line 4861 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4860 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pdp  -> dp_ulBlendingA  += ULONG  (ubA );
+#line 4861 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4862 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4863 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4866 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4865 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pdp  -> BlendScreen  ();
-#line 4869 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4868 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(hud_bShowInfo ){
-#line 4871 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4870 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSnooping  = FALSE ;
-#line 4872 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4871 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * penHUDPlayer  = this ;
-#line 4873 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4872 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * penHUDOwner  = this ;
-#line 4875 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4874 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penHUDPlayer  -> IsPredicted  ()){
-#line 4876 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4875 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penHUDPlayer  = (CPlayer  *) penHUDPlayer  -> GetPredictor  ();
-#line 4877 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4876 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4880 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4879 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * pen  = (CPlayerWeapons  *) & * penHUDPlayer  -> m_penWeapons ;
-#line 4881 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4880 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TIME  tmDelta  = _pTimer  -> CurrentTick  () - pen  -> m_tmSnoopingStarted ;
-#line 4882 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4881 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(tmDelta  < plr_tmSnoopingTime ){
-#line 4883 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4882 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (pen  -> m_penTargeting  != NULL );
-#line 4884 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4883 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penHUDPlayer  = (CPlayer  *) & * pen  -> m_penTargeting ;
-#line 4885 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4884 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSnooping  = TRUE ;
-#line 4886 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4885 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4887 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4886 "C:/MyMod/Sources/EntitiesMP/Player.es"
 DrawHUD  (penHUDPlayer  , pdp  , bSnooping  , penHUDOwner );
+#line 4887 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4888 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4889 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 4896 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4895 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity * CPlayer::GetDeathmatchStartMarker(void) 
-#line 4897 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4896 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4899 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4898 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strPlayerStart  = "Player Start - ";
-#line 4900 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4899 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX ctMarkers  = _pNetwork  -> GetNumberOfEntitiesWithName  (strPlayerStart );
-#line 4902 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4901 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ctMarkers  == 0){
+#line 4903 "C:/MyMod/Sources/EntitiesMP/Player.es"
+return NULL ;
 #line 4904 "C:/MyMod/Sources/EntitiesMP/Player.es"
-return NULL ;
-#line 4905 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4907 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4906 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ctMarkers  == 1){
-#line 4909 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4908 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
-#line 4910 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4909 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4914 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4913 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CStaticArray  < MarkerDistance  > amdMarkers ;
-#line 4915 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4914 "C:/MyMod/Sources/EntitiesMP/Player.es"
 amdMarkers  . New  (ctMarkers );
-#line 4917 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4916 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {for(INDEX iMarker  = 0;iMarker  < ctMarkers ;iMarker  ++){
-#line 4918 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4917 "C:/MyMod/Sources/EntitiesMP/Player.es"
 amdMarkers  [ iMarker  ] . md_ppm  = (CPlayerMarker  *) _pNetwork  -> GetEntityWithName  (strPlayerStart  , iMarker );
-#line 4919 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4918 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(amdMarkers  [ iMarker  ] . md_ppm  == NULL ){
-#line 4920 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4919 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return NULL ;
-#line 4921 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4920 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4923 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4922 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fMinD  = UpperLimit  (0.0f);
-#line 4924 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4923 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iPlayer  = 0;iPlayer  < GetMaxPlayers  ();iPlayer  ++){
-#line 4925 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4924 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * ppl  = (CPlayer  *) & * GetPlayerEntity  (iPlayer );
-#line 4926 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4925 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ppl  == NULL ){
-#line 4927 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4926 "C:/MyMod/Sources/EntitiesMP/Player.es"
 continue ;
-#line 4928 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4927 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4929 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4928 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fD  = 
-#line 4930 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4929 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (amdMarkers  [ iMarker  ] . md_ppm  -> GetPlacement  () . pl_PositionVector  - 
-#line 4931 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4930 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ppl  -> GetPlacement  () . pl_PositionVector ) . Length  ();
-#line 4932 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4931 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fD  < fMinD ){
-#line 4933 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4932 "C:/MyMod/Sources/EntitiesMP/Player.es"
 fMinD  = fD ;
+#line 4933 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4934 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 4935 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4936 "C:/MyMod/Sources/EntitiesMP/Player.es"
 amdMarkers  [ iMarker  ] . md_fMinD  = fMinD ;
-#line 4937 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4936 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }}
-#line 4940 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4939 "C:/MyMod/Sources/EntitiesMP/Player.es"
 qsort  (& amdMarkers  [ 0 ] , ctMarkers  , sizeof  (amdMarkers  [ 0 ]) , & qsort_CompareMarkerDistance );
-#line 4941 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4940 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (amdMarkers  [ 0 ] . md_fMinD  >= amdMarkers  [ ctMarkers  - 1 ] . md_fMinD );
-#line 4943 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4942 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX ctFarMarkers  = ctMarkers  / 2;
-#line 4944 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4943 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (ctFarMarkers  > 0);
-#line 4945 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4944 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iStartMarker  = IRnd  () % ctFarMarkers ;
-#line 4947 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4946 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iMarker  = iStartMarker ;
-#line 4948 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4947 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FOREVER {
-#line 4949 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4948 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pTimer  -> CurrentTick  () > amdMarkers  [ iMarker  ] . md_ppm  -> m_tmLastSpawned  + 1.0f){
+#line 4949 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 4950 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 4951 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4952 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4951 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iMarker  = (iMarker  + 1) % ctMarkers ;
-#line 4953 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4952 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iMarker  == iStartMarker ){
-#line 4954 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4953 "C:/MyMod/Sources/EntitiesMP/Player.es"
 break ;
+#line 4954 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 4955 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 4956 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 4958 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4957 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return amdMarkers  [ iMarker  ] . md_ppm ;
-#line 4959 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4958 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 4965 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4964 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::InitializePlayer() 
-#line 4966 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4965 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 4968 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4967 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 4969 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4968 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  = FLOAT3D (0.0f , plr_fViewHeightStand  , 0.0f);
-#line 4970 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4969 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plLastViewpoint  = en_plViewpoint ;
-#line 4973 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4972 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= PLF_INITIALIZED  | PLF_LEVELSTARTED  | PLF_RESPAWNINPLACE ;
-#line 4974 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4973 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fFallTime  = 0.0f;
-#line 4975 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4974 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_STAND ;
-#line 4976 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4975 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fDamageAmmount  = 0.0f;
-#line 4977 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4976 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmWoundedTime  = 0.0f;
-#line 4978 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4977 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmInvisibility  = 0.0f , 
-#line 4979 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4978 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmInvulnerability  = 0.0f , 
-#line 4980 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4979 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSeriousDamage  = 0.0f , 
-#line 4981 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4980 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSeriousSpeed  = 0.0f , 
-#line 4984 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4983 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Initialize  ();
-#line 4986 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4985 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerWeapons  () -> SendEvent  (EStart  ());
-#line 4989 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4988 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_AfterBurner_Prepare  (this );
-#line 4992 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4991 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (EPF_MODEL_WALKING  | EPF_HASLUNGS );
-#line 4993 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4992 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetCollisionFlags  (ECF_MODEL  | ((ECBI_PLAYER ) << ECB_IS ));
-#line 4994 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4993 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () | ENF_ALIVE );
-#line 4996 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4995 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , AOF_LOOPING );
-#line 4997 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4996 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TeleportPlayer  (WLT_FIXED );
-#line 4998 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 4997 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 5001 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5000 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D CPlayer::GetTeleportingOffset(void) 
-#line 5002 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5001 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5004 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5003 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iPlayer  = GetMyPlayerIndex  ();
-#line 5007 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5006 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const FLOAT fOffsetY  = 0.1f;
-#line 5008 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5007 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vOffsetRel  = FLOAT3D (0 , fOffsetY  , 0);
-#line 5009 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5008 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative  && ! GetSP  () -> sp_bSinglePlayer ){
-#line 5010 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5009 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iRow  = iPlayer  / 4;
-#line 5011 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5010 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iCol  = iPlayer  % 4;
-#line 5012 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5011 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vOffsetRel  = FLOAT3D (- 3.0f + iCol  * 2.0f , fOffsetY  , - 3.0f + iRow  * 2.0f);
-#line 5013 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5012 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5015 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5014 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return vOffsetRel ;
-#line 5016 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5015 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 5019 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5018 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RemapLevelNames(INDEX & iLevel) 
-#line 5020 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5019 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5021 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5020 "C:/MyMod/Sources/EntitiesMP/Player.es"
 switch(iLevel ){
-#line 5022 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5021 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 10: 
-#line 5023 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5022 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 1;
+#line 5023 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5024 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5025 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 11: 
-#line 5026 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5025 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 2;
+#line 5026 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5027 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5028 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 12: 
-#line 5029 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5028 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 3;
+#line 5029 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5030 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5031 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 13: 
-#line 5032 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5031 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 4;
+#line 5032 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5033 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5034 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 14: 
-#line 5035 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5034 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 5;
+#line 5035 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5036 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5037 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 15: 
-#line 5038 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5037 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 6;
+#line 5038 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5039 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5040 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 21: 
-#line 5041 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5040 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 7;
+#line 5041 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5042 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5043 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 22: 
-#line 5044 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5043 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 8;
+#line 5044 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5045 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5046 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 23: 
-#line 5047 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5046 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 9;
+#line 5047 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5048 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5049 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 24: 
-#line 5050 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5049 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 10;
+#line 5050 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5051 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5052 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 31: 
-#line 5053 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5052 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 11;
+#line 5053 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5054 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5055 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 32: 
-#line 5056 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5055 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 12;
+#line 5056 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5057 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5058 "C:/MyMod/Sources/EntitiesMP/Player.es"
 case 33: 
-#line 5059 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5058 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = 13;
+#line 5059 "C:/MyMod/Sources/EntitiesMP/Player.es"
+break ;
 #line 5060 "C:/MyMod/Sources/EntitiesMP/Player.es"
-break ;
-#line 5061 "C:/MyMod/Sources/EntitiesMP/Player.es"
 default  : 
-#line 5062 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5061 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = - 1;
-#line 5063 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5062 "C:/MyMod/Sources/EntitiesMP/Player.es"
 break ;
+#line 5063 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5064 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5065 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 5068 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5067 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::TeleportPlayer(enum WorldLinkType EwltType) 
-#line 5069 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5068 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5070 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5069 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iLevel  = - 1;
-#line 5071 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5070 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strLevelName  = GetWorld  () -> wo_fnmFileName  . FileName  ();
-#line 5074 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5073 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX u  , v ;
-#line 5075 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5074 "C:/MyMod/Sources/EntitiesMP/Player.es"
 u  = v  = - 1;
-#line 5076 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5075 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strLevelName  . ScanF  ("%01d_%01d_" , & u  , & v );
-#line 5077 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5076 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iLevel  = u  * 10 + v ;
-#line 5079 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5078 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RemapLevelNames  (iLevel );
-#line 5081 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5080 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iLevel  > 0){
-#line 5082 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5081 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CSessionProperties  *) GetSP  ()) -> sp_ulLevelsMask  |= 1 << (iLevel  - 1);
-#line 5083 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5082 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5086 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5085 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iPlayer  = GetMyPlayerIndex  ();
-#line 5088 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5087 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plSet  = GetPlacement  ();
-#line 5090 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5089 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (CPlacement3D (FLOAT3D (32000.0f + 100.0f * iPlayer  , 32000.0f , 0) , ANGLE3D (0 , 0 , 0)));
-#line 5092 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5091 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ForceCollisionBoxIndexChange  (PLAYER_COLLISION_BOX_STAND );
-#line 5093 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5092 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_PositionVector  (2) = plr_fViewHeightStand ;
-#line 5094 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5093 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . m_bDisableAnimating  = FALSE ;
-#line 5095 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5094 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . Stand  ();
-#line 5096 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5095 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pstState  = PST_STAND ;
-#line 5099 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5098 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vOffsetRel  = GetTeleportingOffset  ();
-#line 5102 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5101 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bSetHealth  = FALSE ;
-#line 5103 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5102 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BOOL bAdjustHealth  = FALSE ;
-#line 5104 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5103 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * pen  = NULL ;
-#line 5105 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5104 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative ){
-#line 5106 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5105 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(cht_iGoToMarker  >= 0){
-#line 5108 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5107 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strPlayerStart ;
-#line 5109 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5108 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strPlayerStart  . PrintF  ("Player Start - %d" , (INDEX) cht_iGoToMarker );
-#line 5110 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5109 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
-#line 5111 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5110 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  -> SendEvent  (ETrigger  ());
-#line 5112 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5111 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cht_iGoToMarker  = - 1;
+#line 5112 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bSetHealth  = TRUE ;
 #line 5113 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bSetHealth  = TRUE ;
-#line 5114 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bAdjustHealth  = FALSE ;
-#line 5116 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5115 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_penMainMusicHolder  != NULL  && ! (m_ulFlags  & PLF_CHANGINGLEVEL )){
-#line 5117 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5116 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CMusicHolder  * pmh  = (CMusicHolder  *) & * m_penMainMusicHolder ;
-#line 5118 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5117 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pmh  -> m_penRespawnMarker  != NULL ){
-#line 5120 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5119 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = pmh  -> m_penRespawnMarker ;
-#line 5121 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5120 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSetHealth  = TRUE ;
-#line 5122 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5121 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bAdjustHealth  = FALSE ;
+#line 5122 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5123 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5124 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5127 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5126 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  == NULL  && GetSP  () -> sp_bQuickTest  && m_strGroup  == ""){
+#line 5128 "C:/MyMod/Sources/EntitiesMP/Player.es"
+CTString strPlayerStart ;
 #line 5129 "C:/MyMod/Sources/EntitiesMP/Player.es"
-CTString strPlayerStart ;
-#line 5130 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strPlayerStart  . PrintF  ("Player Quick Start");
+#line 5130 "C:/MyMod/Sources/EntitiesMP/Player.es"
+pen  = _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
 #line 5131 "C:/MyMod/Sources/EntitiesMP/Player.es"
-pen  = _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
+bSetHealth  = TRUE ;
 #line 5132 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bSetHealth  = TRUE ;
+bAdjustHealth  = FALSE ;
 #line 5133 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bAdjustHealth  = FALSE ;
-#line 5134 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5136 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5135 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  == NULL ){
-#line 5138 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5137 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strPlayerStart ;
-#line 5139 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5138 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strPlayerStart  . PrintF  ("Player Start - %s" , m_strGroup );
-#line 5140 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5139 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
-#line 5141 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5140 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_strGroup  == ""){
-#line 5142 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5141 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSetHealth  = TRUE ;
+#line 5142 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bAdjustHealth  = FALSE ;
 #line 5143 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bAdjustHealth  = FALSE ;
+}else {
 #line 5144 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5145 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(EwltType  == WLT_FIXED ){
+#line 5145 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bSetHealth  = FALSE ;
 #line 5146 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bSetHealth  = FALSE ;
-#line 5147 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bAdjustHealth  = TRUE ;
-#line 5148 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5147 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5149 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5148 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSetHealth  = FALSE ;
-#line 5150 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5149 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bAdjustHealth  = FALSE ;
+#line 5150 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5151 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 5152 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5153 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5155 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5154 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  == NULL ){
-#line 5157 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5156 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strPlayerStart ;
-#line 5158 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5157 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strPlayerStart  . PrintF  ("Player Start - ");
-#line 5159 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5158 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = _pNetwork  -> GetEntityWithName  (strPlayerStart  , 0);
+#line 5159 "C:/MyMod/Sources/EntitiesMP/Player.es"
+bSetHealth  = TRUE ;
 #line 5160 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bSetHealth  = TRUE ;
+bAdjustHealth  = FALSE ;
 #line 5161 "C:/MyMod/Sources/EntitiesMP/Player.es"
-bAdjustHealth  = FALSE ;
-#line 5162 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5163 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5162 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5164 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5163 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bSetHealth  = TRUE ;
-#line 5165 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5164 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bAdjustHealth  = FALSE ;
-#line 5167 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5166 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pen  = GetDeathmatchStartMarker  ();
-#line 5168 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5167 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  != NULL ){
-#line 5169 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5168 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerMarker  &) * pen ) . m_tmLastSpawned  = _pTimer  -> CurrentTick  ();
+#line 5169 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5170 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5171 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5174 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5173 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if((m_ulFlags  & PLF_RESPAWNINPLACE ) && pen  != NULL  && ! ((CPlayerMarker  *) & * pen ) -> m_bNoRespawnInPlace ){
-#line 5175 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5174 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_RESPAWNINPLACE ;
-#line 5177 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5176 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (TopHealth  ());
-#line 5178 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5177 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  = GetSP  () -> sp_iInitialMana ;
-#line 5179 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5178 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fArmor  = 0.0f;
-#line 5181 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5180 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (CPlacement3D (m_vDied  , m_aDied ));
-#line 5184 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5183 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(pen  != NULL ){
-#line 5186 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5185 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penMainMusicHolder  != NULL ){
-#line 5187 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5186 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CMusicHolder  * pmh  = (CMusicHolder  *) & * m_penMainMusicHolder ;
-#line 5188 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5187 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pmh  -> m_penRespawnMarker  == NULL ){
-#line 5190 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5189 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pmh  -> m_penRespawnMarker  = pen ;
+#line 5190 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5191 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5192 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5194 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5193 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerMarker  & CpmStart  = (CPlayerMarker  &) * pen ;
-#line 5196 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5195 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(bSetHealth ){
-#line 5197 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5196 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (CpmStart  . m_fHealth  / 100.0f * TopHealth  ());
-#line 5198 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5197 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  = GetSP  () -> sp_iInitialMana ;
-#line 5199 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5198 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fArmor  = CpmStart  . m_fShield ;
-#line 5200 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5199 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(bAdjustHealth ){
-#line 5201 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5200 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fHealth  = GetHealth  ();
-#line 5202 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5201 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fTopHealth  = TopHealth  ();
-#line 5203 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5202 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fHealth  < fTopHealth ){
-#line 5204 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5203 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (ClampUp  (fHealth  + fTopHealth  / 2.0f , fTopHealth ));
+#line 5204 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5205 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5206 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5209 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5208 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(CpmStart  . m_bStartInComputer  && GetSP  () -> sp_bSinglePlayer ){
-#line 5211 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5210 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){
-#line 5212 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5211 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_ppenPlayer  = this ;
+#line 5212 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5213 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5214 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_bInitialStart  = TRUE ;
-#line 5215 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5214 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5218 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5217 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CMessageHolder  * penMessage  = (CMessageHolder  *) & * CpmStart  . m_penMessage ;
-#line 5220 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5219 "C:/MyMod/Sources/EntitiesMP/Player.es"
 while(penMessage  != NULL  && IsOfClass  (penMessage  , "MessageHolder")){
-#line 5221 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5220 "C:/MyMod/Sources/EntitiesMP/Player.es"
 const CTFileName & fnmMessage  = penMessage  -> m_fnmMessage ;
-#line 5223 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5222 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! HasMessage  (fnmMessage )){
-#line 5225 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5224 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ReceiveComputerMessage  (fnmMessage  , 0);
-#line 5226 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5225 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5228 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5227 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penMessage  = (CMessageHolder  *) & * penMessage  -> m_penNext ;
-#line 5229 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5228 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5232 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5231 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative ){
-#line 5233 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5232 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . InitializeWeapons  (CpmStart  . m_iGiveWeapons  , 0 , 0 , 
-#line 5234 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5233 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CpmStart  . m_fMaxAmmoRatio );
+#line 5234 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5235 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5236 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . InitializeWeapons  (CpmStart  . m_iGiveWeapons  , CpmStart  . m_iTakeWeapons  , 
-#line 5237 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5236 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetSP  () -> sp_bInfiniteAmmo  ? 0 : CpmStart  . m_iTakeAmmo  , CpmStart  . m_fMaxAmmoRatio );
-#line 5238 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5237 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5240 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5239 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(EwltType  == WLT_RELATIVE ){
-#line 5241 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5240 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plSet  . AbsoluteToRelative  (_SwcWorldChange  . plLink );
-#line 5242 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5241 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plSet  . RelativeToAbsolute  (CpmStart  . GetPlacement  ());
-#line 5243 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5242 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (plSet );
-#line 5245 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5244 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(EwltType  == WLT_FIXED ){
-#line 5246 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5245 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D plNew  = CpmStart  . GetPlacement  ();
-#line 5247 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5246 "C:/MyMod/Sources/EntitiesMP/Player.es"
 vOffsetRel  *= CpmStart  . en_mRotation ;
-#line 5248 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5247 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plNew  . pl_PositionVector  += vOffsetRel ;
-#line 5249 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5248 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (plNew );
+#line 5250 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5251 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5252 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERTALWAYS  ("Unknown world link type");
+#line 5252 "C:/MyMod/Sources/EntitiesMP/Player.es"
+Teleport  (CPlacement3D (FLOAT3D (0 , 0 , 0) + vOffsetRel  , ANGLE3D (0 , 0 , 0)));
 #line 5253 "C:/MyMod/Sources/EntitiesMP/Player.es"
-Teleport  (CPlacement3D (FLOAT3D (0 , 0 , 0) + vOffsetRel  , ANGLE3D (0 , 0 , 0)));
-#line 5254 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5256 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5255 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(CpmStart  . m_penTarget  != NULL ){
-#line 5257 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5256 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (CpmStart  . m_penTarget  , EET_TRIGGER  , this );
-#line 5258 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5257 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5261 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5260 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5263 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5262 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetHealth  (TopHealth  ());
-#line 5264 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5263 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  = GetSP  () -> sp_iInitialMana ;
-#line 5265 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5264 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fArmor  = 0.0f;
-#line 5267 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5266 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . InitializeWeapons  (0 , 0 , 0 , 0);
-#line 5269 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5268 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (CPlacement3D (FLOAT3D (0 , 0 , 0) + vOffsetRel  , ANGLE3D (0 , 0 , 0)));
-#line 5270 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5269 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5272 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5271 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendEventInRange  (ETeleport  () , FLOATaabbox3D (GetPlacement  () . pl_PositionVector  , 200.0f));
-#line 5274 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5273 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ForceFullStop  ();
-#line 5277 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5276 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fMaxHealth  = TopHealth  ();
-#line 5280 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5279 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer  && GetSP  () -> sp_gmGameMode  != CSessionProperties  :: GM_FLYOVER ){
-#line 5281 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5280 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CWorldSettingsController  * pwsc  = GetWSC  (this );
-#line 5282 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5281 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pwsc  != NULL  && pwsc  -> m_bNoSaveGame ){
-#line 5283 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5282 "C:/MyMod/Sources/EntitiesMP/Player.es"
 NOTHING ;
-#line 5284 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5283 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5286 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5285 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("gam_bQuickSave=1;");
+#line 5286 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5287 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5288 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5290 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5289 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_LEVELSTARTED )){
-#line 5291 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5290 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_LEVELSTARTED ;
-#line 5292 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5291 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmLevelStarted  = _pNetwork  -> GetGameTime  ();
-#line 5293 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5292 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5295 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5294 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strDummy ;
-#line 5296 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5295 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPlayerAppearance  (GetModelObject  () , NULL  , strDummy  , FALSE );
-#line 5297 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5296 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ValidateCharacter  ();
-#line 5298 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5297 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPlayerAppearance  (& m_moRender  , & en_pcCharacter  , strDummy  , FALSE );
-#line 5299 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5298 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ParseGender  (strDummy );
-#line 5300 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5299 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SetWeapon  ();
-#line 5301 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5300 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_SYNCWEAPON ;
-#line 5304 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5303 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SpawnTeleport  ();
-#line 5306 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5305 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToModel  ();
-#line 5307 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5306 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSpawned  = _pTimer  -> CurrentTick  ();
-#line 5309 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5308 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_tmLastBreathed  = _pTimer  -> CurrentTick  () + 0.1f;
-#line 5310 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5309 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 5313 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5312 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RecordEndOfLevelData(void) 
-#line 5314 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5313 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5316 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5315 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (! m_bEndOfLevel );
-#line 5318 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5317 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmAnalyseEnd  = 0;
-#line 5319 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5318 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bPendingMessage  = FALSE ;
-#line 5320 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5319 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMessagePlay  = 0;
-#line 5322 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5321 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMayRespawn  = 0;
-#line 5323 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5322 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bEndOfLevel  = TRUE ;
-#line 5325 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5324 "C:/MyMod/Sources/EntitiesMP/Player.es"
 time  (& m_iEndTime );
-#line 5327 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5326 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TIME  tmLevelTime  = _pTimer  -> CurrentTick  () - m_tmLevelStarted ;
-#line 5328 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5327 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_tmTime  = tmLevelTime ;
-#line 5329 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5328 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_tmTime  += tmLevelTime ;
-#line 5330 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5329 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fTimeDelta  = ClampDn  (floor  (m_tmEstTime ) - floor  (tmLevelTime ) , 0.0);
-#line 5331 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5330 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iTimeScore  = floor  (fTimeDelta  * 100.0f);
-#line 5332 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5331 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iScore  += m_iTimeScore ;
-#line 5333 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5332 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iScore  += m_iTimeScore ;
-#line 5336 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5335 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strStats ;
-#line 5337 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5336 "C:/MyMod/Sources/EntitiesMP/Player.es"
 strStats  . PrintF  (TRANS  ("%s\n  Time:   %s\n  Score: %9d\n  Kills:   %03d/%03d\n  Secrets:   %02d/%02d\n") , 
-#line 5338 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5337 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TranslateConst  (en_pwoWorld  -> GetName  () , 0) , TimeToString  (tmLevelTime ) , 
-#line 5339 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5338 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iScore  , 
-#line 5340 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5339 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iKills  , m_psLevelTotal  . ps_iKills  , 
-#line 5341 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5340 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iSecrets  , m_psLevelTotal  . ps_iSecrets );
-#line 5342 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5341 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_strLevelStats  += strStats ;
-#line 5343 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5342 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 5346 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5345 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::SpawnTeleport(void) 
-#line 5347 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5346 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5349 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5348 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer ){
-#line 5351 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5350 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ;
-#line 5352 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5351 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5353 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5352 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESpawnEffect  ese ;
-#line 5354 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5353 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ese  . colMuliplier  = C_WHITE  | CT_OPAQUE ;
-#line 5355 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5354 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ese  . betType  = BET_TELEPORT ;
-#line 5356 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5355 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ese  . vNormal  = FLOAT3D (0 , 1 , 0);
-#line 5357 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5356 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATaabbox3D box ;
-#line 5358 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5357 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetBoundingBox  (box );
-#line 5359 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5358 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fEntitySize  = box  . Size  () . MaxNorm  () * 2;
-#line 5360 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5359 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ese  . vStretch  = FLOAT3D (fEntitySize  , fEntitySize  , fEntitySize );
-#line 5361 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5360 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntityPointer penEffect  = CreateEntity  (GetPlacement  () , CLASS_BASIC_EFFECT );
-#line 5362 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5361 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penEffect  -> Initialize  (ese );
-#line 5363 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5362 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
   
-#line 5368 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5367 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::RenderParticles(void) 
+#line 5368 "C:/MyMod/Sources/EntitiesMP/Player.es"
+{
 #line 5369 "C:/MyMod/Sources/EntitiesMP/Player.es"
-{
-#line 5370 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT tmNow  = _pTimer  -> GetLerpedCurrentTick  ();
-#line 5373 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5372 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_EmptyShells  (this  , m_asldData );
-#line 5375 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5374 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Particle_GetViewer  () == this ){
-#line 5376 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5375 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_ViewerLocal  (this );
+#line 5376 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5377 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5378 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else 
-#line 5379 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5378 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5381 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5380 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RenderChainsawParticles  (TRUE );
-#line 5383 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5382 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetFlags  () & ENF_ALIVE ){
-#line 5384 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5383 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_tmSeriousDamage  > tmNow  && m_tmInvulnerability  > tmNow ){
-#line 5385 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5384 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_ModelGlow  (this  , Max  (m_tmSeriousDamage  , m_tmInvulnerability ) , PT_STAR08  , 0.15f , 2 , 0.03f , 0xff00ff00);
-#line 5386 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5385 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_tmInvulnerability  > tmNow ){
-#line 5387 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5386 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_ModelGlow  (this  , m_tmInvulnerability  , PT_STAR05  , 0.15f , 2 , 0.03f , 0x3333ff00);
-#line 5388 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5387 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(m_tmSeriousDamage  > tmNow ){
-#line 5389 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5388 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_ModelGlow  (this  , m_tmSeriousDamage  , PT_STAR08  , 0.15f , 2 , 0.03f , 0xff777700);
+#line 5389 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5390 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5391 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_tmSeriousSpeed  > tmNow ){
-#line 5392 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5391 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_RunAfterBurner  (this  , m_tmSeriousSpeed  , 0.3f , 0);
-#line 5393 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5392 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5394 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5393 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative ){
-#line 5395 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5394 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * wpn  = GetPlayerWeapons  ();
-#line 5396 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5395 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(wpn  -> m_tmLastSniperFire  == _pTimer  -> CurrentTick  ())
-#line 5397 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5396 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5398 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5397 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CAttachmentModelObject  & amoBody  = * GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO );
-#line 5399 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5398 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOATmatrix3D m ;
-#line 5400 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5399 "C:/MyMod/Sources/EntitiesMP/Player.es"
 MakeRotationMatrix  (m  , amoBody  . amo_plRelative  . pl_OrientationAngle );
-#line 5401 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5400 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vSource  = wpn  -> m_vBulletSource  + FLOAT3D (0.0f , 0.1f , - 0.4f) * GetRotationMatrix  () * m ;
-#line 5402 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5401 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_SniperResidue  (this  , vSource  , wpn  -> m_vBulletTarget );
+#line 5402 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5403 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 5404 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 5405 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5406 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5409 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5408 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_tmSpiritStart  != 0.0f)
-#line 5410 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5409 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5411 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5410 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Particles_Appearing  (this  , m_tmSpiritStart );
+#line 5411 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5412 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5413 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 5415 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5414 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::TeleportToAutoMarker(CPlayerActionMarker * ppam) 
-#line 5416 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5415 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5418 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5417 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative  && ! GetSP  () -> sp_bSinglePlayer ){
-#line 5420 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5419 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iPlayer  = 0;iPlayer  < GetMaxPlayers  ();iPlayer  ++){
-#line 5421 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5420 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * ppl  = (CPlayer  *) GetPlayerEntity  (iPlayer );
-#line 5422 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5421 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ppl  != NULL ){
-#line 5424 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5423 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D pl  = ppam  -> GetPlacement  ();
-#line 5425 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5424 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vOffsetRel  = ppl  -> GetTeleportingOffset  ();
-#line 5426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5425 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pl  . pl_PositionVector  += vOffsetRel  * ppam  -> en_mRotation ;
-#line 5427 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5426 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ppl  -> Teleport  (pl  , FALSE );
-#line 5429 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5428 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ppl  -> m_vDied  = pl  . pl_PositionVector ;
-#line 5430 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5429 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ppl  -> m_aDied  = pl  . pl_OrientationAngle ;
+#line 5430 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5431 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5432 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5435 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5434 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5437 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5436 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D pl  = ppam  -> GetPlacement  ();
-#line 5438 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5437 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vOffsetRel  = GetTeleportingOffset  ();
-#line 5439 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5438 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pl  . pl_PositionVector  += vOffsetRel  * ppam  -> en_mRotation ;
-#line 5440 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5439 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (pl  , FALSE );
+#line 5440 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5441 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5442 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
   
-#line 5445 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5444 "C:/MyMod/Sources/EntitiesMP/Player.es"
 void CPlayer::CheckDeathForRespawnInPlace(EDeath eDeath) 
-#line 5446 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5445 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5448 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5447 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bRespawnInPlace ){
-#line 5450 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5449 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return ;
-#line 5451 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5450 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5453 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5452 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * penKiller  = eDeath  . eLastDamage  . penInflictor ;
-#line 5454 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5453 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (penKiller  , "Player") || IsDerivedFromClass  (penKiller  , "Enemy Base")){
-#line 5456 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5455 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_RESPAWNINPLACE ;
-#line 5457 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5456 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_vDied  = GetPlacement  () . pl_PositionVector ;
-#line 5458 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5457 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_aDied  = GetPlacement  () . pl_OrientationAngle ;
+#line 5458 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5459 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5460 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
 BOOL CPlayer::
-#line 5466 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5465 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Wounded(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_Wounded
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EDamage, "CPlayer::Wounded expects 'EDamage' as input!");  const EDamage &eDamage = (const EDamage &)__eeInput;
-#line 5467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5466 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 5467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5466 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5474 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5473 "C:/MyMod/Sources/EntitiesMP/Player.es"
 WorldChange(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_WorldChange
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::WorldChange expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5476 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5475 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer ){
-#line 5478 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5477 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strDummy  ("1");
-#line 5479 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5478 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SaveStringVar  (GetWorld  () -> wo_fnmFileName  . NoExt  () + ".vis" , strDummy );
-#line 5480 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5479 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5482 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5481 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FindMusicHolder  ();
-#line 5484 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5483 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_strGroup  = _SwcWorldChange  . strGroup ;
-#line 5485 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5484 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TeleportPlayer  ((WorldLinkType ) _SwcWorldChange  . iType );
-#line 5487 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5486 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetupLightSource  ();
-#line 5490 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5489 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * penWeapon  = GetPlayerWeapons  ();
-#line 5491 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5490 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV  = penWeapon  -> m_fSniperMaxFOV ;
-#line 5492 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5491 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_bSniping  = FALSE ;
-#line 5493 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5492 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_ISZOOMING ;
-#line 5496 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5495 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soWeaponAmbient  , SOUND_SILENCE  , SOF_3D );
-#line 5499 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5498 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UpdateLevelStats  ();
-#line 5500 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5499 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_INITIALIZED ;
-#line 5501 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5500 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_CHANGINGLEVEL ;
-#line 5502 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5501 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 5502 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5501 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5505 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5504 "C:/MyMod/Sources/EntitiesMP/Player.es"
 WorldChangeDead(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_WorldChangeDead
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::WorldChangeDead expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5508 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5507 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_RESPAWNINPLACE ;
-#line 5511 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5510 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer ){
-#line 5513 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5512 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strDummy  ("1");
-#line 5514 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5513 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SaveStringVar  (GetWorld  () -> wo_fnmFileName  . NoExt  () + ".vis" , strDummy );
-#line 5515 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5514 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5517 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5516 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FindMusicHolder  ();
-#line 5520 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5519 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_Rebirth, TRUE;
 Jump(STATE_CURRENT, 0x01910008, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910008_WorldChangeDead_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -7416,424 +7448,424 @@ switch(__eeInput.ee_slEvent) {case EVENTCODE_EBegin: Call(STATE_CURRENT, STATE_C
 #define STATE_CURRENT 0x01910009
 const EReturn&__e= (EReturn&)__eeInput;
 ;
-#line 5523 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5522 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetupLightSource  ();
-#line 5526 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5525 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UpdateLevelStats  ();
-#line 5527 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5526 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_INITIALIZED ;
-#line 5528 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5527 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_CHANGINGLEVEL ;
-#line 5529 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5528 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 5529 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5528 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5536 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5535 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Death(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_Death
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EDeath, "CPlayer::Death expects 'EDeath' as input!");  const EDeath &eDeath = (const EDeath &)__eeInput;
-#line 5539 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5538 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReleaseWeapon  ());
-#line 5541 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5540 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this ))
-#line 5542 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5541 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5543 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5542 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  ("ChainsawFire");
-#line 5544 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5543 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  ("FlamethrowerFire");
-#line 5545 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5544 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  ("ChainsawIdle");
-#line 5546 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5545 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  ("SniperZoom");
-#line 5547 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5546 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  ("Minigun_rotate");
-#line 5548 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5547 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5551 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5550 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerWeapons  * penWeapon  = GetPlayerWeapons  ();
-#line 5552 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5551 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_ISZOOMING ;
-#line 5553 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5552 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_bSniping  = FALSE ;
-#line 5554 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5553 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_fSniperFOVlast  = penWeapon  -> m_fSniperFOV  = penWeapon  -> m_fSniperMaxFOV ;
-#line 5557 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5556 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 5558 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5557 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soWeaponAmbient  , SOUND_SILENCE  , SOF_3D );
-#line 5561 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5560 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penWeapon  -> m_aMiniGunLast  = penWeapon  -> m_aMiniGun ;
-#line 5564 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5563 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer  || IsPredictor  ()){
-#line 5566 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5565 "C:/MyMod/Sources/EntitiesMP/Player.es"
 NOTHING ;
-#line 5568 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5567 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(GetSP  () -> sp_bCooperative ){
-#line 5570 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5569 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PrintPlayerDeathMessage  (this  , eDeath );
-#line 5572 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5571 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CheckDeathForRespawnInPlace  (eDeath );
-#line 5574 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5573 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iDeaths  += 1;
-#line 5575 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5574 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iDeaths  += 1;
-#line 5577 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5576 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5579 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5578 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PrintPlayerDeathMessage  (this  , eDeath );
-#line 5581 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5580 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntity  * penKiller  = eDeath  . eLastDamage  . penInflictor ;
-#line 5583 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5582 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * pplKillerPlayer  = NULL ;
-#line 5586 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5585 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penKiller  != NULL ){
-#line 5588 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5587 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (penKiller  , "Player")){
-#line 5590 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5589 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penKiller  != this ){
-#line 5591 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5590 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pplKillerPlayer  = (CPlayer  *) penKiller ;
-#line 5592 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5591 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EReceiveScore  eScore ;
-#line 5593 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5592 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eScore  . iPoints  = m_iMana ;
-#line 5594 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5593 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eDeath  . eLastDamage  . penInflictor  -> SendEvent  (eScore );
-#line 5595 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5594 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eDeath  . eLastDamage  . penInflictor  -> SendEvent  (EKilledEnemy  ());
+#line 5596 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5597 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
+m_psLevelStats  . ps_iScore  -= m_iMana ;
 #line 5598 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psLevelStats  . ps_iScore  -= m_iMana ;
+m_psGameStats  . ps_iScore  -= m_iMana ;
 #line 5599 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psGameStats  . ps_iScore  -= m_iMana ;
+m_psLevelStats  . ps_iKills  -= 1;
 #line 5600 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psLevelStats  . ps_iKills  -= 1;
+m_psGameStats  . ps_iKills  -= 1;
 #line 5601 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psGameStats  . ps_iKills  -= 1;
-#line 5602 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
+#line 5603 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5604 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
+m_psLevelStats  . ps_iScore  -= m_iMana ;
 #line 5605 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psLevelStats  . ps_iScore  -= m_iMana ;
+m_psGameStats  . ps_iScore  -= m_iMana ;
 #line 5606 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psGameStats  . ps_iScore  -= m_iMana ;
+m_psLevelStats  . ps_iKills  -= 1;
 #line 5607 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psLevelStats  . ps_iKills  -= 1;
+m_psGameStats  . ps_iKills  -= 1;
 #line 5608 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_psGameStats  . ps_iKills  -= 1;
-#line 5609 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
+#line 5610 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5611 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5612 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iScore  -= m_iMana ;
-#line 5613 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5612 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iScore  -= m_iMana ;
-#line 5614 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5613 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iKills  -= 1;
-#line 5615 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5614 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iKills  -= 1;
-#line 5616 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5615 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5619 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5618 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bUseFrags ){
-#line 5621 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5620 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pplKillerPlayer  != NULL ){
-#line 5623 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5622 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("  %s: +%d points\n") , pplKillerPlayer  -> GetPlayerName  () , m_iMana );
-#line 5625 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5624 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5627 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5626 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("  %s: -%d points\n") , GetPlayerName  () , m_iMana );
+#line 5627 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5628 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5629 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5632 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5631 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iDeaths  += 1;
-#line 5633 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5632 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iDeaths  += 1;
-#line 5634 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5633 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5637 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5636 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iLastViewState  = m_iViewState ;
-#line 5640 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5639 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () & ~ ENF_ALIVE );
-#line 5642 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5641 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (FLOAT3D (0.0f , 0.0f , 0.0f));
-#line 5643 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5642 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (0.0f , 0.0f , 0.0f));
-#line 5646 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5645 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . RemoveWeapon  ();
-#line 5648 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5647 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerWeapons  () -> SendEvent  (EStop  ());
-#line 5651 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5650 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative ){
-#line 5653 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5652 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerWeapons  () -> DropWeapon  ();
-#line 5654 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5653 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5658 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5657 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iAnim1 ;
-#line 5659 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5658 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iAnim2 ;
-#line 5660 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5659 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_SWIM  || m_pstState  == PST_DIVE ){
-#line 5661 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5660 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_UNDERWATER ;
-#line 5662 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5661 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_UNDERWATER ;
-#line 5663 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5662 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(eDeath  . eLastDamage  . dmtType  == DMT_SPIKESTAB ){
-#line 5664 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5663 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_SPIKES ;
-#line 5665 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5664 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_SPIKES ;
-#line 5666 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5665 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(eDeath  . eLastDamage  . dmtType  == DMT_ABYSS ){
-#line 5667 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5666 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_ABYSSFALL ;
-#line 5668 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5667 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_ABYSSFALL ;
+#line 5668 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5669 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5670 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT3D vFront ;
-#line 5671 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5670 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetHeadingDirection  (0 , vFront );
-#line 5672 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5671 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FLOAT fDamageDir  = m_vDamage  % vFront ;
-#line 5673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5672 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(fDamageDir  < 0){
+#line 5673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(Abs  (fDamageDir ) < 10.0f){
 #line 5674 "C:/MyMod/Sources/EntitiesMP/Player.es"
-if(Abs  (fDamageDir ) < 10.0f){
-#line 5675 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_EASYFALLBACK ;
-#line 5676 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5675 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_EASYFALLBACK ;
+#line 5676 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5677 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5678 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_BACK ;
-#line 5679 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5678 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_BACK ;
-#line 5680 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5679 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
+#line 5680 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5681 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5682 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(Abs  (fDamageDir ) < 10.0f){
-#line 5683 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5682 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_EASYFALLFORWARD ;
-#line 5684 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5683 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_EASYFALLFORWARD ;
-#line 5685 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5684 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5686 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5685 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim1  = PLAYER_ANIM_DEATH_FORWARD ;
-#line 5687 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5686 "C:/MyMod/Sources/EntitiesMP/Player.es"
 iAnim2  = BODY_ANIM_DEATH_FORWARD ;
+#line 5687 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5688 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 5689 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 5690 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5691 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 5692 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5691 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (iAnim1  , 0);
-#line 5693 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5692 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 5694 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5693 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (iAnim2  , 0);
-#line 5697 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5696 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (EPF_MODEL_CORPSE );
-#line 5698 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5697 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetCollisionFlags  (ECF_CORPSE );
-#line 5701 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fDensity  = 400.0f;
-#line 5704 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5703 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pstState  == PST_DIVE ){
+#line 5704 "C:/MyMod/Sources/EntitiesMP/Player.es"
+SetDefaultMouthPitch  ();
 #line 5705 "C:/MyMod/Sources/EntitiesMP/Player.es"
-SetDefaultMouthPitch  ();
-#line 5706 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_DEATHWATER ) , SOF_3D );
-#line 5707 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5706 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("DeathWater");}
+#line 5707 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}else {
 #line 5708 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}else {
-#line 5709 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDefaultMouthPitch  ();
-#line 5710 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5709 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_DEATH ) , SOF_3D );
-#line 5711 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5710 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("Death");}
-#line 5712 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5711 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5715 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5714 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (m_penView  == NULL );
-#line 5716 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5715 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  == NULL ){
-#line 5717 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5716 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penView  = CreateEntity  (GetPlacement  () , CLASS_PLAYER_VIEW );
-#line 5718 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5717 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EViewInit  eInit ;
-#line 5719 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5718 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . penOwner  = this ;
-#line 5720 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5719 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . penCamera  = NULL ;
-#line 5721 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5720 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . vtView  = VT_PLAYERDEATH ;
-#line 5722 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5721 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInit  . bDeathFixed  = eDeath  . eLastDamage  . dmtType  == DMT_ABYSS ;
-#line 5723 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5722 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penView  -> Initialize  (eInit );
-#line 5724 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5723 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5726 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5725 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ShouldBlowUp  ()){
-#line 5727 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5726 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BlowUp  ();
-#line 5728 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5727 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5730 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5729 "C:/MyMod/Sources/EntitiesMP/Player.es"
 LeaveStain  (TRUE );
-#line 5731 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5730 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5733 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5732 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMayRespawn  = 0;
-#line 5735 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5734 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(1.2f);
 Jump(STATE_CURRENT, 0x0191000b, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191000b_Death_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191000b
 switch(__eeInput.ee_slEvent){case(EVENTCODE_EBegin):{const EBegin&e= (EBegin&)__eeInput;
 
-#line 5738 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5737 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iViewState  = PVT_PLAYERAUTOVIEW ;
-#line 5739 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5738 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 5740 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5739 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ETimer):{const ETimer&e= (ETimer&)__eeInput;
 
-#line 5744 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5743 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMayRespawn  = 1;
-#line 5745 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5744 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 5746 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5745 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EDamage):{const EDamage&eDamage= (EDamage&)__eeInput;
 
-#line 5749 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5748 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(eDamage  . dmtType  == DMT_ABYSS ){
-#line 5750 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5749 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  != NULL ){
-#line 5751 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5750 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerView  *) & * m_penView ) -> m_bFixed  = TRUE ;
+#line 5751 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5752 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5753 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5755 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5754 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(ShouldBlowUp  ()){
-#line 5757 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5756 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BlowUp  ();
-#line 5758 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5757 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5759 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5758 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 5760 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5759 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EDeath):{const EDeath&e= (EDeath&)__eeInput;
 return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_EEnd):{const EEnd&e= (EEnd&)__eeInput;
 
-#line 5766 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5765 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! IsPredictor  ()){
-#line 5768 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5767 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UnsetTimer();Jump(STATE_CURRENT,0x0191000c, FALSE, EInternal());return TRUE;
-#line 5769 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5768 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5770 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5769 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EAutoAction):{const EAutoAction&eAutoAction= (EAutoAction&)__eeInput;
 
-#line 5774 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5773 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bCooperative  && ! GetSP  () -> sp_bSinglePlayer ){
-#line 5776 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5775 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(eAutoAction  . penFirstMarker  != NULL  && 
-#line 5777 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5776 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerActionMarker  *) & * eAutoAction  . penFirstMarker ) -> m_paaAction  == PAA_TELEPORT ){
-#line 5779 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5778 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TeleportToAutoMarker  ((CPlayerActionMarker  *) & * eAutoAction  . penFirstMarker );
+#line 5779 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5780 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5781 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5783 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5782 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 5784 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5783 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EDisconnected):{const EDisconnected&e= (EDisconnected&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EReceiveScore):{const EReceiveScore&e= (EReceiveScore&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EKilledEnemy):{const EKilledEnemy&e= (EKilledEnemy&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EPreLevelChange):{const EPreLevelChange&e= (EPreLevelChange&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EPostLevelChange):{const EPostLevelChange&e= (EPostLevelChange&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;default:{return TRUE;}ASSERT(FALSE);break;
-#line 5791 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5790 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x0191000c_Death_02(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191000c
 
-#line 5793 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5792 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,ERebirth  ());
-#line 5793 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5792 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5796 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5795 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TheEnd(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_TheEnd
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::TheEnd expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5798 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5797 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! _pNetwork  -> IsPlayingDemo  ()){
-#line 5800 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5799 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer ){
-#line 5801 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5800 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("gam_iRecordHighScore=0;");
+#line 5801 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 5802 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5803 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 5805 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5804 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_gdGameDifficulty  == CSessionProperties  :: GD_EXTREME ){
-#line 5807 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5806 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("sam_bMentalActivated=1;");
-#line 5808 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5807 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5811 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5810 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReleaseWeapon  ());
-#line 5814 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5813 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () & ~ ENF_ALIVE );
-#line 5816 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5815 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (FLOAT3D (0.0f , 0.0f , 0.0f));
-#line 5817 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5816 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (0.0f , 0.0f , 0.0f));
-#line 5820 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5819 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , 0);
-#line 5821 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5820 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerAnimator  &) * m_penAnimator ) . BodyAnimationTemplate  (
-#line 5822 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5821 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BODY_ANIM_NORMALWALK  , BODY_ANIM_COLT_STAND  , BODY_ANIM_SHOTGUN_STAND  , BODY_ANIM_MINIGUN_STAND  , 
-#line 5823 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5822 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AOF_LOOPING  | AOF_NORESTART );
-#line 5825 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5824 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 5828 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5827 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bEndOfGame  = TRUE ;
-#line 5829 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5828 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetGameEnd  ();
-#line 5831 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5830 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAt(THINKTIME_NEVER);
 Jump(STATE_CURRENT, 0x0191000e, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191000e_TheEnd_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -7843,144 +7875,144 @@ return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_EReceiveScore):{const EReceiveSc
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EKilledEnemy):{const EKilledEnemy&e= (EKilledEnemy&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_ECenterMessage):{const ECenterMessage&e= (ECenterMessage&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;default:{return TRUE;}ASSERT(FALSE);break;
-#line 5837 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5836 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x0191000f_TheEnd_02(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191000f
  ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5843 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5842 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FirstInit(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_FirstInit
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::FirstInit expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5845 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5844 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bUseButtonHeld  = FALSE ;
-#line 5848 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5847 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iViewState  = m_iLastViewState ;
-#line 5851 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5850 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  != NULL ){
-#line 5852 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5851 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerView  &) * m_penView ) . SendEvent  (EEnd  ());
-#line 5853 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5852 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penView  = NULL ;
-#line 5854 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5853 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5856 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5855 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FindMusicHolder  ();
-#line 5859 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5858 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UpdateLevelStats  ();
-#line 5862 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5861 "C:/MyMod/Sources/EntitiesMP/Player.es"
 InitializePlayer  ();
-#line 5865 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5864 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ReceiveComputerMessage  (CTFILENAME  ("Data\\Messages\\Statistics\\Statistics.txt") , CMF_READ );
-#line 5867 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5866 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSettings  () -> ps_ulFlags  & PSF_PREFER3RDPERSON ){
-#line 5868 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5867 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ChangePlayerView  ();
-#line 5869 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5868 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5871 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5870 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 5871 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5870 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5874 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5873 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Rebirth(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_Rebirth
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::Rebirth expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5876 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5875 "C:/MyMod/Sources/EntitiesMP/Player.es"
 bUseButtonHeld  = FALSE ;
-#line 5879 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5878 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iViewState  = m_iLastViewState ;
-#line 5881 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5880 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! (m_ulFlags  & PLF_RESPAWNINPLACE )){
-#line 5882 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5881 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerWeapons  () -> ClearWeapons  ();
-#line 5883 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5882 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
+#line 5885 "C:/MyMod/Sources/EntitiesMP/Player.es"
+if(m_penView  != NULL ){
 #line 5886 "C:/MyMod/Sources/EntitiesMP/Player.es"
-if(m_penView  != NULL ){
+((CPlayerView  &) * m_penView ) . SendEvent  (EEnd  ());
 #line 5887 "C:/MyMod/Sources/EntitiesMP/Player.es"
-((CPlayerView  &) * m_penView ) . SendEvent  (EEnd  ());
+m_penView  = NULL ;
 #line 5888 "C:/MyMod/Sources/EntitiesMP/Player.es"
-m_penView  = NULL ;
-#line 5889 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5892 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5891 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CEntityPointer penFlame  = GetChildOfClass  ("Flame");
-#line 5893 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5892 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penFlame  != NULL )
-#line 5894 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5893 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5896 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5895 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EStopFlaming  esf ;
-#line 5897 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5896 "C:/MyMod/Sources/EntitiesMP/Player.es"
 esf  . m_bNow  = TRUE ;
-#line 5898 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5897 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penFlame  -> SendEvent  (esf );
-#line 5899 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5898 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5901 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5900 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  != NULL ){
-#line 5902 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5901 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerView  &) * m_penView ) . SendEvent  (EEnd  ());
-#line 5903 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5902 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penView  = NULL ;
-#line 5904 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5903 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5906 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5905 "C:/MyMod/Sources/EntitiesMP/Player.es"
 FindMusicHolder  ();
-#line 5909 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5908 "C:/MyMod/Sources/EntitiesMP/Player.es"
 InitializePlayer  ();
-#line 5911 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5910 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 5911 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5910 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5916 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5915 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoGoToMarker(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoGoToMarker
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoGoToMarker expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5918 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5917 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ULONG  ulFlags  = AOF_LOOPING  | AOF_NORESTART ;
-#line 5920 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5919 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iAnim  = GetModelObject  () -> GetAnim  ();
-#line 5921 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5920 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iAnim  != PLAYER_ANIM_STAND )
-#line 5922 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5921 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5923 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5922 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulFlags  |= AOF_SMOOTHCHANGE ;
-#line 5924 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5923 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5926 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5925 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 5927 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5926 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . m_bAttacking  = FALSE ;
-#line 5928 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5927 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyWalkAnimation  ();
-#line 5929 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5928 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_fAutoSpeed  > plr_fSpeedForward  / 2){
-#line 5930 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5929 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_RUN  , ulFlags );
-#line 5931 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5930 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5932 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5931 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_NORMALWALK  , ulFlags );
-#line 5933 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5932 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5936 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5935 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Jump(STATE_CURRENT,0x01910015, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910015_AutoGoToMarker_03(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910015
 if(!(
-#line 5937 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5936 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (m_penActionMarker  -> GetPlacement  () . pl_PositionVector  - 
-#line 5938 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5937 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlacement  () . pl_PositionVector ) . Length  () > 1.0f)){ Jump(STATE_CURRENT,0x01910016, FALSE, EInternal());return TRUE;}
-#line 5940 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5939 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(_pTimer  -> TickQuantum );
 Jump(STATE_CURRENT, 0x01910013, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910013_AutoGoToMarker_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -7990,58 +8022,58 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910014
 ;Jump(STATE_CURRENT,0x01910015, FALSE, EInternal());return TRUE;
-#line 5941 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5940 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }BOOL CPlayer::H0x01910016_AutoGoToMarker_04(const CEntityEvent &__eeInput) {
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910016
 
-#line 5944 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5943 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 5944 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5943 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5948 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5947 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoGoToMarkerAndStop(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoGoToMarkerAndStop
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoGoToMarkerAndStop expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5950 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5949 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ULONG  ulFlags  = AOF_LOOPING  | AOF_NORESTART ;
-#line 5952 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5951 "C:/MyMod/Sources/EntitiesMP/Player.es"
 INDEX iAnim  = GetModelObject  () -> GetAnim  ();
-#line 5953 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5952 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(iAnim  != PLAYER_ANIM_STAND )
-#line 5954 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5953 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 5955 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5954 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ulFlags  |= AOF_SMOOTHCHANGE ;
-#line 5956 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5955 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5958 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5957 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 5959 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5958 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyWalkAnimation  ();
-#line 5960 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5959 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_fAutoSpeed  > plr_fSpeedForward  / 2){
-#line 5961 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5960 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_RUN  , ulFlags );
-#line 5962 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5961 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 5963 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5962 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_NORMALWALK  , ulFlags );
-#line 5964 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5963 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 5967 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5966 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Jump(STATE_CURRENT,0x0191001a, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191001a_AutoGoToMarkerAndStop_03(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191001a
 if(!(
-#line 5968 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5967 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (m_penActionMarker  -> GetPlacement  () . pl_PositionVector  - 
-#line 5969 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5968 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlacement  () . pl_PositionVector ) . Length  () > m_fAutoSpeed  * _pTimer  -> TickQuantum  * 2.00f)){ Jump(STATE_CURRENT,0x0191001b, FALSE, EInternal());return TRUE;}
-#line 5971 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5970 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(_pTimer  -> TickQuantum );
 Jump(STATE_CURRENT, 0x01910018, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910018_AutoGoToMarkerAndStop_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8051,36 +8083,36 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910019
 ;Jump(STATE_CURRENT,0x0191001a, FALSE, EInternal());return TRUE;
-#line 5972 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5971 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }BOOL CPlayer::H0x0191001b_AutoGoToMarkerAndStop_04(const CEntityEvent &__eeInput) {
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191001b
 
-#line 5974 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5973 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fAutoSpeed  = 0.0f;
-#line 5976 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5975 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 5977 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5976 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyStillAnimation  ();
-#line 5978 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5977 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , AOF_LOOPING  | AOF_NORESTART );
-#line 5981 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5980 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ForceFullStop  ();
-#line 5984 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5983 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 5984 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5983 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 5988 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5987 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoUseItem(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoUseItem
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoUseItem expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 5992 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5991 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 5993 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5992 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyPullItemAnimation  ();
-#line 5996 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5995 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(0.2f);
 Jump(STATE_CURRENT, 0x0191001d, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191001d_AutoUseItem_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8090,17 +8122,17 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191001e
 ;
-#line 5999 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5998 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerActionMarker  * ppam  = GetActionMarker  ();
-#line 6000 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 5999 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (ppam  -> m_penItem  , "KeyItem")){
-#line 6001 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6000 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moItem  = ppam  -> m_penItem  -> GetModelObject  () -> GetAttachmentModel  (0) -> amo_moModelObject ;
-#line 6002 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6001 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SetItem  (& moItem );
-#line 6003 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6002 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6005 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6004 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(2.20f - 0.2f);
 Jump(STATE_CURRENT, 0x0191001f, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191001f_AutoUseItem_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8110,27 +8142,27 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910020
 ;
-#line 6008 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6007 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6009 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6008 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyRemoveItem  ();
-#line 6011 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6010 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> m_penTrigger  != NULL ){
-#line 6013 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6012 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (GetActionMarker  () -> m_penTrigger  , EET_TRIGGER  , this );
-#line 6014 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6013 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6017 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6016 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> m_penDoorController  != NULL ){
-#line 6018 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6017 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EPass  ePass ;
-#line 6019 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6018 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ePass  . penOther  = this ;
-#line 6020 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6019 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetActionMarker  () -> m_penDoorController  -> SendEvent  (ePass );
-#line 6021 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6020 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6023 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6022 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(3.25f - 2.20f);
 Jump(STATE_CURRENT, 0x01910021, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910021_AutoUseItem_05(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8140,26 +8172,26 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910022
 ;
-#line 6025 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6024 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6026 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6025 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyRemoveItem  ();
-#line 6029 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6028 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6029 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6028 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6033 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6032 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoPickItem(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoPickItem
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoPickItem expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6037 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6036 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6038 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6037 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyPickItemAnimation  ();
-#line 6039 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6038 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_KEYLIFT  , 0);
-#line 6041 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6040 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(1.2f);
 Jump(STATE_CURRENT, 0x01910024, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910024_AutoPickItem_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8169,29 +8201,29 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910025
 ;
-#line 6044 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6043 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> m_penTrigger  != NULL ){
-#line 6046 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6045 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (GetActionMarker  () -> m_penTrigger  , EET_TRIGGER  , this );
-#line 6047 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6046 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6050 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6049 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerActionMarker  * ppam  = GetActionMarker  ();
-#line 6051 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6050 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (ppam  -> m_penItem  , "KeyItem")){
-#line 6052 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6051 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moItem  = ppam  -> m_penItem  -> GetModelObject  () -> GetAttachmentModel  (0) -> amo_moModelObject ;
-#line 6053 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6052 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SetItem  (& moItem );
-#line 6054 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6053 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EPass  ePass ;
-#line 6055 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6054 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ePass  . penOther  = this ;
-#line 6056 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6055 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ppam  -> m_penItem  -> SendEvent  (ePass );
-#line 6057 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6056 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6059 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6058 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(3.6f - 1.2f + GetActionMarker  () -> m_tmWait );
 Jump(STATE_CURRENT, 0x01910026, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910026_AutoPickItem_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8201,26 +8233,26 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910027
 ;
-#line 6061 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6060 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6062 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6061 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyRemoveItem  ();
-#line 6065 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6064 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6065 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6064 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6068 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6067 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoFallDown(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoFallDown
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoFallDown expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6070 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6069 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_BRIDGEFALLPOSE  , 0);
-#line 6071 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6070 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6072 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6071 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_BRIDGEFALLPOSE  , 0);
-#line 6074 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6073 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetActionMarker  () -> m_tmWait );
 Jump(STATE_CURRENT, 0x01910029, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910029_AutoFallDown_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8230,22 +8262,22 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191002a
 ;
-#line 6077 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6076 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6077 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6076 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6080 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6079 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoFallToAbys(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoFallToAbys
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoFallToAbys expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6082 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6081 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_ABYSSFALL  , AOF_LOOPING );
-#line 6083 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6082 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6084 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6083 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_ABYSSFALL  , AOF_LOOPING );
-#line 6086 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6085 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetActionMarker  () -> m_tmWait );
 Jump(STATE_CURRENT, 0x0191002c, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191002c_AutoFallToAbys_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8255,24 +8287,24 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191002d
 ;
-#line 6089 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6088 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6089 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6088 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6093 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6092 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoLookAround(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoLookAround
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoLookAround expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6095 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6094 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_BACKPEDAL  , 0);
-#line 6096 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6095 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_vAutoSpeed  = FLOAT3D (0 , 0 , plr_fSpeedForward  / 4 / 0.75f);
-#line 6097 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6096 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6098 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6097 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_NORMALWALK  , 0);
-#line 6100 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6099 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetModelObject  () -> GetCurrentAnimLength  () / 2);
 Jump(STATE_CURRENT, 0x0191002f, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191002f_AutoLookAround_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8282,17 +8314,17 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910030
 ;
-#line 6102 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6101 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_vAutoSpeed  = FLOAT3D (0 , 0 , 0);
-#line 6105 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6104 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , 0);
-#line 6106 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6105 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6107 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6106 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_LOOKAROUND  , 0);
-#line 6108 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6107 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6111 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6110 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(moBody  . GetCurrentAnimLength  () + 0.1f);
 Jump(STATE_CURRENT, 0x01910031, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910031_AutoLookAround_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8302,45 +8334,45 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910032
 ;
-#line 6114 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6113 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6114 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6113 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6117 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6116 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoTeleport(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoTeleport
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoTeleport expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6120 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6119 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TeleportToAutoMarker  (GetActionMarker  ());
-#line 6123 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6122 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6123 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6122 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6126 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6125 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoAppear(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoAppear
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoAppear expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6129 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6128 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToEditorModel  ();
-#line 6132 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6131 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (GetActionMarker  () -> GetPlacement  ());
-#line 6134 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6133 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () & ~ (EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY ));
-#line 6135 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6134 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_AUTOMOVEMENTS ;
-#line 6136 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6135 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (60 , 0 , 0));
-#line 6137 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6136 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_SPAWNPOSE  , AOF_LOOPING );
-#line 6138 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6137 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6139 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6138 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_SPAWNPOSE  , AOF_LOOPING );
-#line 6142 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6141 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSpiritStart  = _pTimer  -> CurrentTick  ();
-#line 6144 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6143 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(5);
 Jump(STATE_CURRENT, 0x01910035, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910035_AutoAppear_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8350,11 +8382,11 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910036
 ;
-#line 6147 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6146 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToModel  ();
-#line 6148 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6147 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmFadeStart  = _pTimer  -> CurrentTick  ();
-#line 6150 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6149 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(5);
 Jump(STATE_CURRENT, 0x01910037, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910037_AutoAppear_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8364,23 +8396,23 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910038
 ;
-#line 6152 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6151 "C:/MyMod/Sources/EntitiesMP/Player.es"
 COLOR colAlpha  = GetModelObject  () -> mo_colBlendColor ;
-#line 6153 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6152 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetModelObject  () -> mo_colBlendColor  = colAlpha  | 0xFF;
-#line 6156 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6155 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () | EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY );
-#line 6157 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6156 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (0 , 0 , 0));
-#line 6158 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6157 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_AUTOMOVEMENTS ;
-#line 6161 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6160 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_SPAWN_FALLDOWN  , 0);
-#line 6162 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6161 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6163 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6162 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_SPAWN_FALLDOWN  , 0);
-#line 6165 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6164 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetModelObject  () -> GetCurrentAnimLength  ());
 Jump(STATE_CURRENT, 0x01910039, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910039_AutoAppear_05(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8390,13 +8422,13 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191003a
 ;
-#line 6168 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6167 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_SPAWN_GETUP  , AOF_SMOOTHCHANGE );
-#line 6169 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6168 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6170 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6169 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_SPAWN_GETUP  , AOF_SMOOTHCHANGE );
-#line 6172 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6171 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetModelObject  () -> GetCurrentAnimLength  ());
 Jump(STATE_CURRENT, 0x0191003b, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191003b_AutoAppear_07(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8406,32 +8438,32 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191003c
 ;
-#line 6175 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6174 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6175 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6174 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6178 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6177 "C:/MyMod/Sources/EntitiesMP/Player.es"
 TravellingInBeam(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_TravellingInBeam
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::TravellingInBeam expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6181 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6180 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (GetActionMarker  () -> GetPlacement  ());
-#line 6183 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6182 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () & ~ (EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY ));
-#line 6184 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6183 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_AUTOMOVEMENTS ;
-#line 6185 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6184 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (60 , 0 , 0));
-#line 6186 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6185 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (ANGLE3D (0 , 20.0f , 0));
-#line 6187 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6186 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_SPAWNPOSE  , AOF_LOOPING );
-#line 6188 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6187 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6189 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6188 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_SPAWNPOSE  , AOF_LOOPING );
-#line 6191 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6190 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(8.0f);
 Jump(STATE_CURRENT, 0x0191003e, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191003e_TravellingInBeam_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8441,34 +8473,34 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191003f
 ;
-#line 6193 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6192 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToEditorModel  ();
-#line 6195 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6194 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6195 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6194 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6198 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6197 "C:/MyMod/Sources/EntitiesMP/Player.es"
 LogoFireMinigun(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_LogoFireMinigun
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::LogoFireMinigun expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6201 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6200 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlacement3D pl  = GetActionMarker  () -> GetPlacement  ();
-#line 6202 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6201 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pl  . pl_PositionVector  += FLOAT3D (0 , 0.01f , 0) * GetActionMarker  () -> en_mRotation ;
-#line 6203 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6202 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Teleport  (pl );
-#line 6204 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6203 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  (1) = 20.0f;
-#line 6205 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6204 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plLastViewpoint  . pl_OrientationAngle  = en_plViewpoint  . pl_OrientationAngle ;
-#line 6208 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6207 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_INTRO  , AOF_LOOPING );
-#line 6210 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6209 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMinigunAutoFireStart  = _pTimer  -> CurrentTick  ();
-#line 6213 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6212 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EFireWeapon  ());
-#line 6214 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6213 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(2.5f);
 Jump(STATE_CURRENT, 0x01910041, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910041_LogoFireMinigun_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8478,13 +8510,13 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910042
 ;
-#line 6215 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6214 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReleaseWeapon  ());
-#line 6218 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6217 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6219 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6218 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_MINIGUN_STAND  , 0);
-#line 6221 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6220 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(0.5f);
 Jump(STATE_CURRENT, 0x01910043, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910043_LogoFireMinigun_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8494,39 +8526,39 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910044
 ;
-#line 6224 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6223 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CWorldSettingsController  * pwsc  = NULL ;
-#line 6226 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6225 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CBackgroundViewer  * penBcgViewer  = (CBackgroundViewer  *) GetWorld  () -> GetBackgroundViewer  ();
-#line 6227 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6226 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penBcgViewer  != NULL )
-#line 6228 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6227 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 6229 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6228 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  = (CWorldSettingsController  *) & * penBcgViewer  -> m_penWorldSettingsController ;
-#line 6230 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6229 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_tmShakeStarted  = _pTimer  -> CurrentTick  ();
-#line 6231 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6230 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_vShakePos  = GetPlacement  () . pl_PositionVector ;
-#line 6232 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6231 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_fShakeFalloff  = 250.0f;
-#line 6233 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6232 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_fShakeFade  = 3.0f;
-#line 6235 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6234 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_fShakeIntensityZ  = 0.1f * 2.0f;
-#line 6236 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6235 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_tmShakeFrequencyZ  = 5.0f;
-#line 6237 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6236 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_fShakeIntensityY  = 0.0f;
-#line 6238 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6237 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_fShakeIntensityB  = 0.0f;
-#line 6240 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6239 "C:/MyMod/Sources/EntitiesMP/Player.es"
 pwsc  -> m_bShakeFadeIn  = FALSE ;
-#line 6248 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6247 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6251 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6250 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmMinigunAutoFireStart  = - 1;
-#line 6252 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6251 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(5.0f);
 Jump(STATE_CURRENT, 0x01910045, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910045_LogoFireMinigun_05(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8536,9 +8568,9 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910046
 ;
-#line 6253 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6252 "C:/MyMod/Sources/EntitiesMP/Player.es"
 IFeel_StopEffect  (NULL );
-#line 6254 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6253 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(5.0f);
 Jump(STATE_CURRENT, 0x01910047, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910047_LogoFireMinigun_07(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8548,24 +8580,24 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910048
 ;
-#line 6256 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6255 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6256 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6255 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6259 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6258 "C:/MyMod/Sources/EntitiesMP/Player.es"
 AutoStoreWeapon(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_AutoStoreWeapon
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::AutoStoreWeapon expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6262 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6261 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6263 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6262 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyAnimationTemplate  (BODY_ANIM_WAIT  , 
-#line 6264 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6263 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BODY_ANIM_COLT_REDRAWSLOW  , BODY_ANIM_SHOTGUN_REDRAWSLOW  , BODY_ANIM_MINIGUN_REDRAWSLOW  , 
-#line 6265 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6264 "C:/MyMod/Sources/EntitiesMP/Player.es"
 0);
-#line 6266 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6265 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(plan  . m_fBodyAnimTime );
 Jump(STATE_CURRENT, 0x0191004a, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191004a_AutoStoreWeapon_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8575,33 +8607,33 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191004b
 ;
-#line 6268 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6267 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iAutoOrgWeapon  = ((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon ;
+#line 6268 "C:/MyMod/Sources/EntitiesMP/Player.es"
+((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  = WEAPON_NONE ;
 #line 6269 "C:/MyMod/Sources/EntitiesMP/Player.es"
-((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  = WEAPON_NONE ;
-#line 6270 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . m_iWantedWeapon  = WEAPON_NONE ;
-#line 6271 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6270 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soWeaponAmbient  . Stop  ();
-#line 6274 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6273 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SyncWeapon  ();
-#line 6276 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6275 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6277 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6276 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . m_iWeaponLast  = m_iAutoOrgWeapon ;
-#line 6278 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6277 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . RemoveWeapon  ();
-#line 6279 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6278 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetPlayerAnimator  () -> SyncWeapon  ();
-#line 6281 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6280 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  = (WeaponType ) m_iAutoOrgWeapon ;
-#line 6282 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6281 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . BodyAnimationTemplate  (BODY_ANIM_WAIT  , BODY_ANIM_COLT_DEACTIVATETOWALK  , 
-#line 6283 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6282 "C:/MyMod/Sources/EntitiesMP/Player.es"
 BODY_ANIM_SHOTGUN_DEACTIVATETOWALK  , BODY_ANIM_MINIGUN_DEACTIVATETOWALK  , AOF_SMOOTHCHANGE );
-#line 6284 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6283 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . m_iCurrentWeapon  = WEAPON_NONE ;
-#line 6286 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6285 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(plan  . m_fBodyAnimTime );
 Jump(STATE_CURRENT, 0x0191004c, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191004c_AutoStoreWeapon_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8611,34 +8643,34 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191004d
 ;
-#line 6289 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6288 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EReturn  ());
-#line 6289 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6288 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6293 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6292 "C:/MyMod/Sources/EntitiesMP/Player.es"
 DoAutoActions(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_DoAutoActions
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::DoAutoActions expects 'EVoid' as input!");  const EVoid &e = (const EVoid &)__eeInput;
-#line 6296 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6295 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_plViewpoint  . pl_OrientationAngle  = ANGLE3D (0 , 0 , 0);
-#line 6298 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6297 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6299 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6298 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . m_bDisableAnimating  = TRUE ;
-#line 6302 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6301 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Jump(STATE_CURRENT,0x019100a2, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x019100a2_DoAutoActions_84(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a2
 if(!(m_penActionMarker  != NULL  && IsOfClass  (m_penActionMarker  , "PlayerActionMarker"))){ Jump(STATE_CURRENT,0x019100a3, FALSE, EInternal());return TRUE;}
-#line 6305 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6304 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(!(GetActionMarker  () -> m_paaAction  == PAA_WAIT )){ Jump(STATE_CURRENT,0x019100a1, FALSE, EInternal());return TRUE;}
-#line 6307 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6306 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6308 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6307 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_WAIT  , AOF_NORESTART  | AOF_LOOPING );
-#line 6310 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6309 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetActionMarker  () -> m_tmWait );
 Jump(STATE_CURRENT, 0x0191004f, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191004f_DoAutoActions_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8652,13 +8684,13 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a1
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STOPANDWAIT )){ Jump(STATE_CURRENT,0x0191009f, FALSE, EInternal());return TRUE;}
-#line 6313 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6312 "C:/MyMod/Sources/EntitiesMP/Player.es"
 StartModelAnim  (PLAYER_ANIM_STAND  , 0);
-#line 6314 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6313 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CModelObject & moBody  = GetModelObject  () -> GetAttachmentModel  (PLAYER_ATTACHMENT_TORSO ) -> amo_moModelObject ;
-#line 6315 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6314 "C:/MyMod/Sources/EntitiesMP/Player.es"
 moBody  . PlayAnim  (BODY_ANIM_WAIT  , AOF_NORESTART  | AOF_LOOPING );
-#line 6317 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6316 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(GetActionMarker  () -> m_tmWait );
 Jump(STATE_CURRENT, 0x01910051, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910051_DoAutoActions_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8672,7 +8704,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191009f
 if(!(GetActionMarker  () -> m_paaAction  == PAA_APPEARING )){ Jump(STATE_CURRENT,0x0191009d, FALSE, EInternal());return TRUE;}
-#line 6321 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6320 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoAppear, TRUE;
 Jump(STATE_CURRENT, 0x01910053, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910053_DoAutoActions_05(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8686,7 +8718,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191009d
 if(!(GetActionMarker  () -> m_paaAction  == PAA_TRAVELING_IN_BEAM )){ Jump(STATE_CURRENT,0x0191009b, FALSE, EInternal());return TRUE;}
-#line 6323 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6322 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_TravellingInBeam, TRUE;
 Jump(STATE_CURRENT, 0x01910055, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910055_DoAutoActions_07(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8700,17 +8732,17 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191009b
 if(!(GetActionMarker  () -> m_paaAction  == PAA_INTROSE_SELECT_WEAPON )){ Jump(STATE_CURRENT,0x01910099, FALSE, EInternal());return TRUE;}
-#line 6326 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6325 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 6327 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6326 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = 1;
-#line 6328 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6327 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );Jump(STATE_CURRENT,0x01910098, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910099_DoAutoActions_75(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910099
 if(!(GetActionMarker  () -> m_paaAction  == PAA_LOGO_FIRE_INTROSE )){ Jump(STATE_CURRENT,0x01910097, FALSE, EInternal());return TRUE;}
-#line 6330 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6329 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_LogoFireMinigun, TRUE;
 Jump(STATE_CURRENT, 0x01910057, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910057_DoAutoActions_09(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8724,7 +8756,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910097
 if(!(GetActionMarker  () -> m_paaAction  == PAA_LOGO_FIRE_MINIGUN )){ Jump(STATE_CURRENT,0x01910095, FALSE, EInternal());return TRUE;}
-#line 6332 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6331 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_LogoFireMinigun, TRUE;
 Jump(STATE_CURRENT, 0x01910059, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910059_DoAutoActions_11(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8738,7 +8770,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910095
 if(!(GetActionMarker  () -> m_paaAction  == PAA_TELEPORT )){ Jump(STATE_CURRENT,0x01910093, FALSE, EInternal());return TRUE;}
-#line 6335 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6334 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoTeleport, TRUE;
 Jump(STATE_CURRENT, 0x0191005b, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191005b_DoAutoActions_13(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8752,14 +8784,14 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910093
 if(!(GetActionMarker  () -> m_paaAction  == PAA_WAITFOREVER )){ Jump(STATE_CURRENT,0x01910091, FALSE, EInternal());return TRUE;}
-#line 6340 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6339 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAt(THINKTIME_NEVER);
 Jump(STATE_CURRENT, 0x0191005d, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191005d_DoAutoActions_15(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191005d
 switch(__eeInput.ee_slEvent){case(EVENTCODE_EBegin):{const EBegin&e= (EBegin&)__eeInput;
 return TRUE;}ASSERT(FALSE);break;default:{return FALSE;}ASSERT(FALSE);break;
-#line 6343 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6342 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x0191005e_DoAutoActions_16(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
@@ -8769,7 +8801,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910091
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STOREWEAPON )){ Jump(STATE_CURRENT,0x0191008f, FALSE, EInternal());return TRUE;}
-#line 6346 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6345 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoStoreWeapon, TRUE;
 Jump(STATE_CURRENT, 0x0191005f, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191005f_DoAutoActions_17(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8783,17 +8815,17 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191008f
 if(!(GetActionMarker  () -> m_paaAction  == PAA_DRAWWEAPON )){ Jump(STATE_CURRENT,0x0191008d, FALSE, EInternal());return TRUE;}
-#line 6351 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6350 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 6352 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6351 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = - 4;
-#line 6353 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6352 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );Jump(STATE_CURRENT,0x0191008c, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191008d_DoAutoActions_63(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191008d
 if(!(GetActionMarker  () -> m_paaAction  == PAA_LOOKAROUND )){ Jump(STATE_CURRENT,0x0191008b, FALSE, EInternal());return TRUE;}
-#line 6357 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6356 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoLookAround, TRUE;
 Jump(STATE_CURRENT, 0x01910061, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910061_DoAutoActions_19(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8807,7 +8839,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191008b
 if(!(GetActionMarker  () -> m_paaAction  == PAA_USEITEM )){ Jump(STATE_CURRENT,0x01910089, FALSE, EInternal());return TRUE;}
-#line 6362 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6361 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoUseItem, TRUE;
 Jump(STATE_CURRENT, 0x01910063, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910063_DoAutoActions_21(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8821,7 +8853,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910089
 if(!(GetActionMarker  () -> m_paaAction  == PAA_PICKITEM )){ Jump(STATE_CURRENT,0x01910087, FALSE, EInternal());return TRUE;}
-#line 6367 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6366 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoPickItem, TRUE;
 Jump(STATE_CURRENT, 0x01910065, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910065_DoAutoActions_23(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8835,7 +8867,7 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910087
 if(!(GetActionMarker  () -> m_paaAction  == PAA_FALLDOWN )){ Jump(STATE_CURRENT,0x01910085, FALSE, EInternal());return TRUE;}
-#line 6372 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6371 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoFallDown, TRUE;
 Jump(STATE_CURRENT, 0x01910067, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910067_DoAutoActions_25(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8849,65 +8881,65 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910085
 if(!(GetActionMarker  () -> m_paaAction  == PAA_RELEASEPLAYER )){ Jump(STATE_CURRENT,0x01910083, FALSE, EInternal());return TRUE;}
-#line 6376 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6375 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penCamera  != NULL ){
-#line 6377 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6376 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CCamera  *) & * m_penCamera ) -> m_bStopMoving  = TRUE ;
+#line 6377 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 6378 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 6379 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penCamera  = NULL ;
-#line 6381 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6380 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetPlayerWeapons  () -> m_iCurrentWeapon  == WEAPON_NONE ){
-#line 6383 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6382 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ESelectWeapon  eSelect ;
-#line 6384 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6383 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eSelect  . iWeapon  = - 4;
-#line 6385 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6384 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (eSelect );
-#line 6386 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6385 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6388 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6387 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_SYNCWEAPON ;
-#line 6389 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6388 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmSpiritStart  = 0;Jump(STATE_CURRENT,0x01910082, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910083_DoAutoActions_53(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910083
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STARTCOMPUTER )){ Jump(STATE_CURRENT,0x01910081, FALSE, EInternal());return TRUE;}
-#line 6394 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6393 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this ) && GetSP  () -> sp_bSinglePlayer ){
-#line 6395 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6394 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_ppenPlayer  = this ;
-#line 6396 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6395 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_bInitialStart  = TRUE ;
-#line 6397 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6396 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }Jump(STATE_CURRENT,0x01910080, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910081_DoAutoActions_51(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910081
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STARTINTROSCROLL )){ Jump(STATE_CURRENT,0x0191007f, FALSE, EInternal());return TRUE;}
-#line 6401 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6400 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("sam_iStartCredits=1;");Jump(STATE_CURRENT,0x0191007e, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191007f_DoAutoActions_49(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191007f
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STARTCREDITS )){ Jump(STATE_CURRENT,0x0191007d, FALSE, EInternal());return TRUE;}
-#line 6405 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6404 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("sam_iStartCredits=2;");Jump(STATE_CURRENT,0x0191007c, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191007d_DoAutoActions_47(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191007d
 if(!(GetActionMarker  () -> m_paaAction  == PAA_STOPSCROLLER )){ Jump(STATE_CURRENT,0x0191007b, FALSE, EInternal());return TRUE;}
-#line 6409 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6408 "C:/MyMod/Sources/EntitiesMP/Player.es"
 _pShell  -> Execute  ("sam_iStartCredits=-1;");Jump(STATE_CURRENT,0x0191007a, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191007b_DoAutoActions_45(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191007b
 if(!(GetActionMarker  () -> m_paaAction  == PAA_RUN )){ Jump(STATE_CURRENT,0x01910079, FALSE, EInternal());return TRUE;}
-#line 6414 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6413 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fAutoSpeed  = plr_fSpeedForward  * GetActionMarker  () -> m_fSpeed ;
-#line 6415 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6414 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoGoToMarker, TRUE;
 Jump(STATE_CURRENT, 0x01910069, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x01910069_DoAutoActions_27(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8921,9 +8953,9 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910079
 if(!(GetActionMarker  () -> m_paaAction  == PAA_RUNANDSTOP )){ Jump(STATE_CURRENT,0x01910077, FALSE, EInternal());return TRUE;}
-#line 6420 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6419 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fAutoSpeed  = plr_fSpeedForward  * GetActionMarker  () -> m_fSpeed ;
-#line 6421 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6420 "C:/MyMod/Sources/EntitiesMP/Player.es"
 STATE_CPlayer_AutoGoToMarkerAndStop, TRUE;
 Jump(STATE_CURRENT, 0x0191006b, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191006b_DoAutoActions_29(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8937,37 +8969,37 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910077
 if(!(GetActionMarker  () -> m_paaAction  == PAA_RECORDSTATS )){ Jump(STATE_CURRENT,0x01910075, FALSE, EInternal());return TRUE;}
-#line 6426 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6425 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer  || GetSP  () -> sp_bPlayEntireGame ){
-#line 6428 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6427 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmEstTime  = GetActionMarker  () -> m_tmWait ;
-#line 6430 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6429 "C:/MyMod/Sources/EntitiesMP/Player.es"
 RecordEndOfLevelData  ();
-#line 6431 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6430 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 6432 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6431 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetGameEnd  ();
-#line 6433 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6432 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }Jump(STATE_CURRENT,0x01910074, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910075_DoAutoActions_39(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910075
 if(!(GetActionMarker  () -> m_paaAction  == PAA_SHOWSTATS )){ Jump(STATE_CURRENT,0x01910073, FALSE, EInternal());return TRUE;}
-#line 6438 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6437 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(!(cmp_ppenPlayer  == NULL  && _pNetwork  -> IsPlayerLocal  (this ) && GetSP  () -> sp_bSinglePlayer )){ Jump(STATE_CURRENT,0x01910071, FALSE, EInternal());return TRUE;}
-#line 6439 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6438 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bEndOfLevel  = TRUE ;
-#line 6440 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6439 "C:/MyMod/Sources/EntitiesMP/Player.es"
 cmp_ppenPlayer  = this ;
-#line 6441 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6440 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_DONTRENDER ;
-#line 6442 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6441 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Jump(STATE_CURRENT,0x0191006f, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x0191006f_DoAutoActions_33(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191006f
 if(!(m_bEndOfLevel )){ Jump(STATE_CURRENT,0x01910070, FALSE, EInternal());return TRUE;}
-#line 6443 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6442 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(_pTimer  -> TickQuantum );
 Jump(STATE_CURRENT, 0x0191006d, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x0191006d_DoAutoActions_31(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -8978,27 +9010,27 @@ return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EKilledEnemy):{const EKilledEne
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_ECenterMessage):{const ECenterMessage&e= (ECenterMessage&)__eeInput;
 return FALSE;}ASSERT(FALSE);break;case(EVENTCODE_EPostLevelChange):{const EPostLevelChange&e= (EPostLevelChange&)__eeInput;
 
-#line 6449 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6448 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ! PLF_DONTRENDER ;
-#line 6450 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6449 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_bEndOfLevel  = FALSE ;
-#line 6451 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6450 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return FALSE;
-#line 6452 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6451 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;default:{return TRUE;}ASSERT(FALSE);break;
-#line 6454 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6453 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x0191006e_DoAutoActions_32(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x0191006e
 Jump(STATE_CURRENT,0x0191006f, FALSE, EInternal());return TRUE;
-#line 6455 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6454 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }BOOL CPlayer::H0x01910070_DoAutoActions_34(const CEntityEvent &__eeInput) {
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910070
 
-#line 6456 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6455 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ! PLF_DONTRENDER ;Jump(STATE_CURRENT,0x01910071, FALSE, EInternal());return TRUE;}BOOL CPlayer::H0x01910071_DoAutoActions_35(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
@@ -9008,33 +9040,33 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x01910073
 if(GetActionMarker  () -> m_paaAction  == PAA_ENDOFGAME ){
-#line 6462 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6461 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Jump(STATE_CURRENT, STATE_CPlayer_TheEnd, TRUE, EVoid());return TRUE;
-#line 6463 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6462 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(GetActionMarker  () -> m_paaAction  == PAA_NOGRAVITY ){
-#line 6464 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6463 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () & ~ (EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY ));
-#line 6465 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6464 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> GetParent  () != NULL )
-#line 6466 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6465 "C:/MyMod/Sources/EntitiesMP/Player.es"
 {
-#line 6467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6466 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetParent  (GetActionMarker  () -> GetParent  ());
+#line 6467 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 6468 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 6469 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(GetActionMarker  () -> m_paaAction  == PAA_TURNONGRAVITY ){
-#line 6470 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6469 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPhysicsFlags  (GetPhysicsFlags  () | EPF_TRANSLATEDBYGRAVITY  | EPF_ORIENTEDBYGRAVITY );
-#line 6471 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6470 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetParent  (NULL );
-#line 6472 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6471 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6473 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6472 "C:/MyMod/Sources/EntitiesMP/Player.es"
 else if(TRUE ){
-#line 6474 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6473 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (FALSE );
-#line 6475 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6474 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }Jump(STATE_CURRENT,0x01910072, FALSE, EInternal());return TRUE;}
 BOOL CPlayer::H0x01910072_DoAutoActions_36(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
@@ -9156,68 +9188,68 @@ ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a0
 
-#line 6478 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6477 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetActionMarker  () -> m_penTrigger  != NULL  && 
-#line 6479 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6478 "C:/MyMod/Sources/EntitiesMP/Player.es"
 GetActionMarker  () -> m_paaAction  != PAA_PICKITEM ){
-#line 6481 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6480 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SendToTarget  (GetActionMarker  () -> m_penTrigger  , EET_TRIGGER  , this );
-#line 6482 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6481 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6485 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6484 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penActionMarker  = GetActionMarker  () -> m_penTarget ;Jump(STATE_CURRENT,0x019100a2, FALSE, EInternal());return TRUE;
-#line 6486 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6485 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }BOOL CPlayer::H0x019100a3_DoAutoActions_85(const CEntityEvent &__eeInput) {
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a3
 
-#line 6489 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6488 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_fAutoSpeed  = 0.0f;
-#line 6492 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6491 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penActionMarker  = NULL ;
-#line 6495 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6494 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayerAnimator  & plan  = (CPlayerAnimator  &) * m_penAnimator ;
-#line 6496 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6495 "C:/MyMod/Sources/EntitiesMP/Player.es"
 plan  . m_bDisableAnimating  = FALSE ;
-#line 6499 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6498 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid  ());
-#line 6499 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6498 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};BOOL CPlayer::
-#line 6504 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6503 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Main(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
 #define STATE_CURRENT STATE_CPlayer_Main
   ASSERTMSG(__eeInput.ee_slEvent==EVENTCODE_EVoid, "CPlayer::Main expects 'EVoid' as input!");  const EVoid &evoid = (const EVoid &)__eeInput;
-#line 6507 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6506 "C:/MyMod/Sources/EntitiesMP/Player.es"
 time  (& m_iStartTime );
-#line 6509 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6508 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ctUnreadMessages  = 0;
-#line 6510 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6509 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetFlags  (GetFlags  () | ENF_CROSSESLEVELS  | ENF_NOTIFYLEVELCHANGE );
-#line 6511 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6510 "C:/MyMod/Sources/EntitiesMP/Player.es"
 InitAsEditorModel  ();
-#line 6514 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6513 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CTString strDummy ;
-#line 6515 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6514 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPlayerAppearance  (GetModelObject  () , NULL  , strDummy  , FALSE );
-#line 6517 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6516 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ValidateCharacter  ();
-#line 6518 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6517 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetPlayerAppearance  (& m_moRender  , & en_pcCharacter  , strDummy  , FALSE );
-#line 6519 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6518 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ParseGender  (strDummy );
-#line 6522 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6521 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetModelObject  () -> GetData  () == NULL ){
-#line 6524 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6523 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 6524 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6523 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6525 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6524 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6529 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6528 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ModelChangeNotify  ();
-#line 6532 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6531 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAfter(0.2f);
 Jump(STATE_CURRENT, 0x019100a4, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x019100a4_Main_01(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -9226,83 +9258,83 @@ switch(__eeInput.ee_slEvent){case(EVENTCODE_EBegin):{const EBegin&e= (EBegin&)__
 return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_ETimer):{const ETimer&e= (ETimer&)__eeInput;
 UnsetTimer();Jump(STATE_CURRENT,0x019100a5, FALSE, EInternal());return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_EDisconnected):{const EDisconnected&e= (EDisconnected&)__eeInput;
 
-#line 6536 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6535 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Destroy  ();
-#line 6537 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6536 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 6537 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6536 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6538 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6537 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;default: return FALSE; break;
-#line 6539 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6538 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x019100a5_Main_02(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a5
 
-#line 6542 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6541 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsPredictor  ()){
-#line 6543 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6542 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Destroy  ();
-#line 6544 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6543 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 6544 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6543 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6545 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6544 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6548 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6547 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SwitchToModel  ();
-#line 6549 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6548 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_INITIALIZED ;
-#line 6552 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6551 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_tmMaxHoldBreath  = 60.0f;
-#line 6553 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6552 "C:/MyMod/Sources/EntitiesMP/Player.es"
 en_fDensity  = 1000.0f;
-#line 6555 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6554 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ModelChangeNotify  ();
-#line 6558 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6557 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penWeapons  = CreateEntity  (GetPlacement  () , CLASS_PLAYER_WEAPONS );
-#line 6559 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6558 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EWeaponsInit  eInitWeapons ;
-#line 6560 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6559 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInitWeapons  . penOwner  = this ;
-#line 6561 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6560 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penWeapons  -> Initialize  (eInitWeapons );
-#line 6564 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6563 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penAnimator  = CreateEntity  (GetPlacement  () , CLASS_PLAYER_ANIMATOR );
-#line 6565 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6564 "C:/MyMod/Sources/EntitiesMP/Player.es"
 EAnimatorInit  eInitAnimator ;
-#line 6566 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6565 "C:/MyMod/Sources/EntitiesMP/Player.es"
 eInitAnimator  . penPlayer  = this ;
-#line 6567 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6566 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penAnimator  -> Initialize  (eInitAnimator );
-#line 6570 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6569 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soMouth  . Set3DParameters  (50.0f , 10.0f , 1.0f , 1.0f);
-#line 6571 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6570 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soFootL  . Set3DParameters  (20.0f , 2.0f , 1.0f , 1.0f);
-#line 6572 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6571 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soFootR  . Set3DParameters  (20.0f , 2.0f , 1.0f , 1.0f);
-#line 6573 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6572 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soBody  . Set3DParameters  (25.0f , 5.0f , 1.0f , 1.0f);
-#line 6574 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6573 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soMessage  . Set3DParameters  (25.0f , 5.0f , 1.0f , 1.0f);
-#line 6575 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6574 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soSniperZoom  . Set3DParameters  (25.0f , 5.0f , 1.0f , 1.0f);
-#line 6578 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6577 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetupLightSource  ();
-#line 6581 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6580 "C:/MyMod/Sources/EntitiesMP/Player.es"
 try {
-#line 6582 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6581 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_aoLightAnimation  . SetData_t  (CTFILENAME  ("Animations\\BasicEffects.ani"));
-#line 6583 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6582 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }catch  (char  * strError ){
-#line 6584 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6583 "C:/MyMod/Sources/EntitiesMP/Player.es"
 WarningMessage  (TRANS  ("Cannot load Animations\\BasicEffects.ani: %s") , strError );
-#line 6585 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6584 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6586 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6585 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlayLightAnim  (LIGHT_ANIM_NONE  , 0);
-#line 6588 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6587 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetTimerAt(THINKTIME_NEVER);
 Jump(STATE_CURRENT, 0x019100a6, FALSE, EBegin());return TRUE;}BOOL CPlayer::H0x019100a6_Main_03(const CEntityEvent &__eeInput) {
 #undef STATE_CURRENT
@@ -9313,244 +9345,244 @@ Call(STATE_CURRENT, STATE_CPlayer_Rebirth, TRUE, EVoid());return TRUE;}ASSERT(FA
 Call(STATE_CURRENT, STATE_CPlayer_Death, TRUE, eDeath );return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_EDamage):{const EDamage&eDamage= (EDamage&)__eeInput;
 Call(STATE_CURRENT, STATE_CPlayer_Wounded, TRUE, eDamage );return TRUE;}ASSERT(FALSE);break;case(EVENTCODE_EPreLevelChange):{const EPreLevelChange&e= (EPreLevelChange&)__eeInput;
 
-#line 6594 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6593 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_INITIALIZED ;
-#line 6595 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6594 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  |= PLF_CHANGINGLEVEL ;
-#line 6596 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6595 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_LEVELSTARTED ;
-#line 6597 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6596 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6598 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6597 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EPostLevelChange):{const EPostLevelChange&e= (EPostLevelChange&)__eeInput;
 
-#line 6600 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6599 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(GetSP  () -> sp_bSinglePlayer  || (GetFlags  () & ENF_ALIVE )){
-#line 6601 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6600 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Call(STATE_CURRENT, STATE_CPlayer_WorldChange, TRUE, EVoid());return TRUE;
-#line 6602 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6601 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 6603 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6602 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Call(STATE_CURRENT, STATE_CPlayer_WorldChangeDead, TRUE, EVoid());return TRUE;
-#line 6604 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6603 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6605 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6604 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ETakingBreath):{const ETakingBreath&eTakingBreath= (ETakingBreath&)__eeInput;
 
-#line 6607 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6606 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDefaultMouthPitch  ();
-#line 6608 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6607 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(eTakingBreath  . fBreathDelay  < 0.2f){
-#line 6609 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6608 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_INHALE0 ) , SOF_3D );
-#line 6610 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6609 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else if(eTakingBreath  . fBreathDelay  < 0.8f){
-#line 6611 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6610 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_INHALE1 ) , SOF_3D );
-#line 6612 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6611 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }else {
-#line 6613 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6612 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_INHALE2 ) , SOF_3D );
-#line 6614 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6613 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6615 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6614 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6616 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6615 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ECameraStart):{const ECameraStart&eStart= (ECameraStart&)__eeInput;
 
-#line 6618 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6617 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penCamera  = eStart  . penCamera ;
-#line 6620 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6619 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penActionMarker  == NULL ){
-#line 6621 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6620 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredTranslation  (FLOAT3D (0.0f , 0.0f , 0.0f));
-#line 6622 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6621 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDesiredRotation  (ANGLE3D (0.0f , 0.0f , 0.0f));
-#line 6623 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6622 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6625 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6624 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . SendEvent  (EReleaseWeapon  ());
-#line 6626 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6625 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6627 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6626 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ECameraStop):{const ECameraStop&eCameraStop= (ECameraStop&)__eeInput;
 
-#line 6629 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6628 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penCamera  == eCameraStop  . penCamera ){
-#line 6630 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6629 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penCamera  = NULL ;
-#line 6631 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6630 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6632 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6631 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6633 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6632 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ECenterMessage):{const ECenterMessage&eMsg= (ECenterMessage&)__eeInput;
 
-#line 6635 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6634 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_strCenterMessage  = eMsg  . strMessage ;
-#line 6636 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6635 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_tmCenterMessageEnd  = _pTimer  -> CurrentTick  () + eMsg  . tmLength ;
-#line 6637 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6636 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(eMsg  . mssSound  == MSS_INFO ){
-#line 6638 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6637 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_soMessage  . Set3DParameters  (25.0f , 5.0f , 1.0f , 1.0f);
-#line 6639 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6638 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMessage  , SOUND_INFO  , SOF_3D  | SOF_VOLUMETRIC  | SOF_LOCAL );
-#line 6640 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6639 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6641 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6640 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6642 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6641 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EComputerMessage):{const EComputerMessage&eMsg= (EComputerMessage&)__eeInput;
 
-#line 6644 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6643 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ReceiveComputerMessage  (eMsg  . fnmMessage  , CMF_ANALYZE );
-#line 6645 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6644 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6646 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6645 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EVoiceMessage):{const EVoiceMessage&eMsg= (EVoiceMessage&)__eeInput;
 
-#line 6648 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6647 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SayVoiceMessage  (eMsg  . fnmMessage );
-#line 6649 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6648 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6650 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6649 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EAutoAction):{const EAutoAction&eAutoAction= (EAutoAction&)__eeInput;
 
-#line 6653 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6652 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penActionMarker  = eAutoAction  . penFirstMarker ;
-#line 6655 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6654 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Call(STATE_CURRENT, STATE_CPlayer_DoAutoActions, TRUE, EVoid());return TRUE;
-#line 6656 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6655 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EReceiveScore):{const EReceiveScore&eScore= (EReceiveScore&)__eeInput;
 
-#line 6658 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6657 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iScore  += eScore  . iPoints ;
-#line 6659 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6658 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iScore  += eScore  . iPoints ;
-#line 6660 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6659 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_iMana  += eScore  . iPoints  * GetSP  () -> sp_fManaTransferFactor ;
-#line 6661 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6660 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CheckHighScore  ();
-#line 6662 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6661 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6663 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6662 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EKilledEnemy):{const EKilledEnemy&e= (EKilledEnemy&)__eeInput;
 
-#line 6665 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6664 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iKills  += 1;
-#line 6666 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6665 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iKills  += 1;
-#line 6667 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6666 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6668 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6667 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ESecretFound):{const ESecretFound&e= (ESecretFound&)__eeInput;
 
-#line 6670 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6669 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psLevelStats  . ps_iSecrets  += 1;
-#line 6671 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6670 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_psGameStats  . ps_iSecrets  += 1;
-#line 6672 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6671 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6673 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6672 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EWeaponChanged):{const EWeaponChanged&e= (EWeaponChanged&)__eeInput;
 
-#line 6676 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6675 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ((CPlayerWeapons  &) * m_penWeapons ) . m_bSniping  = FALSE ;
-#line 6677 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6676 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_ulFlags  &= ~ PLF_ISZOOMING ;
-#line 6678 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6677 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soSniperZoom  , SOUND_SILENCE  , SOF_3D );
-#line 6679 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6678 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_StopEffect  ("SniperZoom");}
-#line 6680 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6679 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6681 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6680 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EEnd):{const EEnd&e= (EEnd&)__eeInput;
 
-#line 6684 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6683 "C:/MyMod/Sources/EntitiesMP/Player.es"
 ASSERT  (FALSE );
-#line 6685 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6684 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6686 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6685 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_EDisconnected):{const EDisconnected&e= (EDisconnected&)__eeInput;
 
-#line 6690 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6689 "C:/MyMod/Sources/EntitiesMP/Player.es"
 UnsetTimer();Jump(STATE_CURRENT,0x019100a7, FALSE, EInternal());return TRUE;
-#line 6691 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6690 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;case(EVENTCODE_ETouch):{const ETouch&eTouch= (ETouch&)__eeInput;
 
-#line 6694 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6693 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(IsOfClass  (eTouch  . penOther  , "Bouncer")){
-#line 6695 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6694 "C:/MyMod/Sources/EntitiesMP/Player.es"
 JumpFromBouncer  (this  , eTouch  . penOther );
-#line 6697 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6696 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SetDefaultMouthPitch  ();
-#line 6698 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6697 "C:/MyMod/Sources/EntitiesMP/Player.es"
 PlaySound  (m_soMouth  , GenderSound  (SOUND_JUMP ) , SOF_3D );
-#line 6699 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6698 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(_pNetwork  -> IsPlayerLocal  (this )){IFeel_PlayEffect  ("Jump");}
-#line 6700 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6699 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6701 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6700 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE;
-#line 6702 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6701 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }ASSERT(FALSE);break;default: return FALSE; break;
-#line 6703 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6702 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }return TRUE;}BOOL CPlayer::H0x019100a7_Main_04(const CEntityEvent &__eeInput){
 ASSERT(__eeInput.ee_slEvent==EVENTCODE_EInternal);
 #undef STATE_CURRENT
 #define STATE_CURRENT 0x019100a7
 
-#line 6708 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6707 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! IsPredictor  () && m_ulKeys  != 0){
-#line 6710 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6709 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * penNextPlayer  = NULL ;
-#line 6711 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6710 "C:/MyMod/Sources/EntitiesMP/Player.es"
 for(INDEX iPlayer  = 0;iPlayer  < GetMaxPlayers  ();iPlayer  ++){
-#line 6712 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6711 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPlayer  * pen  = (CPlayer  *) & * GetPlayerEntity  (iPlayer );
-#line 6713 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6712 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(pen  != NULL  && pen  != this  && (pen  -> GetFlags  () & ENF_ALIVE ) && ! (pen  -> GetFlags  () & ENF_DELETED )){
-#line 6714 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6713 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penNextPlayer  = pen ;
+#line 6714 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 6715 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6716 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 6719 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6718 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(penNextPlayer  != NULL ){
-#line 6721 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6720 "C:/MyMod/Sources/EntitiesMP/Player.es"
 CPrintF  (TRANS  ("%s leaving, all keys transfered to %s\n") , 
-#line 6722 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6721 "C:/MyMod/Sources/EntitiesMP/Player.es"
 (const char  *) m_strName  , (const char  *) penNextPlayer  -> GetPlayerName  ());
-#line 6723 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6722 "C:/MyMod/Sources/EntitiesMP/Player.es"
 penNextPlayer  -> m_ulKeys  |= m_ulKeys ;
+#line 6723 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 6724 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6725 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 6728 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6727 "C:/MyMod/Sources/EntitiesMP/Player.es"
 SpawnTeleport  ();
-#line 6731 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6730 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penWeapons  -> Destroy  ();
-#line 6732 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6731 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penAnimator  -> Destroy  ();
-#line 6733 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6732 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_penView  != NULL ){
-#line 6734 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6733 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_penView  -> Destroy  ();
+#line 6734 "C:/MyMod/Sources/EntitiesMP/Player.es"
+}
 #line 6735 "C:/MyMod/Sources/EntitiesMP/Player.es"
-}
-#line 6736 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(m_pen3rdPersonView  != NULL ){
-#line 6737 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6736 "C:/MyMod/Sources/EntitiesMP/Player.es"
 m_pen3rdPersonView  -> Destroy  ();
-#line 6738 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6737 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
-#line 6739 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6738 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Destroy  ();
-#line 6740 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6739 "C:/MyMod/Sources/EntitiesMP/Player.es"
 Return(STATE_CURRENT,EVoid());
-#line 6740 "C:/MyMod/Sources/EntitiesMP/Player.es"
+#line 6739 "C:/MyMod/Sources/EntitiesMP/Player.es"
 return TRUE; ASSERT(FALSE); return TRUE;};

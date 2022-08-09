@@ -6,13 +6,13 @@
 --------------------Configuration: GameMP - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSP3CDE.tmp" with contents
+Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSPBCD3.tmp" with contents
 [
 /nologo /G5 /MD /W3 /GX /Zi /Ox /Ot /Og /Oi /Oy- /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /D "GAME_EXPORTS" /Fp"Release/GameMP.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "C:\MyMod\Sources\GameMP\Game.cpp"
 ]
-Creating command line "cl.exe @C:\Users\PC\AppData\Local\Temp\RSP3CDE.tmp" 
-Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSP3CDF.tmp" with contents
+Creating command line "cl.exe @C:\Users\PC\AppData\Local\Temp\RSPBCD3.tmp" 
+Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSPBCD4.tmp" with contents
 [
 user32.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"Release/GameMP.pdb" /map:"Release/GameMP.map" /debug /machine:I386 /out:"Release/GameMP.dll" /implib:"Release/GameMP.lib" /pdbtype:sept 
 .\Release\Camera.obj
@@ -30,15 +30,15 @@ user32.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"Release/GameMP.
 .\Release\WEDInterface.obj
 \MyMod\Sources\EntitiesMP\Release\EntitiesMP.lib
 ]
-Creating command line "link.exe @C:\Users\PC\AppData\Local\Temp\RSP3CDF.tmp"
-Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSP3CE0.bat" with contents
+Creating command line "link.exe @C:\Users\PC\AppData\Local\Temp\RSPBCD4.tmp"
+Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSPBCD5.bat" with contents
 [
 @echo off
 copy Release\GameMP.dll C:\MyMod\Sources\Bin >nul
 copy Release\GameMP.map C:\MyMod\Sources\Bin >nul
 copy Release\GameMP.lib C:\MyMod\Sources\Bin >nul
 ]
-Creating command line "C:\Users\PC\AppData\Local\Temp\RSP3CE0.bat"
+Creating command line "C:\Users\PC\AppData\Local\Temp\RSPBCD5.bat"
 Compiling...
 Game.cpp
 Linking...
