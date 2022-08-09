@@ -2343,7 +2343,7 @@ functions:
     ANGLE aFOV = plr_fFOV;
     // disable zoom in deathmatch
     if (!GetSP()->sp_bCooperative) {
-      aFOV = 90.0f;
+      aFOV = 140.0f;
     }
     // if sniper active
     if (((CPlayerWeapons&)*m_penWeapons).m_iCurrentWeapon==WEAPON_SNIPER)
@@ -4829,6 +4829,7 @@ functions:
     // get your prediction tail
     CPlayer *pen = (CPlayer*)GetPredictionTail();
     // do screen blending
+	/*
     ULONG ulR=255, ulG=0, ulB=0; // red for wounding
     ULONG ulA = pen->m_fDamageAmmount*5.0f;
     
@@ -4863,7 +4864,7 @@ functions:
 
     // do all queued screen blendings
     pdp->BlendScreen();
-
+*/
     // render status info line (if needed)
     if( hud_bShowInfo) { 
       // get player or its predictor
