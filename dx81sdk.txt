@@ -1,0 +1,14 @@
+
+ ######################################################
+ ##
+ ##                                      DirectX 8.1 Headers & Libraries
+ ##
+ ######################################################
+
+ By installing this package you are agreeing to the following:
+
+  - You use this at your own risk
+  - This package is in no way affiliated with Croteam or Microsoft
+  - The Authors, ISPs, and/or Webhosting providers are not responsible or liable for anything this does to your computer
+
+ Enjoy this package!

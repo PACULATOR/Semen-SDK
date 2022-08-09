@@ -1,0 +1,705 @@
+//=====================================================
+Crashed at: 02/11/22 01:29:01
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  601A04A4 01:000DF4A4 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:035B808C
+EBX:035B804C
+ECX:0F7E6BF0
+EDX:00000000
+ESI:0019F8B0
+EDI:00000000
+CS:EIP:0023:601A04A4
+SS:ESP:002B:0019F864  EBP:0019F898
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010246
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+601A04A4 0019F898 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DF4A4
+601A61F1 0019F910 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E51F1
+601A702D 0019F9BC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E602D
+601A6748 0019FA48 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E5748
+6019BD3D 0019FC58 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DAD3D
+608594EE 0019FD34 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:000184EE
+004346FA 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000336FA
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+75AAFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77AF7A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+77AF7A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 02/25/22 21:26:57
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  601A04A4 01:000DF4A4 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:03597F7C
+EBX:03597F3C
+ECX:24B22820
+EDX:00000011
+ESI:0019F8B0
+EDI:00000000
+CS:EIP:0023:601A04A4
+SS:ESP:002B:0019F864  EBP:0019F898
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010246
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+601A04A4 0019F898 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DF4A4
+601A61F1 0019F910 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E51F1
+601A702D 0019F9BC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E602D
+601A6748 0019FA48 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000E5748
+6019BD3D 0019FC58 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DAD3D
+1001BE0B 0019FD34 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:0001AE0B
+004346FA 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000336FA
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+76E4FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+776A7A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+776A7A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 02/25/22 21:27:40
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:03597C24
+ECX:035973EC
+EDX:03578BDC
+ESI:03596AB8
+EDI:035973EC
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435DC9 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034DC9
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+76E4FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+776A7A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+776A7A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 02/26/22 02:02:11
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  6016B874 01:000AA874 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:0008000D
+EBX:00000000
+ECX:0000005B
+EDX:00000000
+ESI:0000005B
+EDI:00000001
+CS:EIP:0023:6016B874
+SS:ESP:002B:0019FA08  EBP:0019FA48
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010213
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+6016B874 0019FA48 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000AA874
+6019BD35 0019FC58 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DAD35
+1001BE0B 0019FD34 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:0001AE0B
+004346FA 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000336FA
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+76E4FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+776A7A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+776A7A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 03/02/22 00:59:45
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  60958C3D 01:00007C3D C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll
+
+Registers:
+EAX:00000000
+EBX:36FD2138
+ECX:00000000
+EDX:00000001
+ESI:373FBE58
+EDI:00000400
+CS:EIP:0023:60958C3D
+SS:ESP:002B:044BFCB0  EBP:044BFD0C
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+60958C3D 044BFD0C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll 0001:00007C3D
+60961B30 36FB8088 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll 0001:00010B30
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 03/14/22 21:41:42
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:035A6DEC
+ECX:035A65B4
+EDX:035981DC
+ESI:035A5C80
+EDI:035A65B4
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435DC9 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034DC9
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+762CFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77EB7A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77EB7A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 03/14/22 22:03:53
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:035F6DEC
+ECX:035F65B4
+EDX:035E81DC
+ESI:035F5C80
+EDI:035F65B4
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435DC9 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034DC9
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+74D4FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+76EC7A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+76EC7A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 03/19/22 18:40:07
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600C48FD 01:000038FD C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:32E8C833
+EBX:00000000
+ECX:3DE8C87E
+EDX:FD400000
+ESI:60525FC8
+EDI:00000000
+CS:EIP:0023:600C48FD
+SS:ESP:002B:0019EC4C  EBP:0019EC64
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010246
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600C48FD 0019EC64 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000038FD
+6010C3B0 0019EC70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0004B3B0
+60339E1F 0019EF0C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:00028E1F
+60403D87 0019EF68 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:000F2D87
+601AF8A6 0019EF80 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000EE8A6
+601B46B8 0019EFA0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F36B8
+601B5427 0019F148 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F4427
+601B5BF0 0019F178 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F4BF0
+100022BE 0019FB24 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:000012BE
+10017D50 0019FD2C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:00016D50
+004347FF 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000337FF
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+76CBFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77E87A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77E87A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 03/24/22 21:47:37
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  004405D7 01:0003F5D7 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe
+
+Registers:
+EAX:00000004
+EBX:00000004
+ECX:00000001
+EDX:210D2B98
+ESI:0019F5C4
+EDI:00796F00
+CS:EIP:0023:004405D7
+SS:ESP:002B:0019F580  EBP:0019F58C
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010212
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+004405D7 0019F58C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:0003F5D7
+0044056F 0019F5A0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:0003F56F
+004404E2 0019F5B4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:0003F4E2
+0044475A 0019F5C8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:0004375A
+0044491F 0019FCE0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:0004391F
+004447DF 0019FCF0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000437DF
+00442094 0019FCFC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00041094
+6019D053 0019FD34 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000DC053
+00434709 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00033709
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+76CBFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77E87A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77E87A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 04/06/22 15:57:28
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:035A6DEC
+ECX:035A65B4
+EDX:035981DC
+ESI:035A5C80
+EDI:035A65B4
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435DC9 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034DC9
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+7607FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77437A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77437A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 04/08/22 23:28:26
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:035A6DEC
+ECX:035A65B4
+EDX:035981DC
+ESI:035A5C80
+EDI:035A65B4
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435DC9 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034DC9
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+7604FA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77077A7E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77077A4E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 04/16/22 23:50:33
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600EBAE6 01:0002AAE6 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000001
+EBX:600EBB60
+ECX:03CBFE98
+EDX:02340000
+ESI:00000000
+EDI:00000010
+CS:EIP:0023:600EBAE6
+SS:ESP:002B:03CBFE6C  EBP:03CBFE84
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010216
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600EBAE6 03CBFE84 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AAE6
+600EBB9A 03CBFEA4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AB9A
+74D33716 03CBFF70 $adr: C:\Windows\SYSTEM32\WINMM.dll 0001:00002716
+75B0FA29 03CBFF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77B17A7E 03CBFFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A7E
+77B17A4E 03CBFFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A4E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/17/22 19:02:29
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  60130857 01:0006F857 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:000003CB
+EBX:00000000
+ECX:6E4D1304
+EDX:00000000
+ESI:6E4D1304
+EDI:00000003
+CS:EIP:0023:60130857
+SS:ESP:002B:0019EDE0  EBP:0019EDE8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010206
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+60130857 0019EDE8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0006F857
+60332839 0019EE44 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:00021839
+6042AC0E 0019EF68 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:00119C0E
+601AF8A6 0019EF80 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000EE8A6
+601B46B8 0019EFA0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F36B8
+601B5427 0019F148 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F4427
+601B5BF0 0019F178 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000F4BF0
+100022BE 0019FB24 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:000012BE
+10017D50 0019FD2C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:00016D50
+004347FF 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000337FF
+00435D79 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D79
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+74DAFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+76F07A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+76F07A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/21/22 00:31:01
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600EBAE6 01:0002AAE6 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000001
+EBX:600EBB60
+ECX:0449FE98
+EDX:00570000
+ESI:00000000
+EDI:00000010
+CS:EIP:0023:600EBAE6
+SS:ESP:002B:0449FE6C  EBP:0449FE84
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010216
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600EBAE6 0449FE84 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AAE6
+600EBB9A 0449FEA4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AB9A
+74103716 0449FF70 $adr: C:\Windows\SYSTEM32\WINMM.dll 0001:00002716
+769FFA29 0449FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+76EE7A9E 0449FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+76EE7A6E 0449FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/24/22 19:07:27
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600EBAE6 01:0002AAE6 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000001
+EBX:600EBB60
+ECX:0446FE98
+EDX:02330000
+ESI:00000000
+EDI:00000010
+CS:EIP:0023:600EBAE6
+SS:ESP:002B:0446FE6C  EBP:0446FE84
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010216
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600EBAE6 0446FE84 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AAE6
+600EBB9A 0446FEA4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AB9A
+74103716 0446FF70 $adr: C:\Windows\SYSTEM32\WINMM.dll 0001:00002716
+7584FA29 0446FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+76EE7A9E 0446FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+76EE7A6E 0446FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/25/22 14:49:36
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600EBAE6 01:0002AAE6 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000001
+EBX:600EBB60
+ECX:0455FE98
+EDX:02480000
+ESI:00000000
+EDI:00000010
+CS:EIP:0023:600EBAE6
+SS:ESP:002B:0455FE6C  EBP:0455FE84
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010216
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600EBAE6 0455FE84 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AAE6
+600EBB9A 0455FEA4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AB9A
+75043716 0455FF70 $adr: C:\Windows\SYSTEM32\WINMM.dll 0001:00002716
+777DFA29 0455FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77E27A9E 0455FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+77E27A6E 0455FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/25/22 23:50:22
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:18BAEF70
+EBX:00000000
+ECX:16997B84
+EDX:16997D04
+ESI:16997B78
+EDI:16997B84
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FBE4  EBP:0019FC0C
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FC0C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+600D409A 0019FC2C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0001309A
+6022AD5F 0019FC5C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00169D5F
+601D3082 0019FCAC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00112082
+601C98B2 0019FCE0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:001088B2
+60216F12 0019FD04 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00155F12
+603E979D 0019FD24 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:000D879D
+603E95AB 0019FD30 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:000D85AB
+600D7004 0019FD90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00016004
+6019AE97 0019FDDC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000D9E97
+100163DF 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:000153DF
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+75FEFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77637A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+77637A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/26/22 00:02:15
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE08 01:0000CE08 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:12EAD904
+EBX:00000000
+ECX:12EAAE44
+EDX:044CA91C
+ESI:12EAAE38
+EDI:12EAAE44
+CS:EIP:0023:600CDE08
+SS:ESP:002B:0019FBC8  EBP:0019FBF0
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE08 0019FBF0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE08
+600D409A 0019FC10 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0001309A
+6022AD5F 0019FC40 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00169D5F
+601D3082 0019FC90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00112082
+601C98B2 0019FCC4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:001088B2
+6046D75F 0019FCE4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:0015C75F
+6046D2BB 0019FCF0 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:0015C2BB
+60216A79 0019FD38 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00155A79
+603D5658 0019FD90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\EntitiesMP.dll 0001:000C4658
+6019AE97 0019FDDC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:000D9E97
+100163DF 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\GameMP.dll 0001:000153DF
+004361A8 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:000351A8
+00475073 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00074073
+75FEFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+77637A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+77637A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 06/26/22 21:57:50
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600EBAE6 01:0002AAE6 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000001
+EBX:600EBB60
+ECX:044AFE98
+EDX:02360000
+ESI:00000000
+EDI:00000010
+CS:EIP:0023:600EBAE6
+SS:ESP:002B:044AFE6C  EBP:044AFE84
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010216
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600EBAE6 044AFE84 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AAE6
+600EBB9A 044AFEA4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0002AB9A
+74913716 044AFF70 $adr: C:\Windows\SYSTEM32\WINMM.dll 0001:00002716
+762BFA29 044AFF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+776F7A9E 044AFFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+776F7A6E 044AFFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 07/05/22 14:00:09
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  600CDE05 01:0000CE05 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll
+
+Registers:
+EAX:00000000
+EBX:035D7944
+ECX:035D710C
+EDX:035C7DB4
+ESI:035D67D8
+EDI:035D710C
+CS:EIP:0023:600CDE05
+SS:ESP:002B:0019FDB8  EBP:0019FDD8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+600CDE05 0019FDD8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:0000CE05
+60214EA5 0019FDEC $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\Engine.dll 0001:00153EA5
+00435D99 0019FE90 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00034D99
+00436178 0019FED4 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00035178
+00474983 0019FF70 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\SeriousSam.exe 0001:00073983
+75CEFA29 0019FF80 $adr: C:\Windows\System32\KERNEL32.DLL 0001:0000FA29
+777D7A9E 0019FFDC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A9E
+777D7A6E 0019FFEC $adr: C:\Windows\SYSTEM32\ntdll.dll 0001:00066A6E
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 07/08/22 22:13:00
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  609515D0 01:000005D0 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll
+
+Registers:
+EAX:1575F658
+EBX:15674800
+ECX:83EC558B
+EDX:000108EC
+ESI:0A0CEB58
+EDI:15674824
+CS:EIP:0023:609515D0
+SS:ESP:002B:0448FCF0  EBP:14CE71B8
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010282
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+609515D0 14CE71B8 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll 0001:000005D0
+
+manual stack frame walk end:
+
+//=====================================================
+Crashed at: 07/10/22 20:28:13
+Version: 10000.7
+Exception code: C0000005 ACCESS_VIOLATION
+Fault address:  60958D64 01:00007D64 C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll
+
+Registers:
+EAX:00000000
+EBX:00000000
+ECX:03CEFCB8
+EDX:09E48140
+ESI:0363B1F0
+EDI:00000002
+CS:EIP:0023:60958D64
+SS:ESP:002B:03CEFCB0  EBP:03CEFD0C
+DS:002B  ES:002B  FS:0053  GS:002B
+Flags:00010202
+
+manual stack frame walk begin:
+Address   Frame     Logical addr  Module
+60958D64 03CEFD0C $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll 0001:00007D64
+60961B30 09E48140 $adr: C:\PACUL\stim\steamapps\common\Serious Sam Classic The Second Encounter\Bin\vorbis.dll 0001:00010B30
+
+manual stack frame walk end:
+

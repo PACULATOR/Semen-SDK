@@ -1,0 +1,54 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: GameGUIMP - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Build : warning : failed to (or don't know how to) build 'C:\MyMod\Sources\GameMP\Release\GameMP.lib'
+
+Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSPACCD.tmp" with contents
+[
+/nologo /dll /incremental:no /pdb:"Release/GameGUIMP.pdb" /map:"Release/GameGUIMP.map" /debug /machine:I386 /out:"Release/GameGUIMP.dll" /implib:"Release/GameGUIMP.lib" /pdbtype:sept 
+.\Release\ActionsListControl.obj
+.\Release\AxisListCtrl.obj
+.\Release\ConsoleSymbolsCombo.obj
+.\Release\DlgAudioQuality.obj
+.\Release\DlgConsole.obj
+.\Release\DlgEditButtonAction.obj
+.\Release\DlgPlayerAppearance.obj
+.\Release\DlgPlayerControls.obj
+.\Release\DlgPlayerSettings.obj
+.\Release\DlgRenameControls.obj
+.\Release\DlgSelectPlayer.obj
+.\Release\DlgVideoQuality.obj
+.\Release\EditConsole.obj
+.\Release\GameGUI.obj
+.\Release\LocalPlayersList.obj
+.\Release\PressKeyEditControl.obj
+.\Release\StdAfx.obj
+.\Release\GameGUI.res
+\MyMod\Sources\GameMP\Release\GameMP.lib
+]
+Creating command line "link.exe @C:\Users\PC\AppData\Local\Temp\RSPACCD.tmp"
+Creating temporary file "C:\Users\PC\AppData\Local\Temp\RSPACCE.bat" with contents
+[
+@echo off
+copy Release\GameGUIMP.dll C:\MyMod\Sources\Bin >nul
+copy Release\GameGUIMP.map C:\MyMod\Sources\Bin >nul
+copy Release\GameGUIMP.lib C:\MyMod\Sources\Bin >nul
+]
+Creating command line "C:\Users\PC\AppData\Local\Temp\RSPACCE.bat"
+Linking...
+LINK : fatal error LNK1181: cannot open input file "\MyMod\Sources\GameMP\Release\GameMP.lib"
+Error executing link.exe.
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+GameGUIMP.dll - 1 error(s), 1 warning(s)
+</pre>
+</body>
+</html>
