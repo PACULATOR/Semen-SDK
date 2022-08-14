@@ -2822,7 +2822,7 @@ ANGLE aFOV  = plr_fFOV ;
 #line 2345 "C:/MyMod/Sources/EntitiesMP/Player.es"
 if(! GetSP  () -> sp_bCooperative ){
 #line 2346 "C:/MyMod/Sources/EntitiesMP/Player.es"
-aFOV  = 140.0f;
+aFOV  = 137.0f;
 #line 2347 "C:/MyMod/Sources/EntitiesMP/Player.es"
 }
 #line 2349 "C:/MyMod/Sources/EntitiesMP/Player.es"

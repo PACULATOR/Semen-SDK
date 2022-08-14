@@ -2343,7 +2343,7 @@ functions:
     ANGLE aFOV = plr_fFOV;
     // disable zoom in deathmatch
     if (!GetSP()->sp_bCooperative) {
-      aFOV = 140.0f;
+      aFOV = 137.0f; //137
     }
     // if sniper active
     if (((CPlayerWeapons&)*m_penWeapons).m_iCurrentWeapon==WEAPON_SNIPER)

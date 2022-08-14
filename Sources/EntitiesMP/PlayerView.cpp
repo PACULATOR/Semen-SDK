@@ -118,7 +118,7 @@ pl  . pl_OrientationAngle  (2) -= 12.0f;
 #line 96 "C:/MyMod/Sources/EntitiesMP/PlayerView.es"
 pl  . pl_PositionVector  (2) += 1.0f;
 #line 97 "C:/MyMod/Sources/EntitiesMP/PlayerView.es"
-fDistance  = 4.2f;
+fDistance  = 3.5f;
 #line 98 "C:/MyMod/Sources/EntitiesMP/PlayerView.es"
 bFollowCrossHair  = TRUE ;
 #line 100 "C:/MyMod/Sources/EntitiesMP/PlayerView.es"
